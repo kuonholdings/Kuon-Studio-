@@ -1,216 +1,177 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <title>KUON Studio</title>
-  <style>
-    :root{
-      --paper:#fbfbf9;               /* off-white */
-      --ink:#0e1420;                 /* near-black/navy */
-      --muted:rgba(14,20,32,.62);
-      --hair:rgba(14,20,32,.12);
-      --ghost:rgba(14,20,32,.06);    /* background geometry opacity */
-      --ghost2:rgba(14,20,32,.035);
-      --accent:rgba(14,20,32,.86);
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KUON</title>
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background: var(--paper);
-      color: var(--ink);
-      overflow:hidden;
-      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
-    }
+<style>
+:root{
+  --bg:#ffffff;
+  --ink:#111111;
+  --muted:rgba(17,17,17,.65);
+  --hair:rgba(17,17,17,.15);
+}
 
-    /* Ghost geometry layer */
-    .ghost{
-      position:fixed;
-      inset:-8vh -8vw; /* oversize so drift doesn't reveal edges */
-      z-index:0;
-      pointer-events:none;
-      transform: translate3d(0,0,0);
-      will-change: transform;
-    }
-    .ghost svg{
-      width:100%;
-      height:100%;
-      display:block;
-    }
+*{box-sizing:border-box}
+html,body{height:100%}
 
-    /* Optional very subtle ambient drift (can be removed) */
-    @media (prefers-reduced-motion: no-preference){
-      .ghost{
-        animation: drift 46s ease-in-out infinite alternate;
-      }
-      @keyframes drift{
-        0%   { transform: translate3d(-0.6vw, -0.6vh, 0) rotate(-0.15deg); }
-        100% { transform: translate3d(0.6vw,  0.8vh, 0) rotate(0.18deg); }
-      }
-    }
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
+               "Helvetica Neue",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:geometricPrecision;
+  overflow:hidden;
+}
 
-    /* Content */
-    .wrap{
-      position:relative;
-      z-index:1;
-      height:100%;
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: clamp(22px, 5vw, 72px);
-    }
+/* CENTER LAYOUT */
+.wrap{
+  position:relative;
+  height:100%;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+}
 
-    .center{
-      text-align:center;
-      max-width: 880px;
-      padding: 0 18px;
-    }
+.center{
+  max-width:900px;
+}
 
-    .statement{
-      margin:0;
-      font-weight: 750;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      font-size: clamp(18px, 2.6vw, 34px);
-      color: var(--accent);
-      line-height: 1.25;
-    }
+h1{
+  margin:0;
+  font-weight:750;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-size:clamp(22px,3vw,40px);
+  line-height:1.15;
+}
 
-    .sub{
-      margin: 18px 0 0 0;
-      font-size: 14px;
-      letter-spacing:.02em;
-      color: var(--muted);
-    }
+.sub{
+  margin:16px 0 0 0;
+  font-size:14px;
+  letter-spacing:.06em;
+  color:var(--muted);
+}
 
-    /* Minimal corners */
-    .meta{
-      position:fixed;
-      top:18px;
-      right:18px;
-      z-index:2;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      letter-spacing:.08em;
-      color: rgba(14,20,32,.48);
-      padding:10px 12px;
-      border:1px solid rgba(14,20,32,.10);
-      border-radius:14px;
-      background: rgba(251,251,249,.65);
-      user-select:none;
-    }
+/* CORNERS */
+.meta{
+  position:fixed;
+  top:18px;
+  right:18px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12px;
+  letter-spacing:.08em;
+  color:var(--muted);
+  border:1px solid var(--hair);
+  border-radius:14px;
+  padding:10px 12px;
+}
 
-    .footer{
-      position:fixed;
-      left:18px;
-      bottom:18px;
-      z-index:2;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      letter-spacing:.08em;
-      color: rgba(14,20,32,.48);
-      user-select:none;
-    }
+.footer{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12px;
+  letter-spacing:.08em;
+  color:var(--muted);
+}
 
-    .contact{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:2;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      letter-spacing:.08em;
-      color: rgba(14,20,32,.48);
-    }
+.contact{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12px;
+  letter-spacing:.08em;
+}
 
-    a{
-      color: rgba(14,20,32,.62);
-      text-decoration:none;
-      border-bottom:1px solid rgba(14,20,32,.16);
-      padding-bottom:2px;
-      transition: color .2s ease, border-color .2s ease;
-    }
-    a:hover{
-      color: rgba(14,20,32,.86);
-      border-bottom-color: rgba(14,20,32,.28);
-    }
+a{
+  color:var(--muted);
+  text-decoration:none;
+  border-bottom:1px solid var(--hair);
+  padding-bottom:2px;
+  transition:.2s;
+}
+a:hover{
+  color:var(--ink);
+  border-bottom-color:var(--muted);
+}
 
-    @media (max-width: 640px){
-      .meta{ top:14px; right:14px; }
-      .footer{ left:14px; bottom:14px; }
-      .contact{ right:14px; bottom:14px; }
-      .statement{ letter-spacing:.18em; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      body{ overflow:auto; }
-      .ghost{ animation:none; }
-    }
-  </style>
+/* MOBILE */
+@media(max-width:640px){
+  .meta{top:14px;right:14px}
+  .footer{left:14px;bottom:14px}
+  .contact{right:14px;bottom:14px}
+  h1{letter-spacing:.12em}
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Ghost Geometry -->
-  <div class="ghost" aria-hidden="true">
-    <!-- SVG is intentionally oversized + low opacity -->
-    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
-      <!-- faint frame / planes -->
-      <g fill="none" stroke-linecap="square">
-        <!-- main "architectural mark" -->
-        <path d="M260 520 L640 190 L1020 520" stroke="var(--ghost2)" stroke-width="46"/>
-        <path d="M330 520 L640 240 L950 520" stroke="var(--ghost)" stroke-width="18"/>
+<div class="meta" id="utc">UTC — --:--:--</div>
 
-        <!-- secondary angled beams -->
-        <path d="M760 140 L1080 310" stroke="var(--ghost2)" stroke-width="26"/>
-        <path d="M720 190 L1060 360" stroke="var(--ghost)" stroke-width="10"/>
+<main class="wrap">
+  <section class="center">
+    <h1 id="title">KUON</h1>
+    <p class="sub" id="subtitle">Objects, sound, space.</p>
+  </section>
+</main>
 
-        <!-- soft arc (sound / time hint) -->
-        <path d="M390 520 C540 420, 740 420, 890 520" stroke="var(--ghost2)" stroke-width="18"/>
-        <path d="M420 520 C560 445, 720 445, 860 520" stroke="var(--ghost)" stroke-width="8"/>
+<div class="footer">© <span id="yr"></span> KUON</div>
+<div class="contact">
+  <a href="mailto:contact@kuon.studio">contact@kuon.studio</a>
+</div>
 
-        <!-- very faint construction lines -->
-        <path d="M180 520 L1100 520" stroke="rgba(14,20,32,.03)" stroke-width="2"/>
-        <path d="M640 80  L640 640" stroke="rgba(14,20,32,.03)" stroke-width="2"/>
-      </g>
-    </svg>
-  </div>
+<script>
+/* ===========================
+   CHANGE ONLY THIS LINE
+=========================== */
+const MODE = "studio"; // "studio" or "holdings"
 
-  <!-- UTC -->
-  <div class="meta" id="utc">UTC — --:--:--</div>
+/* =========================== */
 
-  <!-- Center content -->
-  <main class="wrap">
-    <section class="center">
-      <h1 class="statement">KUON STUDIO</h1>
-      <p class="sub">Objects, sound, space.</p>
-    </section>
-  </main>
+const title = document.getElementById("title");
+const subtitle = document.getElementById("subtitle");
 
-  <!-- Corners -->
-  <div class="footer">© <span id="yr"></span> KUON</div>
-  <div class="contact"><a href="mailto:contact@kuon.studio">contact@kuon.studio</a></div>
+if(MODE === "studio"){
+  document.documentElement.style.setProperty('--bg','#000000');
+  document.documentElement.style.setProperty('--ink','#ffffff');
+  document.documentElement.style.setProperty('--muted','rgba(255,255,255,.70)');
+  document.documentElement.style.setProperty('--hair','rgba(255,255,255,.18)');
+  title.textContent = "KUON STUDIO";
+  subtitle.textContent = "Objects, sound, space.";
+}else{
+  document.documentElement.style.setProperty('--bg','#fbfbf9');
+  document.documentElement.style.setProperty('--ink','#111111');
+  document.documentElement.style.setProperty('--muted','rgba(17,17,17,.65)');
+  document.documentElement.style.setProperty('--hair','rgba(17,17,17,.15)');
+  title.textContent = "KUON HOLDINGS";
+  subtitle.textContent = "Structure, ownership, continuity.";
+}
 
-  <script>
-    // UTC clock
-    const utcEl = document.getElementById('utc');
-    const yrEl = document.getElementById('yr');
-    yrEl.textContent = new Date().getUTCFullYear();
+/* UTC clock */
+const utcEl=document.getElementById("utc");
+const yr=document.getElementById("yr");
+yr.textContent=new Date().getUTCFullYear();
 
-    const pad = n => String(n).padStart(2,'0');
-    function tickUTC(){
-      const d = new Date();
-      utcEl.textContent = `UTC — ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
-    }
-    tickUTC();
-    setInterval(tickUTC, 1000);
-  </script>
+function pad(n){return String(n).padStart(2,"0")}
+function tick(){
+  const d=new Date();
+  utcEl.textContent=
+   `UTC — ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
+}
+tick();
+setInterval(tick,1000);
+</script>
 
 </body>
 </html>
