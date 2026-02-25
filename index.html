@@ -3,291 +3,214 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark light" />
+  <meta name="color-scheme" content="light dark" />
   <title>KUON Studio</title>
   <style>
     :root{
-      --bg:#000000;                 /* pure black */
-      --ink:#ffffff;                /* crisp white */
-      --muted:rgba(255,255,255,.92);
-      --hair:rgba(255,255,255,.16);
-      --panelHair:rgba(255,255,255,.18);
-      --link:rgba(255,255,255,.94);
-      --linkHover:#ffffff;
+      --paper:#fbfbf9;               /* off-white */
+      --ink:#0e1420;                 /* near-black/navy */
+      --muted:rgba(14,20,32,.62);
+      --hair:rgba(14,20,32,.12);
+      --ghost:rgba(14,20,32,.06);    /* background geometry opacity */
+      --ghost2:rgba(14,20,32,.035);
+      --accent:rgba(14,20,32,.86);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      background: var(--bg);
+      background: var(--paper);
       color: var(--ink);
       overflow:hidden;
-
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: geometricPrecision;
     }
 
-    /* background canvas */
-    #field{
+    /* Ghost geometry layer */
+    .ghost{
       position:fixed;
-      inset:0;
+      inset:-8vh -8vw; /* oversize so drift doesn't reveal edges */
+      z-index:0;
+      pointer-events:none;
+      transform: translate3d(0,0,0);
+      will-change: transform;
+    }
+    .ghost svg{
       width:100%;
       height:100%;
       display:block;
-      z-index:0;
     }
 
-    /* content */
+    /* Optional very subtle ambient drift (can be removed) */
+    @media (prefers-reduced-motion: no-preference){
+      .ghost{
+        animation: drift 46s ease-in-out infinite alternate;
+      }
+      @keyframes drift{
+        0%   { transform: translate3d(-0.6vw, -0.6vh, 0) rotate(-0.15deg); }
+        100% { transform: translate3d(0.6vw,  0.8vh, 0) rotate(0.18deg); }
+      }
+    }
+
+    /* Content */
     .wrap{
       position:relative;
-      z-index:2;
+      z-index:1;
       height:100%;
       width:100%;
       display:flex;
       align-items:center;
-      justify-content:flex-start;
-      padding: clamp(22px, 5vw, 64px);
-      transform: translateY(-2vh); /* subtle "floating" lift */
+      justify-content:center;
+      padding: clamp(22px, 5vw, 72px);
     }
 
-    .panel{
-      max-width: 620px;
-      border-left: 1px solid var(--panelHair);
-      padding-left: clamp(18px, 3vw, 34px);
+    .center{
+      text-align:center;
+      max-width: 880px;
+      padding: 0 18px;
     }
 
-    h1{
-      margin:0 0 14px 0;
+    .statement{
+      margin:0;
       font-weight: 750;
-      letter-spacing: .04em;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      font-size: clamp(22px, 3.2vw, 36px);
-      line-height: 1.02;
+      font-size: clamp(18px, 2.6vw, 34px);
+      color: var(--accent);
+      line-height: 1.25;
     }
 
-    .tag{
-      margin:0 0 22px 0;
-      font-weight: 600;
-      font-size: clamp(18px, 2.3vw, 24px);
-      line-height: 1.28;
+    .sub{
+      margin: 18px 0 0 0;
+      font-size: 14px;
+      letter-spacing:.02em;
       color: var(--muted);
-      letter-spacing: 0;
     }
 
-    .rule{
-      height:1px;
-      width: min(220px, 58vw);
-      background: rgba(255,255,255,0.14);
-      margin: 24px 0 18px 0;
-    }
-
-    a{
-      color: var(--link);
-      text-decoration:none;
-      border-bottom: 1px solid rgba(255,255,255,0.18);
-      padding-bottom:2px;
-      transition: border-color .2s ease, color .2s ease;
-    }
-    a:hover{
-      color: var(--linkHover);
-      border-bottom-color: rgba(255,255,255,0.45);
-    }
-
+    /* Minimal corners */
     .meta{
       position:fixed;
       top:18px;
       right:18px;
-      z-index:3;
+      z-index:2;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size:12px;
       letter-spacing:.08em;
-      color:rgba(255,255,255,.72);
+      color: rgba(14,20,32,.48);
       padding:10px 12px;
-      border:1px solid rgba(255,255,255,.16);
+      border:1px solid rgba(14,20,32,.10);
       border-radius:14px;
-      background: rgba(0,0,0,.55);
+      background: rgba(251,251,249,.65);
       user-select:none;
     }
 
-    .corner{
+    .footer{
       position:fixed;
       left:18px;
       bottom:18px;
-      z-index:3;
+      z-index:2;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size:12px;
       letter-spacing:.08em;
-      color:rgba(255,255,255,.72);
+      color: rgba(14,20,32,.48);
       user-select:none;
+    }
+
+    .contact{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:2;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      letter-spacing:.08em;
+      color: rgba(14,20,32,.48);
+    }
+
+    a{
+      color: rgba(14,20,32,.62);
+      text-decoration:none;
+      border-bottom:1px solid rgba(14,20,32,.16);
+      padding-bottom:2px;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    a:hover{
+      color: rgba(14,20,32,.86);
+      border-bottom-color: rgba(14,20,32,.28);
     }
 
     @media (max-width: 640px){
       .meta{ top:14px; right:14px; }
-      .corner{ left:14px; bottom:14px; }
-      .panel{ max-width: 92vw; }
-      .wrap{ transform: translateY(-1.5vh); }
+      .footer{ left:14px; bottom:14px; }
+      .contact{ right:14px; bottom:14px; }
+      .statement{ letter-spacing:.18em; }
     }
 
-    /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce){
-      #field{ display:none; }
       body{ overflow:auto; }
-      .wrap{ transform:none; }
+      .ghost{ animation:none; }
     }
   </style>
 </head>
 <body>
-  <canvas id="field" aria-hidden="true"></canvas>
 
+  <!-- Ghost Geometry -->
+  <div class="ghost" aria-hidden="true">
+    <!-- SVG is intentionally oversized + low opacity -->
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+      <!-- faint frame / planes -->
+      <g fill="none" stroke-linecap="square">
+        <!-- main "architectural mark" -->
+        <path d="M260 520 L640 190 L1020 520" stroke="var(--ghost2)" stroke-width="46"/>
+        <path d="M330 520 L640 240 L950 520" stroke="var(--ghost)" stroke-width="18"/>
+
+        <!-- secondary angled beams -->
+        <path d="M760 140 L1080 310" stroke="var(--ghost2)" stroke-width="26"/>
+        <path d="M720 190 L1060 360" stroke="var(--ghost)" stroke-width="10"/>
+
+        <!-- soft arc (sound / time hint) -->
+        <path d="M390 520 C540 420, 740 420, 890 520" stroke="var(--ghost2)" stroke-width="18"/>
+        <path d="M420 520 C560 445, 720 445, 860 520" stroke="var(--ghost)" stroke-width="8"/>
+
+        <!-- very faint construction lines -->
+        <path d="M180 520 L1100 520" stroke="rgba(14,20,32,.03)" stroke-width="2"/>
+        <path d="M640 80  L640 640" stroke="rgba(14,20,32,.03)" stroke-width="2"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- UTC -->
   <div class="meta" id="utc">UTC — --:--:--</div>
 
+  <!-- Center content -->
   <main class="wrap">
-    <section class="panel">
-      <h1>KUON Studio</h1>
-      <p class="tag">Objects, sound, space.</p>
-      <div class="rule"></div>
-      <p style="margin:0; color:rgba(255,255,255,.86); font-size:14px; letter-spacing:.03em;">
-        <a href="mailto:contact@kuon.studio">contact@kuon.studio</a>
-      </p>
+    <section class="center">
+      <h1 class="statement">KUON STUDIO</h1>
+      <p class="sub">Objects, sound, space.</p>
     </section>
   </main>
 
-  <div class="corner">© <span id="yr"></span> KUON</div>
+  <!-- Corners -->
+  <div class="footer">© <span id="yr"></span> KUON</div>
+  <div class="contact"><a href="mailto:contact@kuon.studio">contact@kuon.studio</a></div>
 
   <script>
-    // --- UTC clock ---
+    // UTC clock
     const utcEl = document.getElementById('utc');
     const yrEl = document.getElementById('yr');
     yrEl.textContent = new Date().getUTCFullYear();
 
-    function pad(n){ return String(n).padStart(2,'0'); }
+    const pad = n => String(n).padStart(2,'0');
     function tickUTC(){
       const d = new Date();
-      utcEl.textContent =
-        `UTC — ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
+      utcEl.textContent = `UTC — ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
     }
     tickUTC();
     setInterval(tickUTC, 1000);
-
-    // --- Night-sky drifting point field ---
-    const canvas = document.getElementById('field');
-    const ctx = canvas.getContext('2d', { alpha: true });
-
-    const reduceMotion = window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    let W=0, H=0, DPR=1;
-
-    function resize(){
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
-      W = Math.floor(window.innerWidth);
-      H = Math.floor(window.innerHeight);
-      canvas.width  = Math.floor(W * DPR);
-      canvas.height = Math.floor(H * DPR);
-      canvas.style.width  = W + 'px';
-      canvas.style.height = H + 'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-    }
-    window.addEventListener('resize', resize, { passive:true });
-    resize();
-
-    function rand(min,max){ return min + Math.random()*(max-min); }
-
-    // "Night sky" density (not too busy)
-    const density = 0.00011;
-    let count = Math.max(70, Math.min(150, Math.floor(W * H * density)));
-
-    const particles = [];
-    let parX=0, parY=0, tgtX=0, tgtY=0;
-
-    function onPointerMove(e){
-      const x = (e.touches ? e.touches[0].clientX : e.clientX) / W;
-      const y = (e.touches ? e.touches[0].clientY : e.clientY) / H;
-      tgtX = (x - 0.5) * 8;   // subtle parallax
-      tgtY = (y - 0.5) * 8;
-    }
-    window.addEventListener('mousemove', onPointerMove, { passive:true });
-    window.addEventListener('touchmove', onPointerMove, { passive:true });
-
-    function seed(){
-      particles.length = 0;
-      for(let i=0;i<count;i++){
-        const r = Math.random();
-        const bright = r > 0.92;                     // fewer brighter stars
-        const size = bright ? rand(1.2, 2.0) : rand(0.55, 1.1);
-
-        // VERY slow drift
-        const speed = bright ? rand(0.0007, 0.0019) : rand(0.0011, 0.0030);
-
-        const angle = rand(0, Math.PI*2);
-        const vx = Math.cos(angle) * speed;
-        const vy = Math.sin(angle) * speed;
-
-        particles.push({
-          x: rand(0, W),
-          y: rand(0, H),
-          vx, vy,
-          size,
-          a: bright ? rand(0.10, 0.22) : rand(0.05, 0.14),
-          tw: rand(0.0004, 0.0013),                  // slow twinkle
-          ph: rand(0, Math.PI*2),
-          depth: bright ? rand(0.15, 0.45) : rand(0.35, 0.75)
-        });
-      }
-    }
-    seed();
-
-    let lastArea = W * H;
-    function maybeReseed(){
-      const area = W * H;
-      if (Math.abs(area - lastArea) / lastArea > 0.35){
-        lastArea = area;
-        count = Math.max(70, Math.min(150, Math.floor(W * H * density)));
-        seed();
-      }
-    }
-
-    function draw(t){
-      if (reduceMotion) return;
-
-      // ease parallax
-      parX += (tgtX - parX) * 0.03;
-      parY += (tgtY - parY) * 0.03;
-
-      ctx.clearRect(0,0,W,H);
-
-      for(const p of particles){
-        // update (scaled gently)
-        p.x += p.vx * 60;
-        p.y += p.vy * 60;
-
-        // wrap edges
-        if (p.x < -10) p.x = W + 10;
-        if (p.x > W + 10) p.x = -10;
-        if (p.y < -10) p.y = H + 10;
-        if (p.y > H + 10) p.y = -10;
-
-        // subtle twinkle
-        const tw = 0.022 * Math.sin(p.ph + t * p.tw);
-        const alpha = Math.max(0, p.a + tw);
-
-        const x = p.x + parX * p.depth;
-        const y = p.y + parY * p.depth;
-
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(255,255,255,${alpha * 0.85})`; // slightly dim overall
-        ctx.arc(x, y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      maybeReseed();
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
   </script>
+
 </body>
 </html>
