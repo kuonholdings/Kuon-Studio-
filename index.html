@@ -7,12 +7,12 @@
   <title>KUON Studio</title>
   <style>
     :root{
-      --bg:#020204;                 /* near-black */
+      --bg:#000000;                 /* pure black */
       --ink:#ffffff;                /* crisp white */
-      --muted:rgba(255,255,255,.82);
-      --hair:rgba(255,255,255,.12);
-      --panelHair:rgba(255,255,255,.10);
-      --link:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.92);
+      --hair:rgba(255,255,255,.16);
+      --panelHair:rgba(255,255,255,.18);
+      --link:rgba(255,255,255,.94);
       --linkHover:#ffffff;
     }
 
@@ -25,9 +25,7 @@
       color: var(--ink);
       overflow:hidden;
 
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-                   "Helvetica Neue", Helvetica, Arial, sans-serif;
-
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: geometricPrecision;
@@ -43,18 +41,6 @@
       z-index:0;
     }
 
-    /* subtle depth / vignette */
-    .vignette{
-      position:fixed;
-      inset:-2px;
-      pointer-events:none;
-      z-index:1;
-      background:
-        radial-gradient(900px 700px at 70% 20%, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 55%),
-        radial-gradient(900px 900px at 20% 80%, rgba(255,255,255,.035) 0%, rgba(255,255,255,0) 60%),
-        radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
-    }
-
     /* content */
     .wrap{
       position:relative;
@@ -65,38 +51,38 @@
       align-items:center;
       justify-content:flex-start;
       padding: clamp(22px, 5vw, 64px);
+      transform: translateY(-2vh); /* subtle "floating" lift */
     }
 
     .panel{
-      max-width: 560px;
+      max-width: 620px;
       border-left: 1px solid var(--panelHair);
-      padding-left: clamp(16px, 2.8vw, 28px);
+      padding-left: clamp(18px, 3vw, 34px);
     }
 
     h1{
-      margin:0 0 10px 0;
-      font-weight: 650;
-      letter-spacing: .08em;
+      margin:0 0 14px 0;
+      font-weight: 750;
+      letter-spacing: .04em;
       text-transform: uppercase;
-      font-size: clamp(18px, 2.2vw, 22px);
-      text-shadow: 0 0 18px rgba(255,255,255,0.08);
+      font-size: clamp(22px, 3.2vw, 36px);
+      line-height: 1.02;
     }
 
     .tag{
-      margin:0 0 18px 0;
-      font-weight: 520;
-      font-size: clamp(16px, 2.2vw, 22px);
-      line-height: 1.35;
+      margin:0 0 22px 0;
+      font-weight: 600;
+      font-size: clamp(18px, 2.3vw, 24px);
+      line-height: 1.28;
       color: var(--muted);
-      letter-spacing: .01em;
-      text-shadow: 0 0 18px rgba(255,255,255,0.06);
+      letter-spacing: 0;
     }
 
     .rule{
       height:1px;
-      width: min(240px, 64vw);
-      background: rgba(255,255,255,0.10);
-      margin: 22px 0 18px 0;
+      width: min(220px, 58vw);
+      background: rgba(255,255,255,0.14);
+      margin: 24px 0 18px 0;
     }
 
     a{
@@ -118,14 +104,12 @@
       z-index:3;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size:12px;
-      letter-spacing:.06em;
-      color:rgba(255,255,255,.60);
+      letter-spacing:.08em;
+      color:rgba(255,255,255,.72);
       padding:10px 12px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
       border-radius:14px;
-      background: rgba(5,6,10,.35);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(0,0,0,.55);
       user-select:none;
     }
 
@@ -136,25 +120,28 @@
       z-index:3;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size:12px;
-      letter-spacing:.06em;
-      color:rgba(255,255,255,.60);
+      letter-spacing:.08em;
+      color:rgba(255,255,255,.72);
+      user-select:none;
     }
 
     @media (max-width: 640px){
       .meta{ top:14px; right:14px; }
       .corner{ left:14px; bottom:14px; }
       .panel{ max-width: 92vw; }
+      .wrap{ transform: translateY(-1.5vh); }
     }
 
+    /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce){
       #field{ display:none; }
       body{ overflow:auto; }
+      .wrap{ transform:none; }
     }
   </style>
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
-  <div class="vignette" aria-hidden="true"></div>
 
   <div class="meta" id="utc">UTC — --:--:--</div>
 
@@ -163,7 +150,7 @@
       <h1>KUON Studio</h1>
       <p class="tag">Objects, sound, space.</p>
       <div class="rule"></div>
-      <p style="margin:0; color:rgba(255,255,255,.78); font-size:14px; letter-spacing:.03em;">
+      <p style="margin:0; color:rgba(255,255,255,.86); font-size:14px; letter-spacing:.03em;">
         <a href="mailto:contact@kuon.studio">contact@kuon.studio</a>
       </p>
     </section>
@@ -210,7 +197,7 @@
 
     function rand(min,max){ return min + Math.random()*(max-min); }
 
-    // Density tuned for "night sky" (not too busy)
+    // "Night sky" density (not too busy)
     const density = 0.00011;
     let count = Math.max(70, Math.min(150, Math.floor(W * H * density)));
 
@@ -230,11 +217,11 @@
       particles.length = 0;
       for(let i=0;i<count;i++){
         const r = Math.random();
-        const big = r > 0.92;                         // fewer bright stars
-        const size = big ? rand(1.2, 2.0) : rand(0.55, 1.1);
+        const bright = r > 0.92;                     // fewer brighter stars
+        const size = bright ? rand(1.2, 2.0) : rand(0.55, 1.1);
 
-        // MUCH slower drift
-        const speed = big ? rand(0.0008, 0.0022) : rand(0.0012, 0.0032);
+        // VERY slow drift
+        const speed = bright ? rand(0.0007, 0.0019) : rand(0.0011, 0.0030);
 
         const angle = rand(0, Math.PI*2);
         const vx = Math.cos(angle) * speed;
@@ -245,10 +232,10 @@
           y: rand(0, H),
           vx, vy,
           size,
-          a: big ? rand(0.10, 0.22) : rand(0.05, 0.14), // dimmer overall
-          tw: rand(0.0004, 0.0014),                     // slower twinkle
+          a: bright ? rand(0.10, 0.22) : rand(0.05, 0.14),
+          tw: rand(0.0004, 0.0013),                  // slow twinkle
           ph: rand(0, Math.PI*2),
-          depth: big ? rand(0.15, 0.45) : rand(0.35, 0.75)
+          depth: bright ? rand(0.15, 0.45) : rand(0.35, 0.75)
         });
       }
     }
@@ -285,14 +272,14 @@
         if (p.y > H + 10) p.y = -10;
 
         // subtle twinkle
-        const tw = 0.025 * Math.sin(p.ph + t * p.tw);
+        const tw = 0.022 * Math.sin(p.ph + t * p.tw);
         const alpha = Math.max(0, p.a + tw);
 
         const x = p.x + parX * p.depth;
         const y = p.y + parY * p.depth;
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.fillStyle = `rgba(255,255,255,${alpha * 0.85})`; // slightly dim overall
         ctx.arc(x, y, p.size, 0, Math.PI * 2);
         ctx.fill();
       }
