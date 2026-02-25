@@ -1,297 +1,64 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark light" />
-  <title>KUON Studio</title>
-  <style>
-    :root{
-      --bg0:#07080c;
-      --bg1:#0a0c14;
-      --ink:#f1ede3;         /* warm off-white */
-      --muted:rgba(241,237,227,.72);
-      --hair:rgba(241,237,227,.14);
-      --link:rgba(241,237,227,.86);
-      --linkHover:rgba(241,237,227,1);
-    }
+:root{
+  --bg0:#020204;
+  --ink:#ffffff;
+  --muted:rgba(255,255,255,.82);
+  --hair:rgba(255,255,255,.12);
+  --link:rgba(255,255,255,.92);
+  --linkHover:#ffffff;
+}
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-      background: radial-gradient(1200px 800px at 20% 10%, #0f1222 0%, var(--bg1) 40%, var(--bg0) 100%);
-      color:var(--ink);
-      overflow:hidden;
-    }
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+  background:#020204;
+  color:var(--ink);
+  overflow:hidden;
 
-    /* background canvas */
-    #field{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      display:block;
-      z-index:0;
-    }
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
 
-    /* subtle vignette / depth layer */
-    .vignette{
-      position:fixed;
-      inset:-2px;
-      background:
-        radial-gradient(1000px 700px at 70% 20%, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 55%),
-        radial-gradient(900px 900px at 20% 80%, rgba(255,255,255,.035) 0%, rgba(255,255,255,0) 60%),
-        radial-gradient(1200px 900px at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.45) 100%);
-      pointer-events:none;
-      z-index:1;
-      mix-blend-mode: normal;
-    }
+.panel{
+  max-width:560px;
+  border-left:1px solid rgba(255,255,255,0.10);
+  padding-left: clamp(16px, 2.8vw, 28px);
+}
 
-    /* content */
-    .wrap{
-      position:relative;
-      z-index:2;
-      height:100%;
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      padding: clamp(22px, 5vw, 64px);
-    }
+h1{
+  margin:0 0 10px 0;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size: clamp(18px, 2.2vw, 22px);
+  text-shadow: 0 0 18px rgba(255,255,255,0.08);
+}
 
-    .panel{
-      max-width: 560px;
-      border-left:1px solid var(--hair);
-      padding-left: clamp(16px, 2.8vw, 28px);
-    }
+.tag{
+  margin:0 0 18px 0;
+  font-weight:500;
+  font-size: clamp(16px, 2.2vw, 22px);
+  line-height:1.35;
+  color:var(--muted);
+  letter-spacing:.01em;
+  text-shadow: 0 0 18px rgba(255,255,255,0.06);
+}
 
-    h1{
-      margin:0 0 10px 0;
-      font-weight:400;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      font-size: clamp(18px, 2.2vw, 22px);
-    }
+.rule{
+  height:1px;
+  width: min(240px, 64vw);
+  background: rgba(255,255,255,0.10);
+  margin: 22px 0 18px 0;
+}
 
-    .tag{
-      margin:0 0 18px 0;
-      font-size: clamp(16px, 2.2vw, 22px);
-      line-height:1.35;
-      color:var(--muted);
-      letter-spacing:.02em;
-    }
-
-    .rule{
-      height:1px;
-      width: min(320px, 70vw);
-      background:var(--hair);
-      margin: 18px 0 18px 0;
-    }
-
-    a{
-      color:var(--link);
-      text-decoration:none;
-      border-bottom:1px solid rgba(241,237,227,.22);
-      padding-bottom:2px;
-      transition: border-color .2s ease, color .2s ease;
-    }
-    a:hover{
-      color:var(--linkHover);
-      border-bottom-color: rgba(241,237,227,.5);
-    }
-
-    .meta{
-      position:fixed;
-      top:18px;
-      right:18px;
-      z-index:3;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      letter-spacing:.06em;
-      color:rgba(241,237,227,.6);
-      padding:10px 12px;
-      border:1px solid rgba(241,237,227,.12);
-      border-radius:14px;
-      background: rgba(5,6,10,.35);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      user-select:none;
-    }
-
-    .corner{
-      position:fixed;
-      left:18px;
-      bottom:18px;
-      z-index:3;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:12px;
-      letter-spacing:.06em;
-      color:rgba(241,237,227,.6);
-    }
-
-    @media (max-width: 640px){
-      .meta{ top:14px; right:14px; }
-      .corner{ left:14px; bottom:14px; }
-      .panel{ max-width: 92vw; }
-    }
-
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      #field{ display:none; }
-      body{ overflow:auto; }
-    }
-  </style>
-</head>
-<body>
-  <canvas id="field" aria-hidden="true"></canvas>
-  <div class="vignette" aria-hidden="true"></div>
-
-  <div class="meta" id="utc">UTC — --:--:--</div>
-
-  <main class="wrap">
-    <section class="panel">
-      <h1>KUON Studio</h1>
-      <p class="tag">Objects, sound, space.</p>
-      <div class="rule"></div>
-      <p style="margin:0; color:rgba(241,237,227,.78); font-size:14px; letter-spacing:.03em;">
-        <a href="mailto:contact@kuon.studio">contact@kuon.studio</a>
-      </p>
-    </section>
-  </main>
-
-  <div class="corner">© <span id="yr"></span> KUON</div>
-
-  <script>
-    // --- UTC clock ---
-    const utcEl = document.getElementById('utc');
-    const yrEl = document.getElementById('yr');
-    yrEl.textContent = new Date().getUTCFullYear();
-
-    function pad(n){ return String(n).padStart(2,'0'); }
-    function tickUTC(){
-      const d = new Date();
-      const hh = pad(d.getUTCHours());
-      const mm = pad(d.getUTCMinutes());
-      const ss = pad(d.getUTCSeconds());
-      utcEl.textContent = `UTC — ${hh}:${mm}:${ss}`;
-    }
-    tickUTC();
-    setInterval(tickUTC, 1000);
-
-    // --- Drifting point field (canvas) ---
-    const canvas = document.getElementById('field');
-    const ctx = canvas.getContext('2d', { alpha: true });
-
-    // Respect reduced motion even if CSS is overridden
-    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    let W = 0, H = 0, DPR = 1;
-    function resize(){
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
-      W = Math.floor(window.innerWidth);
-      H = Math.floor(window.innerHeight);
-      canvas.width = Math.floor(W * DPR);
-      canvas.height = Math.floor(H * DPR);
-      canvas.style.width = W + 'px';
-      canvas.style.height = H + 'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-    }
-    window.addEventListener('resize', resize, { passive:true });
-    resize();
-
-    // Particle design: slow drift, tiny sizes, minimal twinkle
-    const particles = [];
-    const density = 0.00014; // particles per pixel (tweak)
-    const count = Math.max(70, Math.min(170, Math.floor(W * H * density)));
-
-    // Gentle parallax target
-    let parX = 0, parY = 0, tgtX = 0, tgtY = 0;
-    function onPointerMove(e){
-      const x = (e.touches ? e.touches[0].clientX : e.clientX) / W;
-      const y = (e.touches ? e.touches[0].clientY : e.clientY) / H;
-      tgtX = (x - 0.5) * 10; // px
-      tgtY = (y - 0.5) * 10;
-    }
-    window.addEventListener('mousemove', onPointerMove, { passive:true });
-    window.addEventListener('touchmove', onPointerMove, { passive:true });
-
-    function rand(min,max){ return min + Math.random()*(max-min); }
-
-    function seed(){
-      particles.length = 0;
-      for(let i=0;i<count;i++){
-        const r = Math.random();
-        const size = r < 0.86 ? rand(0.6, 1.2) : rand(1.4, 2.4);
-        const speed = r < 0.86 ? rand(0.006, 0.02) : rand(0.004, 0.014); // very slow
-        const angle = rand(0, Math.PI * 2);
-        const vx = Math.cos(angle) * speed;
-        const vy = Math.sin(angle) * speed;
-        particles.push({
-          x: rand(0, W),
-          y: rand(0, H),
-          vx, vy,
-          size,
-          a: r < 0.86 ? rand(0.12, 0.28) : rand(0.18, 0.40),
-          tw: rand(0.0006, 0.0022), // twinkle rate
-          ph: rand(0, Math.PI*2),
-          depth: r < 0.86 ? rand(0.35, 0.8) : rand(0.15, 0.5) // for parallax
-        });
-      }
-    }
-    seed();
-
-    // If resized heavily, reseed to keep density feeling right
-    let lastArea = W * H;
-    function maybeReseed(){
-      const area = W * H;
-      if (Math.abs(area - lastArea) / lastArea > 0.35){
-        lastArea = area;
-        seed();
-      }
-    }
-
-    function draw(t){
-      if (reduceMotion) return;
-
-      // Ease parallax
-      parX += (tgtX - parX) * 0.03;
-      parY += (tgtY - parY) * 0.03;
-
-      ctx.clearRect(0,0,W,H);
-
-      // Optional faint background speckle glow
-      // (kept minimal – your vignette does most of the work)
-
-      for(const p of particles){
-        p.x += p.vx * 60; // scale to frame time-ish
-        p.y += p.vy * 60;
-
-        // wrap
-        if (p.x < -10) p.x = W + 10;
-        if (p.x > W + 10) p.x = -10;
-        if (p.y < -10) p.y = H + 10;
-        if (p.y > H + 10) p.y = -10;
-
-        // tiny twinkle (subtle)
-        const tw = 0.06 * Math.sin(p.ph + t * p.tw);
-        const alpha = Math.max(0, p.a + tw);
-
-        const x = p.x + parX * p.depth;
-        const y = p.y + parY * p.depth;
-
-        // Dot
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(241,237,227,${alpha})`;
-        ctx.arc(x, y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      maybeReseed();
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
-  </script>
-</body>
-</html>
+a{
+  color:var(--link);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.18);
+  padding-bottom:2px;
+  transition:border-color .2s ease,color .2s ease;
+}
+a:hover{
+  color:var(--linkHover);
+  border-bottom-color: rgba(255,255,255,.45);
+}
