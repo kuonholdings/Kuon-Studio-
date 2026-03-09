@@ -1,177 +1,364 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KUON</title>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kuon Studio | 久音</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#ffffff;
-  --ink:#111111;
-  --muted:rgba(17,17,17,.65);
-  --hair:rgba(17,17,17,.15);
-}
-
-*{box-sizing:border-box}
-html,body{height:100%}
 
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
-               "Helvetica Neue",Helvetica,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  text-rendering:geometricPrecision;
-  overflow:hidden;
+font-family:'Inter', sans-serif;
+margin:0;
+background:#f5f5f3;
+color:#111;
+line-height:1.6;
 }
 
-/* CENTER LAYOUT */
-.wrap{
-  position:relative;
-  height:100%;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
+/* NAV */
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:30px 60px;
+font-size:14px;
 }
 
-.center{
-  max-width:900px;
+nav a{
+margin-left:30px;
+text-decoration:none;
+color:#111;
 }
 
-h1{
-  margin:0;
-  font-weight:750;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  font-size:clamp(22px,3vw,40px);
-  line-height:1.15;
+.logo{
+font-weight:500;
 }
 
-.sub{
-  margin:16px 0 0 0;
-  font-size:14px;
-  letter-spacing:.06em;
-  color:var(--muted);
+
+/* HERO */
+
+.hero{
+padding:160px 60px 120px 60px;
 }
 
-/* CORNERS */
-.meta{
-  position:fixed;
-  top:18px;
-  right:18px;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  font-size:12px;
-  letter-spacing:.08em;
-  color:var(--muted);
-  border:1px solid var(--hair);
-  border-radius:14px;
-  padding:10px 12px;
+.hero h1{
+font-size:92px;
+font-weight:500;
+margin:0;
 }
 
-.footer{
-  position:fixed;
-  left:18px;
-  bottom:18px;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  font-size:12px;
-  letter-spacing:.08em;
-  color:var(--muted);
+.tagline{
+margin-top:20px;
+font-size:22px;
+color:#555;
 }
 
-.contact{
-  position:fixed;
-  right:18px;
-  bottom:18px;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  font-size:12px;
-  letter-spacing:.08em;
+
+/* INTRO */
+
+.intro{
+padding:80px 60px;
+max-width:700px;
+font-size:18px;
 }
 
-a{
-  color:var(--muted);
-  text-decoration:none;
-  border-bottom:1px solid var(--hair);
-  padding-bottom:2px;
-  transition:.2s;
-}
-a:hover{
-  color:var(--ink);
-  border-bottom-color:var(--muted);
+
+/* SECTIONS */
+
+.section{
+padding:120px 60px;
+border-top:1px solid #ddd;
 }
 
-/* MOBILE */
-@media(max-width:640px){
-  .meta{top:14px;right:14px}
-  .footer{left:14px;bottom:14px}
-  .contact{right:14px;bottom:14px}
-  h1{letter-spacing:.12em}
+.section h2{
+font-size:40px;
+margin-bottom:40px;
+font-weight:500;
 }
+
+
+/* DIAGRAM */
+
+.diagram{
+margin-top:40px;
+font-size:18px;
+display:flex;
+gap:12px;
+color:#444;
+}
+
+
+/* WORK GRID */
+
+.work-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:40px;
+}
+
+.work-item{
+padding:30px;
+border:1px solid #ddd;
+background:white;
+}
+
+.work-item h3{
+margin-top:0;
+font-weight:500;
+}
+
+
+/* LIST */
+
+ul{
+padding-left:20px;
+}
+
+
+/* FOOTER */
+
+footer{
+padding:80px 60px;
+border-top:1px solid #ddd;
+font-size:14px;
+color:#666;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+.hero h1{
+font-size:56px;
+}
+
+nav{
+padding:20px 30px;
+}
+
+.hero{
+padding:100px 30px;
+}
+
+.section{
+padding:80px 30px;
+}
+
+.intro{
+padding:60px 30px;
+}
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="meta" id="utc">UTC — --:--:--</div>
 
-<main class="wrap">
-  <section class="center">
-    <h1 id="title">KUON</h1>
-    <p class="sub" id="subtitle">Objects, sound, space.</p>
-  </section>
-</main>
 
-<div class="footer">© <span id="yr"></span> KUON</div>
-<div class="contact">
-  <a href="mailto:contact@kuon.studio">contact@kuon.studio</a>
+<nav>
+
+<div class="logo">KUON STUDIO | 久音</div>
+
+<div>
+
+<a href="#practice">Practice</a>
+<a href="#work">Work</a>
+<a href="#research">Research</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+
 </div>
 
-<script>
-/* ===========================
-   CHANGE ONLY THIS LINE
-=========================== */
-const MODE = "studio"; // "studio" or "holdings"
+</nav>
 
-/* =========================== */
 
-const title = document.getElementById("title");
-const subtitle = document.getElementById("subtitle");
 
-if(MODE === "studio"){
-  document.documentElement.style.setProperty('--bg','#000000');
-  document.documentElement.style.setProperty('--ink','#ffffff');
-  document.documentElement.style.setProperty('--muted','rgba(255,255,255,.70)');
-  document.documentElement.style.setProperty('--hair','rgba(255,255,255,.18)');
-  title.textContent = "KUON STUDIO";
-  subtitle.textContent = "Objects, sound, space.";
-}else{
-  document.documentElement.style.setProperty('--bg','#fbfbf9');
-  document.documentElement.style.setProperty('--ink','#111111');
-  document.documentElement.style.setProperty('--muted','rgba(17,17,17,.65)');
-  document.documentElement.style.setProperty('--hair','rgba(17,17,17,.15)');
-  title.textContent = "KUON HOLDINGS";
-  subtitle.textContent = "Structure, ownership, continuity.";
-}
+<section class="hero">
 
-/* UTC clock */
-const utcEl=document.getElementById("utc");
-const yr=document.getElementById("yr");
-yr.textContent=new Date().getUTCFullYear();
+<h1>Sound Architecture</h1>
 
-function pad(n){return String(n).padStart(2,"0")}
-function tick(){
-  const d=new Date();
-  utcEl.textContent=
-   `UTC — ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())}`;
-}
-tick();
-setInterval(tick,1000);
-</script>
+<p class="tagline">
+A practice exploring the relationship between vibration, objects, and space.
+</p>
+
+</section>
+
+
+
+<section class="intro">
+
+<p>
+Kuon Studio is a design practice founded by Guy Traviss working at the intersection of sound, objects, and architecture.
+</p>
+
+<p>
+The studio explores how sound can move beyond conventional equipment and become integrated into the physical world — through instruments, architectural systems, and material structures.
+</p>
+
+</section>
+
+
+
+<section id="practice" class="section">
+
+<h2>Practice</h2>
+
+<p>
+Kuon Studio operates as a sound architecture practice.  
+Rather than treating sound as an electronic product, the studio approaches it as a material that interacts with objects and space.
+</p>
+
+<p>
+This perspective connects several disciplines — instrument making, acoustic engineering, product design, and architecture — into a single field of exploration.
+</p>
+
+<div class="diagram">
+
+<span>instrument</span>
+<span>→</span>
+<span>speaker</span>
+<span>→</span>
+<span>object</span>
+<span>→</span>
+<span>architecture</span>
+
+</div>
+
+</section>
+
+
+
+<section id="work" class="section">
+
+<h2>Work</h2>
+
+<div class="work-grid">
+
+<div class="work-item">
+<h3>MASO</h3>
+<p>
+Architectural sound works exploring how acoustic systems become integrated elements of space.
+</p>
+</div>
+
+
+<div class="work-item">
+<h3>Neostein</h3>
+<p>
+Architectural audio company founded by Guy Traviss developing loudspeaker systems designed for integration within built environments.
+</p>
+</div>
+
+
+<div class="work-item">
+<h3>Sleep Speaker</h3>
+<p>
+Wellness audio research exploring personal sound environments for rest and recovery.
+</p>
+</div>
+
+
+<div class="work-item">
+<h3>Instrument Design</h3>
+<p>
+Research into acoustic guitar construction and resonance structures.
+</p>
+</div>
+
+
+<div class="work-item">
+<h3>Architectural Materials</h3>
+<p>
+Exploration of acoustic doors and sound-isolating architectural elements.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+
+<section id="research" class="section">
+
+<h2>Research</h2>
+
+<p>
+Kuon Studio investigates sound as a physical and cultural phenomenon.
+</p>
+
+<ul>
+
+<li>Sound as architecture</li>
+<li>Permanence and technological obsolescence</li>
+<li>Vibration and material behaviour</li>
+<li>Domestic sound environments</li>
+
+</ul>
+
+<p>
+The studio’s ongoing research may eventually form the basis of academic work exploring the relationship between sound, architecture, and material culture.
+</p>
+
+</section>
+
+
+
+<section id="about" class="section">
+
+<h2>About</h2>
+
+<p>
+Guy Traviss is a British designer working internationally at the intersection of sound, architecture, and objects.
+</p>
+
+<p>
+His work spans musical instruments, loudspeaker systems, and architectural sound objects, exploring how vibration shapes spatial experience.
+</p>
+
+<p>
+He is the founder of Neostein and the creator of MASO, an ongoing exploration of sound as a permanent architectural element.
+</p>
+
+</section>
+
+
+
+<section id="contact" class="section">
+
+<h2>Contact</h2>
+
+<p>
+For collaborations, architectural projects, and research enquiries.
+</p>
+
+<p>
+Email: contact@kuon.studio
+</p>
+
+</section>
+
+
+
+<footer>
+
+<p>© Kuon Studio</p>
+
+</footer>
+
+
 
 </body>
+
 </html>
