@@ -10,48 +10,53 @@
   <style>
     :root{
       --bg:#ffffff;
-      --fg:#111;
-
-      --baseline:52vh;
-      --sub-gap:22px;
-      --nav-gap:54px;
-
-      --panel-gap:22px;
-      --item-gap:18px;
-
-      --muted-1: rgba(0,0,0,0.66);
-      --muted-2: rgba(0,0,0,0.72);
-      --muted-3: rgba(0,0,0,0.56);
-      --muted-4: rgba(0,0,0,0.34);
+      --fg:#111111;
+      --fg-soft:rgba(0,0,0,0.44);
+      --muted-1:rgba(0,0,0,0.68);
+      --muted-2:rgba(0,0,0,0.58);
+      --muted-3:rgba(0,0,0,0.36);
+      --line:rgba(0,0,0,0.18);
 
       --pad-x:64px;
       --pad-y:56px;
 
-      --mark: rgba(0,0,0,0.18);
+      --mark:rgba(0,0,0,0.18);
       --mark-h:1px;
       --mark-l:22px;
       --mark-gap:18px;
 
+      --hero-top:52vh;
+
       --logo-size:56px;
-      --logo-track:0.18em;
-      --logo-pad:0.18em;
+      --logo-track:0.15em;
+      --logo-pad:0.15em;
+      --logo-line-h:calc(var(--logo-size) * 1.12);
+
+      --meta-size:11px;
+      --meta-track:0.16em;
 
       --sub-size:13px;
+      --sub-track:0.12em;
       --sub-line:1.8;
+      --sub-gap:22px;
 
       --nav-size:11px;
       --nav-track:0.24em;
+      --nav-gap:52px;
+      --nav-row-h:18px;
 
+      --body-size:13px;
+      --body-track:0.12em;
+      --body-line:1.8;
+
+      --panel-gap:20px;
       --panel-width:620px;
+      --panel-min-h:230px;
 
-      --swap-ms:1700ms;
+      --swap-ms:1200ms;
       --swap-ease:cubic-bezier(.35,0,.25,1);
       --swap-inset-y:6px;
       --swap-inset-x:12px;
-
-      --logo-line-h: calc(var(--logo-size) * 1.08);
-      --sub-line-h: calc(var(--sub-size) * 1.8 * 2);
-      --nav-line-h: 18px;
     }
 
     *{ box-sizing:border-box; }
@@ -67,11 +72,15 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
+    a, button{
+      -webkit-tap-highlight-color: transparent;
+    }
+
     .wrap{
-      height:100%;
-      width:100%;
-      padding:var(--pad-y) var(--pad-x);
       position:relative;
+      width:100%;
+      height:100%;
+      padding:var(--pad-y) var(--pad-x);
     }
 
     .crop{
@@ -79,10 +88,11 @@
       width:calc(var(--mark-l) + 2px);
       height:calc(var(--mark-l) + 2px);
       pointer-events:none;
-      z-index:5;
+      z-index:1;
       opacity:0.78;
       transition:opacity 300ms ease;
     }
+
     body:hover .crop{ opacity:1; }
 
     .crop::before,
@@ -91,18 +101,109 @@
       position:absolute;
       background:var(--mark);
     }
-    .crop::before{ height:var(--mark-h); width:var(--mark-l); top:0; left:0; }
-    .crop::after{ width:var(--mark-h); height:var(--mark-l); top:0; left:0; }
+
+    .crop::before{
+      width:var(--mark-l);
+      height:var(--mark-h);
+      top:0;
+      left:0;
+    }
+
+    .crop::after{
+      width:var(--mark-h);
+      height:var(--mark-l);
+      top:0;
+      left:0;
+    }
 
     .crop.tl{ top:var(--mark-gap); left:var(--mark-gap); }
     .crop.tr{ top:var(--mark-gap); right:var(--mark-gap); transform:scaleX(-1); }
     .crop.bl{ bottom:var(--mark-gap); left:var(--mark-gap); transform:scaleY(-1); }
     .crop.br{ bottom:var(--mark-gap); right:var(--mark-gap); transform:scale(-1); }
 
+    .corner{
+      position:fixed;
+      z-index:2;
+      font-size:var(--meta-size);
+      letter-spacing:var(--meta-track);
+      text-transform:uppercase;
+      line-height:1.6;
+    }
+
+    .corner a,
+    .corner button,
+    .corner span{
+      font:inherit;
+      letter-spacing:inherit;
+      text-transform:inherit;
+    }
+
+    .top-left{
+      top:calc(var(--mark-gap) - 2px);
+      left:calc(var(--mark-gap) + 34px);
+    }
+
+    .top-right{
+      top:calc(var(--mark-gap) - 2px);
+      right:calc(var(--mark-gap) + 34px);
+      text-align:right;
+      color:var(--muted-3);
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;
+      user-select:none;
+    }
+
+    .bottom-left{
+      left:calc(var(--mark-gap) + 34px);
+      bottom:calc(var(--mark-gap) - 2px);
+      color:var(--muted-3);
+      pointer-events:none;
+    }
+
+    .bottom-right{
+      right:calc(var(--mark-gap) + 34px);
+      bottom:calc(var(--mark-gap) - 2px);
+      text-align:right;
+    }
+
+    .sister-link{
+      color:var(--muted-3);
+      text-decoration:none;
+      transition:color 180ms ease;
+    }
+
+    .sister-link:hover{ color:var(--fg); }
+
+    .lang-switch{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .lang-btn{
+      background:transparent;
+      border:0;
+      padding:0;
+      cursor:pointer;
+      color:var(--muted-3);
+      transition:color 180ms ease;
+    }
+
+    .lang-btn:hover{ color:var(--fg); }
+
+    .lang-btn[aria-current="true"]{
+      color:rgba(0,0,0,0.80);
+    }
+
+    .lang-sep{
+      color:rgba(0,0,0,0.24);
+      pointer-events:none;
+    }
+
     .center{
       position:absolute;
       left:50%;
-      top:var(--baseline);
+      top:var(--hero-top);
       transform:translate(-50%, -50%);
       width:min(980px, calc(100% - 40px));
       text-align:center;
@@ -112,15 +213,190 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:var(--sub-gap);
+      justify-content:flex-start;
+      min-height:250px;
     }
+
+    .logoBox{
+      height:var(--logo-line-h);
+      min-height:var(--logo-line-h);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .logo{
+      margin:0;
+      font-size:var(--logo-size);
+      line-height:1;
+      letter-spacing:var(--logo-track);
+      padding-left:var(--logo-pad);
+      white-space:nowrap;
+      font-weight:700;
+    }
+
+    .logo .brand{
+      color:var(--fg);
+    }
+
+    .logo .division{
+      color:var(--fg-soft);
+    }
+
+    .subBox{
+      margin-top:var(--sub-gap);
+      min-height:48px;
+      max-width:62ch;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .subtitle{
+      margin:0;
+      font-size:var(--sub-size);
+      line-height:var(--sub-line);
+      letter-spacing:var(--sub-track);
+      color:var(--muted-1);
+      text-align:center;
+    }
+
+    .navRow{
+      margin-top:var(--nav-gap);
+      min-height:var(--nav-row-h);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .navBtn{
+      border:0;
+      background:transparent;
+      padding:0;
+      cursor:pointer;
+      color:var(--muted-3);
+      font-size:var(--nav-size);
+      font-weight:400;
+      letter-spacing:var(--nav-track);
+      text-transform:uppercase;
+      line-height:1;
+      position:relative;
+      transition:color 180ms ease;
+    }
+
+    .navBtn:hover{ color:var(--fg); }
+
+    .navBtn.is-active{
+      color:rgba(0,0,0,0.80);
+    }
+
+    .navBtn.is-active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-4px;
+      height:1px;
+      background:rgba(0,0,0,0.22);
+    }
+
+    .navBtn:focus{ outline:none; }
+    .navBtn:focus-visible{
+      outline:1px solid rgba(0,0,0,0.18);
+      outline-offset:6px;
+      border-radius:8px;
+    }
+
+    .panel{
+      width:min(var(--panel-width), 100%);
+      min-height:var(--panel-min-h);
+      margin:22px auto 0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+
+    .panelInner{
+      width:100%;
+      display:grid;
+      gap:var(--panel-gap);
+      justify-items:center;
+    }
+
+    .bodyText{
+      margin:0;
+      max-width:58ch;
+      font-size:var(--body-size);
+      line-height:var(--body-line);
+      letter-spacing:var(--body-track);
+      color:var(--muted-1);
+      text-align:center;
+    }
+
+    .workList{
+      width:min(620px, 100%);
+      display:grid;
+      gap:18px;
+    }
+
+    .workItem{
+      display:grid;
+      gap:7px;
+      justify-items:center;
+    }
+
+    .workTitle{
+      margin:0;
+      font-size:11px;
+      line-height:1.6;
+      letter-spacing:0.20em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.80);
+      text-align:center;
+    }
+
+    .workDesc{
+      margin:0;
+      max-width:58ch;
+      font-size:13px;
+      line-height:1.8;
+      letter-spacing:0.12em;
+      color:var(--muted-1);
+      text-align:center;
+    }
+
+    .smallLabel{
+      margin:0;
+      font-size:11px;
+      line-height:1.6;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:var(--muted-3);
+      text-align:center;
+    }
+
+    .email{
+      font-size:12px;
+      line-height:1.6;
+      letter-spacing:0.14em;
+      color:var(--muted-2);
+      text-decoration:none;
+      padding:4px 10px;
+      transition:color 160ms ease;
+    }
+
+    .email:hover{ color:var(--fg); }
 
     .swapBox{
       position:relative;
       display:inline-flex;
       align-items:center;
       justify-content:center;
+      width:100%;
     }
+
     .swapBox::before{
       content:"";
       position:absolute;
@@ -138,180 +414,8 @@
     }
 
     .swapBox.is-swapping::before{
-      animation: curtain var(--swap-ms) var(--swap-ease) both;
+      animation:curtain var(--swap-ms) var(--swap-ease) both;
     }
-
-    .logoBox{
-      min-height:var(--logo-line-h);
-      height:var(--logo-line-h);
-    }
-
-    .subBox{
-      min-height:var(--sub-line-h);
-      max-width: 62ch;
-    }
-
-    .logo{
-      margin:0;
-      font-weight:700;
-      letter-spacing:var(--logo-track);
-      font-size:var(--logo-size);
-      line-height:1;
-      padding-left:var(--logo-pad);
-      white-space:nowrap;
-    }
-
-    .subtitle{
-      margin:0;
-      font-size:var(--sub-size);
-      letter-spacing:0.12em;
-      line-height:var(--sub-line);
-      color:var(--muted-1);
-      text-align:center;
-    }
-
-    .navRow{
-      margin-top:var(--nav-gap);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:20px;
-      flex-wrap:wrap;
-    }
-
-    .navBtn{
-      border:0;
-      background:transparent;
-      padding:4px 2px;
-      cursor:pointer;
-      color:var(--muted-3);
-      font-size:var(--nav-size);
-      font-weight:400;
-      letter-spacing:var(--nav-track);
-      text-transform:uppercase;
-      white-space:nowrap;
-      position:relative;
-      transition: color 160ms ease;
-    }
-
-    .navBtn:hover{ color:var(--fg); }
-    .navBtn.is-active{ color:rgba(0,0,0,0.80); }
-
-    .navBtn.is-active::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:-3px;
-      height:1px;
-      background:rgba(0,0,0,0.24);
-    }
-
-    .navBtn:focus{ outline:none; }
-    .navBtn:focus-visible{
-      outline:1px solid rgba(0,0,0,0.18);
-      outline-offset:4px;
-      border-radius:6px;
-    }
-
-    .panel{
-      margin-top:var(--panel-gap);
-      width:min(var(--panel-width), 100%);
-      margin-left:auto;
-      margin-right:auto;
-      opacity:1;
-      transform:none;
-    }
-
-    .panelInner{
-      display:grid;
-      gap:var(--item-gap);
-      justify-items:center;
-    }
-
-    .bodyText{
-      margin:0;
-      font-size:13px;
-      letter-spacing:0.12em;
-      color:var(--muted-1);
-      max-width:60ch;
-      line-height:1.8;
-      text-align:center;
-    }
-
-    .workList{
-      display:grid;
-      gap:18px;
-      width:min(620px, 100%);
-      margin:0 auto;
-    }
-
-    .workItem{
-      display:grid;
-      gap:7px;
-      justify-items:center;
-    }
-
-    .workTitle{
-      margin:0;
-      font-size:11px;
-      letter-spacing:0.22em;
-      text-transform:uppercase;
-      color:rgba(0,0,0,0.78);
-    }
-
-    .workDesc{
-      margin:0;
-      font-size:13px;
-      letter-spacing:0.12em;
-      color:var(--muted-1);
-      line-height:1.8;
-      max-width:58ch;
-      text-align:center;
-    }
-
-    .email{
-      font-size:12px;
-      letter-spacing:0.14em;
-      color:var(--muted-2);
-      text-decoration:none;
-      padding:4px 10px;
-      transition: color 160ms ease;
-    }
-    .email:hover{ color:var(--fg); }
-
-    .smallLabel{
-      margin:0;
-      font-size:11px;
-      letter-spacing:0.20em;
-      text-transform:uppercase;
-      color:var(--muted-4);
-    }
-
-    .bottom{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:var(--mark-gap);
-      padding:0 var(--pad-x);
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:24px;
-      pointer-events:none;
-    }
-
-    .bottom .left,
-    .bottom .right{
-      font-size:11px;
-      letter-spacing:0.14em;
-      color:rgba(0,0,0,0.34);
-      line-height:1.6;
-      white-space:nowrap;
-      text-transform:uppercase;
-    }
-
-    .bottom .right{ text-align:right; }
 
     @media (prefers-reduced-motion: reduce){
       .swapBox.is-swapping::before{ animation:none; opacity:0; }
@@ -321,21 +425,29 @@
       :root{
         --pad-x:22px;
         --pad-y:40px;
-        --logo-size:42px;
-        --logo-track:0.14em;
-        --logo-pad:0.14em;
         --mark-l:18px;
         --mark-gap:14px;
+        --hero-top:50vh;
+        --logo-size:42px;
+        --logo-track:0.12em;
+        --logo-pad:0.12em;
         --sub-size:12px;
+        --nav-gap:42px;
+        --panel-min-h:250px;
+      }
+
+      .top-left{ left:calc(var(--mark-gap) + 28px); }
+      .top-right{ right:calc(var(--mark-gap) + 28px); }
+      .bottom-left{ left:calc(var(--mark-gap) + 28px); }
+      .bottom-right{ right:calc(var(--mark-gap) + 28px); }
+
+      .top-right{
+        max-width:42vw;
+        white-space:normal;
       }
 
       .navRow{
         gap:14px;
-      }
-
-      .bottom .left,
-      .bottom .right{
-        white-space:normal;
       }
     }
   </style>
@@ -347,96 +459,193 @@
   <div class="crop bl" aria-hidden="true"></div>
   <div class="crop br" aria-hidden="true"></div>
 
+  <div class="corner top-left">
+    <a class="sister-link" href="https://kuonholdings.com">Holdings</a>
+  </div>
+
+  <div class="corner top-right">
+    <span id="clockText">—</span>
+  </div>
+
+  <div class="corner bottom-left">
+    <span id="footerBrand">KUON</span>
+  </div>
+
+  <div class="corner bottom-right">
+    <div class="lang-switch" aria-label="Language selector">
+      <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
+    </div>
+  </div>
+
   <div class="wrap">
     <main class="center" aria-label="KUON STUDIO">
-
       <div class="hero">
-        <div class="swapBox logoBox" id="logoSwap">
-          <h1 class="logo" id="logoText">KUON STUDIO</h1>
+        <div class="logoBox">
+          <h1 class="logo">
+            <span class="brand">KUON</span>
+            <span class="division" id="divisionText">STUDIO</span>
+          </h1>
         </div>
 
-        <div class="swapBox subBox" id="subSwap">
-          <p class="subtitle" id="subText">
-            Objects, sound, and spatial design.
-          </p>
+        <div class="subBox">
+          <p class="subtitle" id="subText">Objects, sound, and spatial design.</p>
         </div>
-      </div>
 
-      <div class="navRow" aria-label="Section navigation">
-        <button class="navBtn is-active" type="button" data-panel="studio">Studio</button>
-        <button class="navBtn" type="button" data-panel="work">Work</button>
-        <button class="navBtn" type="button" data-panel="contact">Contact</button>
-      </div>
+        <div class="navRow" aria-label="Section navigation">
+          <button class="navBtn is-active" type="button" data-panel="studio">Studio</button>
+          <button class="navBtn" type="button" data-panel="work">Work</button>
+          <button class="navBtn" type="button" data-panel="contact">Contact</button>
+        </div>
 
-      <div class="panel" aria-live="polite">
-        <div class="swapBox" id="panelSwap">
-          <div class="panelInner" id="panelInner">
-            <!-- injected by JS -->
+        <div class="panel" aria-live="polite">
+          <div class="swapBox" id="panelSwap">
+            <div class="panelInner" id="panelInner"></div>
           </div>
         </div>
       </div>
-
     </main>
   </div>
-
-  <footer class="bottom" aria-label="Footer info">
-    <div class="left">KUON</div>
-    <div class="right">TAIPEI | LONDON</div>
-  </footer>
 
   <script>
     const prefersReducedMotion =
       window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const SWAP_TOTAL_MS = 1700;
+    const SWAP_TOTAL_MS = 1200;
     const SWAP_AT_MS = Math.round(SWAP_TOTAL_MS * 0.50);
 
-    const panelContent = {
-      studio: `
-        <p class="bodyText">
-          KUON Studio is a design-led practice exploring sound, material, and form across products, environments, and experimental concepts.
-        </p>
-        <p class="bodyText">
-          The studio brings together technical development and a quieter, more atmospheric visual language.
-        </p>
-      `,
-      work: `
-        <div class="workList">
-
-          <div class="workItem">
-            <h2 class="workTitle">Neostein</h2>
-            <p class="workDesc">
-              Product direction and development within high-performance audio and architectural integration.
+    const CONTENT = {
+      "en": {
+        htmlLang: "en",
+        footerBrand: "KUON",
+        subtitle: "Objects, sound, and spatial design.",
+        nav: {
+          studio: "Studio",
+          work: "Work",
+          contact: "Contact"
+        },
+        panels: {
+          studio: `
+            <p class="bodyText">
+              KUON Studio is a design-led practice exploring sound, material, and form across products, environments, and experimental concepts.
             </p>
-          </div>
-
-          <div class="workItem">
-            <h2 class="workTitle">Guitar Project</h2>
-            <p class="workDesc">
-              A studio-led instrument study shaped by form, material, and expression.
+            <p class="bodyText">
+              The studio brings together technical development and a quieter, more atmospheric visual language.
             </p>
-          </div>
+          `,
+          work: `
+            <div class="workList">
+              <div class="workItem">
+                <h2 class="workTitle">Neostein</h2>
+                <p class="workDesc">Product direction and development within high-performance audio and architectural integration.</p>
+              </div>
+              <div class="workItem">
+                <h2 class="workTitle">Guitar Project</h2>
+                <p class="workDesc">A studio-led instrument study shaped by form, material, and expression.</p>
+              </div>
+              <div class="workItem">
+                <h2 class="workTitle">In Development</h2>
+                <p class="workDesc">Emerging concepts in sound, objects, and spatial experience.</p>
+              </div>
+            </div>
+          `,
+          contact: `
+            <p class="smallLabel">For studio enquiries, collaborations, and selected projects</p>
+            <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
+            <p class="smallLabel">Taipei / London</p>
+          `
+        },
+        clockZone: "Asia/Taipei",
+        clockLabel: "TPE"
+      },
 
-          <div class="workItem">
-            <h2 class="workTitle">In Development</h2>
-            <p class="workDesc">
-              Emerging concepts in sound, objects, and spatial experience.
+      "zh-Hant": {
+        htmlLang: "zh-Hant",
+        footerBrand: "久音",
+        subtitle: "物件、聲音與空間設計。",
+        nav: {
+          studio: "工作室",
+          work: "作品",
+          contact: "聯絡"
+        },
+        panels: {
+          studio: `
+            <p class="bodyText">
+              KUON Studio 是一個以設計為核心的實踐，探索聲音、材質與形式，涵蓋產品、環境與實驗性概念。
             </p>
-          </div>
-
-        </div>
-      `,
-      contact: `
-        <p class="smallLabel">For studio enquiries, collaborations, and selected projects</p>
-        <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
-      `
+            <p class="bodyText">
+              工作室結合技術開發與更安靜、更具氛圍感的視覺語言。
+            </p>
+          `,
+          work: `
+            <div class="workList">
+              <div class="workItem">
+                <h2 class="workTitle">Neostein</h2>
+                <p class="workDesc">專注於高性能音響與建築整合領域的產品方向與開發工作。</p>
+              </div>
+              <div class="workItem">
+                <h2 class="workTitle">Guitar Project</h2>
+                <p class="workDesc">一項由工作室主導的樂器研究，圍繞形式、材質與表現而展開。</p>
+              </div>
+              <div class="workItem">
+                <h2 class="workTitle">In Development</h2>
+                <p class="workDesc">關於聲音、物件與空間體驗的持續發展中概念。</p>
+              </div>
+            </div>
+          `,
+          contact: `
+            <p class="smallLabel">工作室合作、委託與聯絡方式</p>
+            <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
+            <p class="smallLabel">台北 / 倫敦</p>
+          `
+        },
+        clockZone: "Asia/Taipei",
+        clockLabel: "TPE"
+      }
     };
 
+    let currentLang = "en";
+    let currentPanel = "studio";
+
+    const clockText = document.getElementById("clockText");
+    const footerBrand = document.getElementById("footerBrand");
+    const subText = document.getElementById("subText");
     const panelInner = document.getElementById("panelInner");
     const panelSwap = document.getElementById("panelSwap");
     const navButtons = Array.from(document.querySelectorAll(".navBtn"));
+    const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
 
-    let currentPanel = "studio";
+    function partsForTZ(date, timeZone){
+      const fmt = new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
+      const parts = fmt.formatToParts(date);
+      const get = (type) => parts.find(p => p.type === type)?.value || "";
+      return {
+        Y: get("year"),
+        M: get("month"),
+        D: get("day"),
+        h: get("hour"),
+        m: get("minute")
+      };
+    }
+
+    function formatClock(date, langKey){
+      const { clockZone, clockLabel } = CONTENT[langKey];
+      const p = partsForTZ(date, clockZone);
+      return `${p.Y}.${p.M}.${p.D} ${p.h}:${p.m} ${clockLabel}`;
+    }
+
+    function updateClock(){
+      clockText.textContent = formatClock(new Date(), currentLang);
+    }
 
     function startCurtain(box){
       box.classList.remove("is-swapping");
@@ -453,25 +662,59 @@
         applyNewContent();
         return;
       }
-
       boxes.forEach(startCurtain);
       setTimeout(applyNewContent, SWAP_AT_MS);
       setTimeout(() => boxes.forEach(stopCurtain), SWAP_TOTAL_MS);
     }
 
-    function setActiveButton(panelKey){
+    function setActiveLang(langKey){
+      langButtons.forEach(btn => {
+        if (btn.dataset.lang === langKey) {
+          btn.setAttribute("aria-current", "true");
+        } else {
+          btn.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    function setActivePanel(panelKey){
       navButtons.forEach(btn => {
         btn.classList.toggle("is-active", btn.dataset.panel === panelKey);
       });
     }
 
     function renderPanel(panelKey){
-      panelInner.innerHTML = panelContent[panelKey];
-      setActiveButton(panelKey);
+      panelInner.innerHTML = CONTENT[currentLang].panels[panelKey];
+      setActivePanel(panelKey);
+    }
+
+    function applyLanguage(langKey){
+      const c = CONTENT[langKey];
+      document.documentElement.lang = c.htmlLang;
+      footerBrand.textContent = c.footerBrand;
+      subText.textContent = c.subtitle;
+
+      navButtons.forEach(btn => {
+        const key = btn.dataset.panel;
+        btn.textContent = c.nav[key];
+      });
+
+      renderPanel(currentPanel);
+      setActiveLang(langKey);
+      updateClock();
+    }
+
+    function setLanguage(langKey){
+      if (!CONTENT[langKey] || langKey === currentLang) return;
+      currentLang = langKey;
+
+      curtainSwap([panelSwap], () => {
+        applyLanguage(langKey);
+      });
     }
 
     function setPanel(panelKey){
-      if (!panelContent[panelKey] || panelKey === currentPanel) return;
+      if (!CONTENT[currentLang].panels[panelKey] || panelKey === currentPanel) return;
       currentPanel = panelKey;
 
       curtainSwap([panelSwap], () => {
@@ -485,7 +728,15 @@
       });
     });
 
-    renderPanel("studio");
+    langButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        setLanguage(btn.dataset.lang);
+      });
+    });
+
+    applyLanguage("en");
+    updateClock();
+    setInterval(updateClock, 10000);
   </script>
 </body>
 </html>
