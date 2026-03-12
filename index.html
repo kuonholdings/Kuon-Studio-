@@ -11,11 +11,12 @@
     :root{
       --bg:#ffffff;
       --fg:#111111;
-      --fg-soft:rgba(0,0,0,0.42);
+      --fg-soft:rgba(108,98,88,0.68); /* slightly warmer for STUDIO */
       --muted-1:rgba(0,0,0,0.74);
       --muted-2:rgba(0,0,0,0.62);
       --muted-3:rgba(0,0,0,0.42);
       --muted-4:rgba(0,0,0,0.24);
+      --line:rgba(0,0,0,0.18);
 
       --pad-x:64px;
       --pad-y:56px;
@@ -57,10 +58,17 @@
       --panel-width:640px;
       --panel-min-h:150px;
 
-      --swap-ms:1200ms;
+      --swap-ms:900ms;
       --swap-ease:cubic-bezier(.35,0,.25,1);
       --swap-inset-y:6px;
       --swap-inset-x:12px;
+
+      --intro-brand-ms:700ms;
+      --intro-division-ms:700ms;
+      --intro-rest-ms:700ms;
+      --intro-delay-1:180ms;
+      --intro-delay-2:520ms;
+      --intro-delay-3:860ms;
     }
 
     *{ box-sizing:border-box; }
@@ -368,8 +376,46 @@
       animation:curtain var(--swap-ms) var(--swap-ease) both;
     }
 
+    /* intro */
+    .intro-brand,
+    .intro-division,
+    .intro-rest{
+      opacity:0;
+      transform:translateY(8px);
+    }
+
+    .is-ready .intro-brand{
+      animation:introRise var(--intro-brand-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-1) forwards;
+    }
+
+    .is-ready .intro-division{
+      animation:introRise var(--intro-division-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-2) forwards;
+    }
+
+    .is-ready .intro-rest{
+      animation:introRise var(--intro-rest-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
+    }
+
+    @keyframes introRise{
+      from{
+        opacity:0;
+        transform:translateY(8px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce){
       .swapBox.is-swapping::before{ animation:none; opacity:0; }
+      .intro-brand,
+      .intro-division,
+      .intro-rest{
+        opacity:1;
+        transform:none;
+        animation:none !important;
+      }
     }
 
     @media (max-width: 720px){
@@ -406,19 +452,19 @@
   <div class="crop bl" aria-hidden="true"></div>
   <div class="crop br" aria-hidden="true"></div>
 
-  <div class="corner top-left">
+  <div class="corner top-left intro-rest">
     <a class="sister-link" href="https://kuonholdings.com">HOLDINGS</a>
   </div>
 
-  <div class="corner top-right">
+  <div class="corner top-right intro-rest">
     <span id="clockText">—</span>
   </div>
 
-  <div class="corner bottom-left">
+  <div class="corner bottom-left intro-rest">
     <span id="footerBrand">KUON</span>
   </div>
 
-  <div class="corner bottom-right">
+  <div class="corner bottom-right intro-rest">
     <div class="lang-switch" aria-label="Language selector">
       <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
       <span class="lang-sep">/</span>
@@ -431,24 +477,24 @@
       <div class="hero">
         <div class="logoBox">
           <h1 class="logo">
-            <span class="brand">KUON</span>
-            <span class="division">STUDIO</span>
+            <span class="brand intro-brand">KUON</span>
+            <span class="division intro-division">STUDIO</span>
           </h1>
         </div>
 
-        <p class="subtitle" id="subtitle">
-          Objects, sound, and spatial design.
+        <p class="subtitle intro-rest" id="subtitle">
+          Sound Architecture Practice
         </p>
 
-        <div class="nav" id="nav">
+        <div class="nav intro-rest" id="nav">
           <button data-panel="studio" class="active" type="button">STUDIO</button>
           <button data-panel="work" type="button">WORK</button>
           <button data-panel="contact" type="button">CONTACT</button>
         </div>
 
-        <p class="locationStatic" id="locationStatic">Taipei / London</p>
+        <p class="locationStatic intro-rest" id="locationStatic">Taipei / London</p>
 
-        <div class="panel">
+        <div class="panel intro-rest">
           <div class="swapBox" id="panelSwap">
             <div id="panelInner" class="panelInner"></div>
           </div>
@@ -461,14 +507,14 @@
     const prefersReducedMotion =
       window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const SWAP_TOTAL_MS = 1200;
+    const SWAP_TOTAL_MS = 900;
     const SWAP_AT_MS = Math.round(SWAP_TOTAL_MS * 0.50);
 
     const CONTENT = {
       "en": {
         htmlLang: "en",
         footerBrand: "KUON",
-        subtitle: "Objects, sound, and spatial design.",
+        subtitle: "Sound Architecture Practice",
         location: "Taipei / London",
         nav: {
           studio: "STUDIO",
@@ -478,7 +524,7 @@
         panels: {
           studio: `
             <p class="body">
-              KUON Studio explores product, sound, and spatial ideas through design research and development.
+              KUON Studio explores sound, form, and spatial ideas through design research, product thinking, and architectural audio development.
             </p>
           `,
           work: `
@@ -487,7 +533,7 @@
             </p>
           `,
           contact: `
-            <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
+            <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
           `
         },
         clockZone: "Europe/London",
@@ -497,7 +543,7 @@
       "zh-Hant": {
         htmlLang: "zh-Hant",
         footerBrand: "久音",
-        subtitle: "物件、聲音與空間設計。",
+        subtitle: "聲音建築實踐",
         location: "台北 / 倫敦",
         nav: {
           studio: "工作室",
@@ -507,7 +553,7 @@
         panels: {
           studio: `
             <p class="body">
-              KUON Studio 專注於產品、聲音與空間概念的設計研究與開發。
+              KUON Studio 透過設計研究、產品思維與建築音響開發，探索聲音、形式與空間概念。
             </p>
           `,
           work: `
@@ -516,7 +562,7 @@
             </p>
           `,
           contact: `
-            <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
+            <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
           `
         },
         clockZone: "Asia/Taipei",
@@ -658,6 +704,14 @@
     applyLanguage("en");
     updateClock();
     setInterval(updateClock, 10000);
+
+    if (!prefersReducedMotion) {
+      requestAnimationFrame(() => {
+        document.body.classList.add("is-ready");
+      });
+    } else {
+      document.body.classList.add("is-ready");
+    }
   </script>
 </body>
 </html>
