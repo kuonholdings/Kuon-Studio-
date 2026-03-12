@@ -11,12 +11,11 @@
     :root{
       --bg:#ffffff;
       --fg:#111111;
-      --fg-soft:rgba(108,98,88,0.68); /* slightly warmer for STUDIO */
+      --fg-soft:rgba(108,98,88,0.68);
       --muted-1:rgba(0,0,0,0.74);
       --muted-2:rgba(0,0,0,0.62);
       --muted-3:rgba(0,0,0,0.42);
       --muted-4:rgba(0,0,0,0.24);
-      --line:rgba(0,0,0,0.18);
 
       --pad-x:64px;
       --pad-y:56px;
@@ -39,16 +38,16 @@
       --sub-size:14px;
       --sub-line:1.85;
       --sub-track:0.10em;
-      --sub-gap:24px;
+      --sub-gap:22px;
 
       --nav-size:12px;
       --nav-track:0.22em;
-      --nav-gap:36px;
+      --nav-gap:28px;
       --nav-line-h:20px;
 
       --loc-size:12px;
       --loc-track:0.16em;
-      --loc-gap:20px;
+      --loc-gap:16px;
 
       --body-size:14px;
       --body-line:1.85;
@@ -56,19 +55,24 @@
 
       --panel-gap:18px;
       --panel-width:640px;
-      --panel-min-h:150px;
+      --panel-min-h:130px;
 
-      --swap-ms:900ms;
+      --line-y-gap:18px;
+      --horizon-color:rgba(120,110,100,0.20);
+
+      --swap-ms:1100ms;
       --swap-ease:cubic-bezier(.35,0,.25,1);
       --swap-inset-y:6px;
       --swap-inset-x:12px;
 
-      --intro-brand-ms:700ms;
-      --intro-division-ms:700ms;
-      --intro-rest-ms:700ms;
-      --intro-delay-1:180ms;
-      --intro-delay-2:520ms;
-      --intro-delay-3:860ms;
+      --intro-brand-ms:1000ms;
+      --intro-division-ms:1000ms;
+      --intro-line-ms:1100ms;
+      --intro-rest-ms:1000ms;
+      --intro-delay-1:260ms;
+      --intro-delay-2:760ms;
+      --intro-delay-3:1380ms;
+      --intro-delay-4:2000ms;
     }
 
     *{ box-sizing:border-box; }
@@ -84,9 +88,7 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
-    a, button{
-      -webkit-tap-highlight-color: transparent;
-    }
+    a, button{ -webkit-tap-highlight-color:transparent; }
 
     .wrap{
       position:relative;
@@ -104,7 +106,6 @@
       opacity:0.78;
       transition:opacity 300ms ease;
     }
-
     body:hover .crop{ opacity:1; }
 
     .crop::before,
@@ -113,16 +114,14 @@
       position:absolute;
       background:var(--mark);
     }
-
     .crop::before{
       width:var(--mark-l);
-      height:var(--mark-h);
+      height:1px;
       top:0;
       left:0;
     }
-
     .crop::after{
-      width:var(--mark-h);
+      width:1px;
       height:var(--mark-l);
       top:0;
       left:0;
@@ -143,35 +142,24 @@
       white-space:nowrap;
     }
 
-    .corner a,
-    .corner button,
-    .corner span{
-      font:inherit;
-      letter-spacing:inherit;
-      text-transform:inherit;
-    }
-
     .top-left{
       top:calc(var(--mark-gap) - 2px);
       left:calc(var(--mark-gap) + 34px);
     }
-
     .top-right{
       top:calc(var(--mark-gap) - 2px);
       right:calc(var(--mark-gap) + 34px);
-      text-align:right;
       color:var(--muted-3);
       font-variant-numeric:tabular-nums;
+      text-align:right;
       user-select:none;
     }
-
     .bottom-left{
       left:calc(var(--mark-gap) + 34px);
       bottom:calc(var(--mark-gap) - 2px);
       color:var(--muted-3);
       pointer-events:none;
     }
-
     .bottom-right{
       right:calc(var(--mark-gap) + 34px);
       bottom:calc(var(--mark-gap) - 2px);
@@ -183,7 +171,6 @@
       text-decoration:none;
       transition:color 180ms ease;
     }
-
     .sister-link:hover{ color:var(--fg); }
 
     .lang-switch{
@@ -191,7 +178,6 @@
       align-items:center;
       gap:10px;
     }
-
     .lang-btn{
       background:transparent;
       border:0;
@@ -199,14 +185,12 @@
       cursor:pointer;
       color:var(--muted-3);
       transition:color 180ms ease;
+      font:inherit;
+      letter-spacing:inherit;
+      text-transform:inherit;
     }
-
     .lang-btn:hover{ color:var(--fg); }
-
-    .lang-btn[aria-current="true"]{
-      color:rgba(0,0,0,0.82);
-    }
-
+    .lang-btn[aria-current="true"]{ color:rgba(0,0,0,0.82); }
     .lang-sep{
       color:var(--muted-4);
       pointer-events:none;
@@ -226,7 +210,7 @@
       flex-direction:column;
       align-items:center;
       justify-content:flex-start;
-      min-height:355px;
+      min-height:380px;
     }
 
     .logoBox{
@@ -246,14 +230,25 @@
       white-space:nowrap;
       font-weight:700;
     }
-
     .logo .brand{ color:var(--fg); }
     .logo .division{ color:var(--fg-soft); }
 
+    .horizonWrap{
+      width:100%;
+      margin-top:var(--line-y-gap);
+      padding:0 calc(var(--mark-gap) + 34px);
+    }
+    .horizon{
+      height:1px;
+      background:var(--horizon-color);
+      transform:scaleX(0);
+      transform-origin:center center;
+    }
+
     .subtitle{
-      margin:var(--sub-gap) 0 0;
+      margin:18px 0 0;
       max-width:60ch;
-      min-height:56px;
+      min-height:34px;
       font-size:var(--sub-size);
       line-height:var(--sub-line);
       letter-spacing:var(--sub-track);
@@ -270,7 +265,6 @@
       gap:22px;
       flex-wrap:wrap;
     }
-
     .nav button{
       background:transparent;
       border:0;
@@ -283,13 +277,8 @@
       transition:color 180ms ease;
       position:relative;
     }
-
     .nav button:hover{ color:var(--fg); }
-
-    .nav button.active{
-      color:rgba(0,0,0,0.82);
-    }
-
+    .nav button.active{ color:rgba(0,0,0,0.82); }
     .nav button.active::after{
       content:"";
       position:absolute;
@@ -314,7 +303,7 @@
     .panel{
       width:min(var(--panel-width), 100%);
       min-height:var(--panel-min-h);
-      margin:24px auto 0;
+      margin:22px auto 0;
       display:flex;
       align-items:flex-start;
       justify-content:center;
@@ -345,7 +334,6 @@
       color:var(--muted-2);
       transition:color 160ms ease;
     }
-
     .email:hover{ color:var(--fg); }
 
     .swapBox{
@@ -355,7 +343,6 @@
       justify-content:center;
       width:100%;
     }
-
     .swapBox::before{
       content:"";
       position:absolute;
@@ -364,58 +351,60 @@
       opacity:0;
       pointer-events:none;
     }
-
     @keyframes curtain{
-      0%   { opacity:0; }
-      45%  { opacity:1; }
-      55%  { opacity:1; }
-      100% { opacity:0; }
+      0%{ opacity:0; }
+      45%{ opacity:1; }
+      55%{ opacity:1; }
+      100%{ opacity:0; }
     }
-
     .swapBox.is-swapping::before{
       animation:curtain var(--swap-ms) var(--swap-ease) both;
     }
 
-    /* intro */
     .intro-brand,
     .intro-division,
+    .intro-line,
     .intro-rest{
       opacity:0;
-      transform:translateY(8px);
+      transform:translateY(10px);
     }
 
     .is-ready .intro-brand{
       animation:introRise var(--intro-brand-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-1) forwards;
     }
-
     .is-ready .intro-division{
       animation:introRise var(--intro-division-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-2) forwards;
     }
-
+    .is-ready .intro-line{
+      animation:introRise var(--intro-line-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
+    }
+    .is-ready .intro-line .horizon{
+      animation:lineDraw var(--intro-line-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
+    }
     .is-ready .intro-rest{
-      animation:introRise var(--intro-rest-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
+      animation:introRise var(--intro-rest-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-4) forwards;
     }
 
     @keyframes introRise{
-      from{
-        opacity:0;
-        transform:translateY(8px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
+      from{ opacity:0; transform:translateY(10px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+    @keyframes lineDraw{
+      from{ transform:scaleX(0); }
+      to{ transform:scaleX(1); }
     }
 
     @media (prefers-reduced-motion: reduce){
       .swapBox.is-swapping::before{ animation:none; opacity:0; }
       .intro-brand,
       .intro-division,
+      .intro-line,
       .intro-rest{
         opacity:1;
         transform:none;
         animation:none !important;
       }
+      .horizon{ transform:scaleX(1); }
     }
 
     @media (max-width: 720px){
@@ -439,9 +428,8 @@
       .bottom-left{ left:calc(var(--mark-gap) + 28px); }
       .bottom-right{ right:calc(var(--mark-gap) + 28px); }
 
-      .nav{
-        gap:16px;
-      }
+      .nav{ gap:16px; }
+      .horizonWrap{ padding:0 calc(var(--mark-gap) + 28px); }
     }
   </style>
 </head>
@@ -482,9 +470,11 @@
           </h1>
         </div>
 
-        <p class="subtitle intro-rest" id="subtitle">
-          Sound Architecture Practice
-        </p>
+        <div class="horizonWrap intro-line">
+          <div class="horizon"></div>
+        </div>
+
+        <p class="subtitle intro-rest" id="subtitle">Sound Architecture Practice</p>
 
         <div class="nav intro-rest" id="nav">
           <button data-panel="studio" class="active" type="button">STUDIO</button>
@@ -507,7 +497,7 @@
     const prefersReducedMotion =
       window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const SWAP_TOTAL_MS = 900;
+    const SWAP_TOTAL_MS = 1100;
     const SWAP_AT_MS = Math.round(SWAP_TOTAL_MS * 0.50);
 
     const CONTENT = {
@@ -524,7 +514,7 @@
         panels: {
           studio: `
             <p class="body">
-              KUON Studio explores sound, form, and spatial ideas through design research, product thinking, and architectural audio development.
+              Design research, product thinking, and architectural audio development.
             </p>
           `,
           work: `
@@ -539,7 +529,6 @@
         clockZone: "Europe/London",
         clockLabel: "LDN"
       },
-
       "zh-Hant": {
         htmlLang: "zh-Hant",
         footerBrand: "久音",
@@ -553,7 +542,7 @@
         panels: {
           studio: `
             <p class="body">
-              KUON Studio 透過設計研究、產品思維與建築音響開發，探索聲音、形式與空間概念。
+              設計研究、產品思維與建築音響開發。
             </p>
           `,
           work: `
@@ -635,11 +624,8 @@
 
     function setActiveLang(langKey){
       langButtons.forEach(btn => {
-        if (btn.dataset.lang === langKey) {
-          btn.setAttribute("aria-current", "true");
-        } else {
-          btn.removeAttribute("aria-current");
-        }
+        if (btn.dataset.lang === langKey) btn.setAttribute("aria-current", "true");
+        else btn.removeAttribute("aria-current");
       });
     }
 
@@ -674,31 +660,21 @@
     function setLanguage(langKey){
       if (!CONTENT[langKey] || langKey === currentLang) return;
       currentLang = langKey;
-
-      curtainSwap([panelSwap], () => {
-        applyLanguage(langKey);
-      });
+      curtainSwap([panelSwap], () => applyLanguage(langKey));
     }
 
     function setPanel(panelKey){
       if (!CONTENT[currentLang].panels[panelKey] || panelKey === currentPanel) return;
       currentPanel = panelKey;
-
-      curtainSwap([panelSwap], () => {
-        renderPanel(panelKey);
-      });
+      curtainSwap([panelSwap], () => renderPanel(panelKey));
     }
 
     navButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        setPanel(btn.dataset.panel);
-      });
+      btn.addEventListener("click", () => setPanel(btn.dataset.panel));
     });
 
     langButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        setLanguage(btn.dataset.lang);
-      });
+      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
     });
 
     applyLanguage("en");
@@ -706,9 +682,7 @@
     setInterval(updateClock, 10000);
 
     if (!prefersReducedMotion) {
-      requestAnimationFrame(() => {
-        document.body.classList.add("is-ready");
-      });
+      requestAnimationFrame(() => document.body.classList.add("is-ready"));
     } else {
       document.body.classList.add("is-ready");
     }
