@@ -12,7 +12,7 @@
       --bg:#ffffff;
       --fg:#111111;
       --fg-soft:rgba(108,98,88,0.68);
-      --muted-1:rgba(0,0,0,0.80);
+      --muted-1:rgba(0,0,0,0.82);
       --muted-2:rgba(0,0,0,0.62);
       --muted-3:rgba(0,0,0,0.42);
       --muted-4:rgba(0,0,0,0.24);
@@ -20,12 +20,7 @@
       --pad-x:64px;
       --pad-y:56px;
 
-      --mark:rgba(0,0,0,0.18);
-      --mark-h:1px;
-      --mark-l:22px;
-      --mark-gap:18px;
-
-      --hero-top:51vh;
+      --hero-top:50vh;
 
       --logo-size:56px;
       --logo-track:0.15em;
@@ -33,37 +28,34 @@
       --logo-line-h:calc(var(--logo-size) * 1.12);
 
       --meta-size:12px;
-      --meta-track:0.15em;
+      --meta-track:0.14em;
 
-      --sub-size:16px;
-      --sub-line:1.55;
-      --sub-track:0.04em;
-      --sub-gap:20px;
+      --tag-size:16px;
+      --tag-line:1.5;
+      --tag-track:0.04em;
+      --tag-gap:18px;
 
       --nav-size:12px;
-      --nav-track:0.22em;
+      --nav-track:0.20em;
       --nav-gap:30px;
-      --nav-line-h:20px;
 
       --loc-size:12px;
       --loc-track:0.16em;
       --loc-gap:30px;
 
       --body-size:14px;
-      --body-line:1.85;
-      --body-track:0.10em;
+      --body-line:1.8;
+      --body-track:0.08em;
 
       --panel-gap:18px;
-      --panel-width:640px;
-      --panel-min-h:130px;
+      --panel-width:660px;
+      --panel-min-h:150px;
 
       --line-y-gap:18px;
       --horizon-color:rgba(120,110,100,0.20);
 
-      --swap-ms:1100ms;
+      --swap-ms:900ms;
       --swap-ease:cubic-bezier(.35,0,.25,1);
-      --swap-inset-y:6px;
-      --swap-inset-x:12px;
 
       --intro-brand-ms:1000ms;
       --intro-division-ms:1000ms;
@@ -88,7 +80,9 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
-    a, button{ -webkit-tap-highlight-color:transparent; }
+    a, button{
+      -webkit-tap-highlight-color:transparent;
+    }
 
     .wrap{
       position:relative;
@@ -97,87 +91,56 @@
       padding:var(--pad-y) var(--pad-x);
     }
 
-    .crop{
+    .clock{
       position:fixed;
-      width:calc(var(--mark-l) + 2px);
-      height:calc(var(--mark-l) + 2px);
-      pointer-events:none;
-      z-index:1;
-      opacity:0.78;
-      transition:opacity 300ms ease;
-    }
-    body:hover .crop{ opacity:1; }
-
-    .crop::before,
-    .crop::after{
-      content:"";
-      position:absolute;
-      background:var(--mark);
-    }
-    .crop::before{
-      width:var(--mark-l);
-      height:1px;
-      top:0;
-      left:0;
-    }
-    .crop::after{
-      width:1px;
-      height:var(--mark-l);
-      top:0;
-      left:0;
-    }
-
-    .crop.tl{ top:var(--mark-gap); left:var(--mark-gap); }
-    .crop.tr{ top:var(--mark-gap); right:var(--mark-gap); transform:scaleX(-1); }
-    .crop.bl{ bottom:var(--mark-gap); left:var(--mark-gap); transform:scaleY(-1); }
-    .crop.br{ bottom:var(--mark-gap); right:var(--mark-gap); transform:scale(-1); }
-
-    .corner{
-      position:fixed;
-      z-index:2;
+      top:var(--pad-y);
+      right:var(--pad-x);
+      z-index:3;
       font-size:var(--meta-size);
       letter-spacing:var(--meta-track);
       text-transform:uppercase;
       line-height:1.6;
-      white-space:nowrap;
-    }
-
-    .top-left{
-      top:calc(var(--mark-gap) - 2px);
-      left:calc(var(--mark-gap) + 34px);
-    }
-    .top-right{
-      top:calc(var(--mark-gap) - 2px);
-      right:calc(var(--mark-gap) + 34px);
       color:var(--muted-3);
       font-variant-numeric:tabular-nums;
-      text-align:right;
+      white-space:nowrap;
       user-select:none;
     }
-    .bottom-left{
-      left:calc(var(--mark-gap) + 34px);
-      bottom:calc(var(--mark-gap) - 2px);
+
+    .stack{
+      position:fixed;
+      left:var(--pad-x);
+      bottom:var(--pad-y);
+      z-index:3;
+      display:grid;
+      gap:6px;
+      justify-items:start;
+      font-size:var(--meta-size);
+      letter-spacing:var(--meta-track);
+      text-transform:uppercase;
+      line-height:1.5;
       color:var(--muted-3);
-      pointer-events:none;
-    }
-    .bottom-right{
-      right:calc(var(--mark-gap) + 34px);
-      bottom:calc(var(--mark-gap) - 2px);
-      text-align:right;
     }
 
-    .sister-link{
+    .stack .brandline{
+      color:var(--muted-3);
+    }
+
+    .stack a{
       color:var(--muted-3);
       text-decoration:none;
       transition:color 180ms ease;
     }
-    .sister-link:hover{ color:var(--fg); }
+
+    .stack a:hover{
+      color:var(--fg);
+    }
 
     .lang-switch{
       display:flex;
       align-items:center;
       gap:10px;
     }
+
     .lang-btn{
       background:transparent;
       border:0;
@@ -189,8 +152,10 @@
       letter-spacing:inherit;
       text-transform:inherit;
     }
+
     .lang-btn:hover{ color:var(--fg); }
     .lang-btn[aria-current="true"]{ color:rgba(0,0,0,0.82); }
+
     .lang-sep{
       color:var(--muted-4);
       pointer-events:none;
@@ -209,13 +174,11 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      justify-content:flex-start;
-      min-height:400px;
+      min-height:420px;
     }
 
     .logoBox{
       height:var(--logo-line-h);
-      min-height:var(--logo-line-h);
       display:flex;
       align-items:center;
       justify-content:center;
@@ -230,14 +193,16 @@
       white-space:nowrap;
       font-weight:700;
     }
+
     .logo .brand{ color:var(--fg); }
     .logo .division{ color:var(--fg-soft); }
 
     .horizonWrap{
       width:100%;
       margin-top:var(--line-y-gap);
-      padding:0 calc(var(--mark-gap) + 34px);
+      padding:0;
     }
+
     .horizon{
       height:1px;
       background:var(--horizon-color);
@@ -245,13 +210,13 @@
       transform-origin:center center;
     }
 
-    .subtitle{
+    .tagline{
       margin:18px 0 0;
       max-width:60ch;
       min-height:34px;
-      font-size:var(--sub-size);
-      line-height:var(--sub-line);
-      letter-spacing:var(--sub-track);
+      font-size:var(--tag-size);
+      line-height:var(--tag-line);
+      letter-spacing:var(--tag-track);
       color:var(--muted-1);
       text-align:center;
       font-weight:500;
@@ -259,13 +224,14 @@
 
     .nav{
       margin-top:var(--nav-gap);
-      min-height:var(--nav-line-h);
+      min-height:20px;
       display:flex;
       justify-content:center;
       align-items:center;
       gap:22px;
       flex-wrap:wrap;
     }
+
     .nav button{
       background:transparent;
       border:0;
@@ -278,8 +244,13 @@
       transition:color 180ms ease;
       position:relative;
     }
+
     .nav button:hover{ color:var(--fg); }
-    .nav button.active{ color:rgba(0,0,0,0.82); }
+
+    .nav button.active{
+      color:rgba(0,0,0,0.82);
+    }
+
     .nav button.active::after{
       content:"";
       position:absolute;
@@ -319,7 +290,7 @@
 
     .body{
       margin:0;
-      max-width:60ch;
+      max-width:62ch;
       font-size:var(--body-size);
       line-height:var(--body-line);
       letter-spacing:var(--body-track);
@@ -335,6 +306,7 @@
       color:var(--muted-2);
       transition:color 160ms ease;
     }
+
     .email:hover{ color:var(--fg); }
 
     .swapBox{
@@ -344,22 +316,25 @@
       justify-content:center;
       width:100%;
     }
+
     .swapBox::before{
       content:"";
       position:absolute;
-      inset:calc(-1 * var(--swap-inset-y)) calc(-1 * var(--swap-inset-x));
+      inset:-6px -12px;
       background:var(--bg);
       opacity:0;
       pointer-events:none;
     }
+
     @keyframes curtain{
       0%{ opacity:0; }
       45%{ opacity:1; }
       55%{ opacity:1; }
       100%{ opacity:0; }
     }
+
     .swapBox.is-swapping::before{
-      animation:curtain var(--swap-ms) var(--swap-ease) both;
+      animation:curtain var(--swap-ms) cubic-bezier(.35,0,.25,1) both;
     }
 
     .intro-brand,
@@ -373,15 +348,19 @@
     .is-ready .intro-brand{
       animation:introRise var(--intro-brand-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-1) forwards;
     }
+
     .is-ready .intro-division{
       animation:introRise var(--intro-division-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-2) forwards;
     }
+
     .is-ready .intro-line{
       animation:introRise var(--intro-line-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
     }
+
     .is-ready .intro-line .horizon{
       animation:lineDraw var(--intro-line-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
     }
+
     .is-ready .intro-rest{
       animation:introRise var(--intro-rest-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-4) forwards;
     }
@@ -390,6 +369,7 @@
       from{ opacity:0; transform:translateY(10px); }
       to{ opacity:1; transform:translateY(0); }
     }
+
     @keyframes lineDraw{
       from{ transform:scaleX(0); }
       to{ transform:scaleX(1); }
@@ -412,49 +392,28 @@
       :root{
         --pad-x:22px;
         --pad-y:40px;
-        --mark-l:18px;
-        --mark-gap:14px;
         --hero-top:50vh;
         --logo-size:42px;
         --logo-track:0.12em;
         --logo-pad:0.12em;
-        --sub-size:15px;
+        --tag-size:15px;
         --meta-size:11px;
         --nav-size:11px;
         --body-size:13px;
         --loc-gap:26px;
       }
 
-      .top-left{ left:calc(var(--mark-gap) + 28px); }
-      .top-right{ right:calc(var(--mark-gap) + 28px); }
-      .bottom-left{ left:calc(var(--mark-gap) + 28px); }
-      .bottom-right{ right:calc(var(--mark-gap) + 28px); }
-
       .nav{ gap:16px; }
-      .horizonWrap{ padding:0 calc(var(--mark-gap) + 28px); }
     }
   </style>
 </head>
 
 <body>
-  <div class="crop tl" aria-hidden="true"></div>
-  <div class="crop tr" aria-hidden="true"></div>
-  <div class="crop bl" aria-hidden="true"></div>
-  <div class="crop br" aria-hidden="true"></div>
+  <div class="clock intro-rest" id="clockText">—</div>
 
-  <div class="corner top-left intro-rest">
-    <a class="sister-link" href="https://kuonholdings.com">HOLDINGS</a>
-  </div>
-
-  <div class="corner top-right intro-rest">
-    <span id="clockText">—</span>
-  </div>
-
-  <div class="corner bottom-left intro-rest">
-    <span id="footerBrand">KUON</span>
-  </div>
-
-  <div class="corner bottom-right intro-rest">
+  <div class="stack intro-rest">
+    <div class="brandline" id="footerBrand">KUON</div>
+    <a href="https://kuonholdings.com">HOLDINGS</a>
     <div class="lang-switch" aria-label="Language selector">
       <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
       <span class="lang-sep">/</span>
@@ -476,11 +435,12 @@
           <div class="horizon"></div>
         </div>
 
-        <p class="subtitle intro-rest" id="subtitle">Sound Architecture Practice</p>
+        <p class="tagline intro-rest" id="taglineText">Sound Architecture Practice</p>
 
         <div class="nav intro-rest" id="nav">
           <button data-panel="studio" class="active" type="button">STUDIO</button>
           <button data-panel="work" type="button">WORK</button>
+          <button data-panel="research" type="button">RESEARCH</button>
           <button data-panel="contact" type="button">CONTACT</button>
         </div>
 
@@ -499,29 +459,35 @@
     const prefersReducedMotion =
       window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const SWAP_TOTAL_MS = 1100;
+    const SWAP_TOTAL_MS = 900;
     const SWAP_AT_MS = Math.round(SWAP_TOTAL_MS * 0.50);
 
     const CONTENT = {
       "en": {
         htmlLang: "en",
         footerBrand: "KUON",
-        subtitle: "Sound Architecture Practice",
+        tagline: "Sound Architecture Practice",
         location: "Taipei / London",
         nav: {
           studio: "STUDIO",
           work: "WORK",
+          research: "RESEARCH",
           contact: "CONTACT"
         },
         panels: {
           studio: `
             <p class="body">
-              Design research, product thinking, and architectural audio development.
+              A practice working across sound, form, systems, and spatial development.
             </p>
           `,
           work: `
             <p class="body">
-              Selected work includes Neostein, ongoing instrument studies, and experimental audio objects.
+              Selected projects in audio, objects, and built integration, including Neostein and instrument studies.
+            </p>
+          `,
+          research: `
+            <p class="body">
+              Ongoing studies in design rationale, spatial sound, and future product thinking.
             </p>
           `,
           contact: `
@@ -534,22 +500,28 @@
       "zh-Hant": {
         htmlLang: "zh-Hant",
         footerBrand: "久音",
-        subtitle: "聲音建築實踐",
+        tagline: "聲音建築實踐",
         location: "台北 / 倫敦",
         nav: {
           studio: "工作室",
           work: "作品",
+          research: "研究",
           contact: "聯絡"
         },
         panels: {
           studio: `
             <p class="body">
-              設計研究、產品思維與建築音響開發。
+              一個橫跨聲音、形式、系統與空間發展的實踐。
             </p>
           `,
           work: `
             <p class="body">
-              代表性項目包括 Neostein、持續進行中的樂器研究，以及實驗性聲音物件。
+              精選項目涵蓋音響、物件與建築整合，包括 Neostein 與樂器研究。
+            </p>
+          `,
+          research: `
+            <p class="body">
+              持續中的研究包含設計理據、空間聲音，以及未來產品思考。
             </p>
           `,
           contact: `
@@ -566,7 +538,7 @@
 
     const clockText = document.getElementById("clockText");
     const footerBrand = document.getElementById("footerBrand");
-    const subtitle = document.getElementById("subtitle");
+    const taglineText = document.getElementById("taglineText");
     const locationStatic = document.getElementById("locationStatic");
     const panelInner = document.getElementById("panelInner");
     const panelSwap = document.getElementById("panelSwap");
@@ -646,7 +618,7 @@
       const c = CONTENT[langKey];
       document.documentElement.lang = c.htmlLang;
       footerBrand.textContent = c.footerBrand;
-      subtitle.textContent = c.subtitle;
+      taglineText.textContent = c.tagline;
       locationStatic.textContent = c.location;
 
       navButtons.forEach(btn => {
