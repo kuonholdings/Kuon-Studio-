@@ -1,364 +1,491 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KUON STUDIO</title>
+  <meta name="description" content="KUON STUDIO" />
+  <meta name="theme-color" content="#ffffff" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root{
+      --bg:#ffffff;
+      --fg:#111;
 
-<title>Kuon Studio | 久音</title>
+      --baseline:52vh;
+      --sub-gap:22px;
+      --nav-gap:54px;
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+      --panel-gap:22px;
+      --item-gap:18px;
 
-<style>
+      --muted-1: rgba(0,0,0,0.66);
+      --muted-2: rgba(0,0,0,0.72);
+      --muted-3: rgba(0,0,0,0.56);
+      --muted-4: rgba(0,0,0,0.34);
 
-body{
-font-family:'Inter', sans-serif;
-margin:0;
-background:#f5f5f3;
-color:#111;
-line-height:1.6;
-}
+      --pad-x:64px;
+      --pad-y:56px;
 
-/* NAV */
+      --mark: rgba(0,0,0,0.18);
+      --mark-h:1px;
+      --mark-l:22px;
+      --mark-gap:18px;
 
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:30px 60px;
-font-size:14px;
-}
+      --logo-size:56px;
+      --logo-track:0.18em;
+      --logo-pad:0.18em;
 
-nav a{
-margin-left:30px;
-text-decoration:none;
-color:#111;
-}
+      --sub-size:13px;
+      --sub-line:1.8;
 
-.logo{
-font-weight:500;
-}
+      --nav-size:11px;
+      --nav-track:0.24em;
 
+      --panel-width:620px;
 
-/* HERO */
+      --swap-ms:1700ms;
+      --swap-ease:cubic-bezier(.35,0,.25,1);
+      --swap-inset-y:6px;
+      --swap-inset-x:12px;
 
-.hero{
-padding:160px 60px 120px 60px;
-}
+      --logo-line-h: calc(var(--logo-size) * 1.08);
+      --sub-line-h: calc(var(--sub-size) * 1.8 * 2);
+      --nav-line-h: 18px;
+    }
 
-.hero h1{
-font-size:92px;
-font-weight:500;
-margin:0;
-}
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
 
-.tagline{
-margin-top:20px;
-font-size:22px;
-color:#555;
-}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      overflow:hidden;
+      font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
 
+    .wrap{
+      height:100%;
+      width:100%;
+      padding:var(--pad-y) var(--pad-x);
+      position:relative;
+    }
 
-/* INTRO */
+    .crop{
+      position:fixed;
+      width:calc(var(--mark-l) + 2px);
+      height:calc(var(--mark-l) + 2px);
+      pointer-events:none;
+      z-index:5;
+      opacity:0.78;
+      transition:opacity 300ms ease;
+    }
+    body:hover .crop{ opacity:1; }
 
-.intro{
-padding:80px 60px;
-max-width:700px;
-font-size:18px;
-}
+    .crop::before,
+    .crop::after{
+      content:"";
+      position:absolute;
+      background:var(--mark);
+    }
+    .crop::before{ height:var(--mark-h); width:var(--mark-l); top:0; left:0; }
+    .crop::after{ width:var(--mark-h); height:var(--mark-l); top:0; left:0; }
 
+    .crop.tl{ top:var(--mark-gap); left:var(--mark-gap); }
+    .crop.tr{ top:var(--mark-gap); right:var(--mark-gap); transform:scaleX(-1); }
+    .crop.bl{ bottom:var(--mark-gap); left:var(--mark-gap); transform:scaleY(-1); }
+    .crop.br{ bottom:var(--mark-gap); right:var(--mark-gap); transform:scale(-1); }
 
-/* SECTIONS */
+    .center{
+      position:absolute;
+      left:50%;
+      top:var(--baseline);
+      transform:translate(-50%, -50%);
+      width:min(980px, calc(100% - 40px));
+      text-align:center;
+    }
 
-.section{
-padding:120px 60px;
-border-top:1px solid #ddd;
-}
+    .hero{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:var(--sub-gap);
+    }
 
-.section h2{
-font-size:40px;
-margin-bottom:40px;
-font-weight:500;
-}
+    .swapBox{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .swapBox::before{
+      content:"";
+      position:absolute;
+      inset:calc(-1 * var(--swap-inset-y)) calc(-1 * var(--swap-inset-x));
+      background:var(--bg);
+      opacity:0;
+      pointer-events:none;
+    }
 
+    @keyframes curtain{
+      0%   { opacity:0; }
+      45%  { opacity:1; }
+      55%  { opacity:1; }
+      100% { opacity:0; }
+    }
 
-/* DIAGRAM */
+    .swapBox.is-swapping::before{
+      animation: curtain var(--swap-ms) var(--swap-ease) both;
+    }
 
-.diagram{
-margin-top:40px;
-font-size:18px;
-display:flex;
-gap:12px;
-color:#444;
-}
+    .logoBox{
+      min-height:var(--logo-line-h);
+      height:var(--logo-line-h);
+    }
 
+    .subBox{
+      min-height:var(--sub-line-h);
+      max-width: 62ch;
+    }
 
-/* WORK GRID */
+    .logo{
+      margin:0;
+      font-weight:700;
+      letter-spacing:var(--logo-track);
+      font-size:var(--logo-size);
+      line-height:1;
+      padding-left:var(--logo-pad);
+      white-space:nowrap;
+    }
 
-.work-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:40px;
-}
+    .subtitle{
+      margin:0;
+      font-size:var(--sub-size);
+      letter-spacing:0.12em;
+      line-height:var(--sub-line);
+      color:var(--muted-1);
+      text-align:center;
+    }
 
-.work-item{
-padding:30px;
-border:1px solid #ddd;
-background:white;
-}
+    .navRow{
+      margin-top:var(--nav-gap);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
 
-.work-item h3{
-margin-top:0;
-font-weight:500;
-}
+    .navBtn{
+      border:0;
+      background:transparent;
+      padding:4px 2px;
+      cursor:pointer;
+      color:var(--muted-3);
+      font-size:var(--nav-size);
+      font-weight:400;
+      letter-spacing:var(--nav-track);
+      text-transform:uppercase;
+      white-space:nowrap;
+      position:relative;
+      transition: color 160ms ease;
+    }
 
+    .navBtn:hover{ color:var(--fg); }
+    .navBtn.is-active{ color:rgba(0,0,0,0.80); }
 
-/* LIST */
+    .navBtn.is-active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-3px;
+      height:1px;
+      background:rgba(0,0,0,0.24);
+    }
 
-ul{
-padding-left:20px;
-}
+    .navBtn:focus{ outline:none; }
+    .navBtn:focus-visible{
+      outline:1px solid rgba(0,0,0,0.18);
+      outline-offset:4px;
+      border-radius:6px;
+    }
 
+    .panel{
+      margin-top:var(--panel-gap);
+      width:min(var(--panel-width), 100%);
+      margin-left:auto;
+      margin-right:auto;
+      opacity:1;
+      transform:none;
+    }
 
-/* FOOTER */
+    .panelInner{
+      display:grid;
+      gap:var(--item-gap);
+      justify-items:center;
+    }
 
-footer{
-padding:80px 60px;
-border-top:1px solid #ddd;
-font-size:14px;
-color:#666;
-}
+    .bodyText{
+      margin:0;
+      font-size:13px;
+      letter-spacing:0.12em;
+      color:var(--muted-1);
+      max-width:60ch;
+      line-height:1.8;
+      text-align:center;
+    }
 
+    .workList{
+      display:grid;
+      gap:18px;
+      width:min(620px, 100%);
+      margin:0 auto;
+    }
 
-/* RESPONSIVE */
+    .workItem{
+      display:grid;
+      gap:7px;
+      justify-items:center;
+    }
 
-@media(max-width:800px){
+    .workTitle{
+      margin:0;
+      font-size:11px;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,0.78);
+    }
 
-.hero h1{
-font-size:56px;
-}
+    .workDesc{
+      margin:0;
+      font-size:13px;
+      letter-spacing:0.12em;
+      color:var(--muted-1);
+      line-height:1.8;
+      max-width:58ch;
+      text-align:center;
+    }
 
-nav{
-padding:20px 30px;
-}
+    .email{
+      font-size:12px;
+      letter-spacing:0.14em;
+      color:var(--muted-2);
+      text-decoration:none;
+      padding:4px 10px;
+      transition: color 160ms ease;
+    }
+    .email:hover{ color:var(--fg); }
 
-.hero{
-padding:100px 30px;
-}
+    .smallLabel{
+      margin:0;
+      font-size:11px;
+      letter-spacing:0.20em;
+      text-transform:uppercase;
+      color:var(--muted-4);
+    }
 
-.section{
-padding:80px 30px;
-}
+    .bottom{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:var(--mark-gap);
+      padding:0 var(--pad-x);
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:24px;
+      pointer-events:none;
+    }
 
-.intro{
-padding:60px 30px;
-}
+    .bottom .left,
+    .bottom .right{
+      font-size:11px;
+      letter-spacing:0.14em;
+      color:rgba(0,0,0,0.34);
+      line-height:1.6;
+      white-space:nowrap;
+      text-transform:uppercase;
+    }
 
-}
+    .bottom .right{ text-align:right; }
 
-</style>
+    @media (prefers-reduced-motion: reduce){
+      .swapBox.is-swapping::before{ animation:none; opacity:0; }
+    }
 
+    @media (max-width: 720px){
+      :root{
+        --pad-x:22px;
+        --pad-y:40px;
+        --logo-size:42px;
+        --logo-track:0.14em;
+        --logo-pad:0.14em;
+        --mark-l:18px;
+        --mark-gap:14px;
+        --sub-size:12px;
+      }
+
+      .navRow{
+        gap:14px;
+      }
+
+      .bottom .left,
+      .bottom .right{
+        white-space:normal;
+      }
+    }
+  </style>
 </head>
 
-
 <body>
-
-
-
-<nav>
-
-<div class="logo">KUON STUDIO | 久音</div>
-
-<div>
-
-<a href="#practice">Practice</a>
-<a href="#work">Work</a>
-<a href="#research">Research</a>
-<a href="#about">About</a>
-<a href="#contact">Contact</a>
-
-</div>
-
-</nav>
-
-
-
-<section class="hero">
-
-<h1>Sound Architecture</h1>
-
-<p class="tagline">
-A practice exploring the relationship between vibration, objects, and space.
-</p>
-
-</section>
-
-
-
-<section class="intro">
-
-<p>
-Kuon Studio is a design practice founded by Guy Traviss working at the intersection of sound, objects, and architecture.
-</p>
-
-<p>
-The studio explores how sound can move beyond conventional equipment and become integrated into the physical world — through instruments, architectural systems, and material structures.
-</p>
-
-</section>
-
-
-
-<section id="practice" class="section">
-
-<h2>Practice</h2>
-
-<p>
-Kuon Studio operates as a sound architecture practice.  
-Rather than treating sound as an electronic product, the studio approaches it as a material that interacts with objects and space.
-</p>
-
-<p>
-This perspective connects several disciplines — instrument making, acoustic engineering, product design, and architecture — into a single field of exploration.
-</p>
-
-<div class="diagram">
-
-<span>instrument</span>
-<span>→</span>
-<span>speaker</span>
-<span>→</span>
-<span>object</span>
-<span>→</span>
-<span>architecture</span>
-
-</div>
-
-</section>
-
-
-
-<section id="work" class="section">
-
-<h2>Work</h2>
-
-<div class="work-grid">
-
-<div class="work-item">
-<h3>MASO</h3>
-<p>
-Architectural sound works exploring how acoustic systems become integrated elements of space.
-</p>
-</div>
-
-
-<div class="work-item">
-<h3>Neostein</h3>
-<p>
-Architectural audio company founded by Guy Traviss developing loudspeaker systems designed for integration within built environments.
-</p>
-</div>
-
-
-<div class="work-item">
-<h3>Sleep Speaker</h3>
-<p>
-Wellness audio research exploring personal sound environments for rest and recovery.
-</p>
-</div>
-
-
-<div class="work-item">
-<h3>Instrument Design</h3>
-<p>
-Research into acoustic guitar construction and resonance structures.
-</p>
-</div>
-
-
-<div class="work-item">
-<h3>Architectural Materials</h3>
-<p>
-Exploration of acoustic doors and sound-isolating architectural elements.
-</p>
-</div>
-
-</div>
-
-</section>
-
-
-
-<section id="research" class="section">
-
-<h2>Research</h2>
-
-<p>
-Kuon Studio investigates sound as a physical and cultural phenomenon.
-</p>
-
-<ul>
-
-<li>Sound as architecture</li>
-<li>Permanence and technological obsolescence</li>
-<li>Vibration and material behaviour</li>
-<li>Domestic sound environments</li>
-
-</ul>
-
-<p>
-The studio’s ongoing research may eventually form the basis of academic work exploring the relationship between sound, architecture, and material culture.
-</p>
-
-</section>
-
-
-
-<section id="about" class="section">
-
-<h2>About</h2>
-
-<p>
-Guy Traviss is a British designer working internationally at the intersection of sound, architecture, and objects.
-</p>
-
-<p>
-His work spans musical instruments, loudspeaker systems, and architectural sound objects, exploring how vibration shapes spatial experience.
-</p>
-
-<p>
-He is the founder of Neostein and the creator of MASO, an ongoing exploration of sound as a permanent architectural element.
-</p>
-
-</section>
-
-
-
-<section id="contact" class="section">
-
-<h2>Contact</h2>
-
-<p>
-For collaborations, architectural projects, and research enquiries.
-</p>
-
-<p>
-Email: contact@kuon.studio
-</p>
-
-</section>
-
-
-
-<footer>
-
-<p>© Kuon Studio</p>
-
-</footer>
-
-
-
+  <div class="crop tl" aria-hidden="true"></div>
+  <div class="crop tr" aria-hidden="true"></div>
+  <div class="crop bl" aria-hidden="true"></div>
+  <div class="crop br" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <main class="center" aria-label="KUON STUDIO">
+
+      <div class="hero">
+        <div class="swapBox logoBox" id="logoSwap">
+          <h1 class="logo" id="logoText">KUON STUDIO</h1>
+        </div>
+
+        <div class="swapBox subBox" id="subSwap">
+          <p class="subtitle" id="subText">
+            Objects, sound, and spatial design.
+          </p>
+        </div>
+      </div>
+
+      <div class="navRow" aria-label="Section navigation">
+        <button class="navBtn is-active" type="button" data-panel="studio">Studio</button>
+        <button class="navBtn" type="button" data-panel="work">Work</button>
+        <button class="navBtn" type="button" data-panel="contact">Contact</button>
+      </div>
+
+      <div class="panel" aria-live="polite">
+        <div class="swapBox" id="panelSwap">
+          <div class="panelInner" id="panelInner">
+            <!-- injected by JS -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="bottom" aria-label="Footer info">
+    <div class="left">KUON</div>
+    <div class="right">TAIPEI | LONDON</div>
+  </footer>
+
+  <script>
+    const prefersReducedMotion =
+      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const SWAP_TOTAL_MS = 1700;
+    const SWAP_AT_MS = Math.round(SWAP_TOTAL_MS * 0.50);
+
+    const panelContent = {
+      studio: `
+        <p class="bodyText">
+          KUON Studio is a design-led practice exploring sound, material, and form across products, environments, and experimental concepts.
+        </p>
+        <p class="bodyText">
+          The studio brings together technical development and a quieter, more atmospheric visual language.
+        </p>
+      `,
+      work: `
+        <div class="workList">
+
+          <div class="workItem">
+            <h2 class="workTitle">Neostein</h2>
+            <p class="workDesc">
+              Product direction and development within high-performance audio and architectural integration.
+            </p>
+          </div>
+
+          <div class="workItem">
+            <h2 class="workTitle">Guitar Project</h2>
+            <p class="workDesc">
+              A studio-led instrument study shaped by form, material, and expression.
+            </p>
+          </div>
+
+          <div class="workItem">
+            <h2 class="workTitle">In Development</h2>
+            <p class="workDesc">
+              Emerging concepts in sound, objects, and spatial experience.
+            </p>
+          </div>
+
+        </div>
+      `,
+      contact: `
+        <p class="smallLabel">For studio enquiries, collaborations, and selected projects</p>
+        <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
+      `
+    };
+
+    const panelInner = document.getElementById("panelInner");
+    const panelSwap = document.getElementById("panelSwap");
+    const navButtons = Array.from(document.querySelectorAll(".navBtn"));
+
+    let currentPanel = "studio";
+
+    function startCurtain(box){
+      box.classList.remove("is-swapping");
+      void box.offsetWidth;
+      box.classList.add("is-swapping");
+    }
+
+    function stopCurtain(box){
+      box.classList.remove("is-swapping");
+    }
+
+    function curtainSwap(boxes, applyNewContent){
+      if (prefersReducedMotion){
+        applyNewContent();
+        return;
+      }
+
+      boxes.forEach(startCurtain);
+      setTimeout(applyNewContent, SWAP_AT_MS);
+      setTimeout(() => boxes.forEach(stopCurtain), SWAP_TOTAL_MS);
+    }
+
+    function setActiveButton(panelKey){
+      navButtons.forEach(btn => {
+        btn.classList.toggle("is-active", btn.dataset.panel === panelKey);
+      });
+    }
+
+    function renderPanel(panelKey){
+      panelInner.innerHTML = panelContent[panelKey];
+      setActiveButton(panelKey);
+    }
+
+    function setPanel(panelKey){
+      if (!panelContent[panelKey] || panelKey === currentPanel) return;
+      currentPanel = panelKey;
+
+      curtainSwap([panelSwap], () => {
+        renderPanel(panelKey);
+      });
+    }
+
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        setPanel(btn.dataset.panel);
+      });
+    });
+
+    renderPanel("studio");
+  </script>
 </body>
-
 </html>
