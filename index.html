@@ -11,11 +11,11 @@
     :root{
       --bg:#ffffff;
       --fg:#111111;
-      --fg-soft:rgba(108,98,88,0.68);
-      --muted-1:rgba(0,0,0,0.82);
-      --muted-2:rgba(0,0,0,0.62);
-      --muted-3:rgba(0,0,0,0.42);
-      --muted-4:rgba(0,0,0,0.24);
+      --fg-soft:rgba(0,0,0,0.55);
+      --muted-1:rgba(0,0,0,0.76);
+      --muted-2:rgba(0,0,0,0.58);
+      --muted-3:rgba(0,0,0,0.34);
+      --muted-4:rgba(0,0,0,0.20);
 
       --pad-x:64px;
       --pad-y:56px;
@@ -37,7 +37,7 @@
 
       --nav-size:12px;
       --nav-track:0.20em;
-      --nav-gap:30px;
+      --nav-gap:36px;
 
       --loc-size:12px;
       --loc-track:0.16em;
@@ -52,7 +52,7 @@
       --panel-min-h:150px;
 
       --line-y-gap:18px;
-      --horizon-color:rgba(120,110,100,0.20);
+      --horizon-color:rgba(0,0,0,0.14);
 
       --swap-ms:900ms;
       --swap-ease:cubic-bezier(.35,0,.25,1);
@@ -89,21 +89,6 @@
       width:100%;
       height:100%;
       padding:var(--pad-y) var(--pad-x);
-    }
-
-    .clock{
-      position:fixed;
-      top:var(--pad-y);
-      right:var(--pad-x);
-      z-index:3;
-      font-size:var(--meta-size);
-      letter-spacing:var(--meta-track);
-      text-transform:uppercase;
-      line-height:1.6;
-      color:var(--muted-3);
-      font-variant-numeric:tabular-nums;
-      white-space:nowrap;
-      user-select:none;
     }
 
     .stack{
@@ -154,7 +139,7 @@
     }
 
     .lang-btn:hover{ color:var(--fg); }
-    .lang-btn[aria-current="true"]{ color:rgba(0,0,0,0.82); }
+    .lang-btn[aria-current="true"]{ color:rgba(0,0,0,0.76); }
 
     .lang-sep{
       color:var(--muted-4);
@@ -175,6 +160,7 @@
       flex-direction:column;
       align-items:center;
       min-height:420px;
+      justify-content:center;
     }
 
     .logoBox{
@@ -248,7 +234,7 @@
     .nav button:hover{ color:var(--fg); }
 
     .nav button.active{
-      color:rgba(0,0,0,0.82);
+      color:rgba(0,0,0,0.76);
     }
 
     .nav button.active::after{
@@ -258,7 +244,7 @@
       right:0;
       bottom:-4px;
       height:1px;
-      background:rgba(0,0,0,0.22);
+      background:rgba(0,0,0,0.18);
     }
 
     .locationStatic{
@@ -334,7 +320,7 @@
     }
 
     .swapBox.is-swapping::before{
-      animation:curtain var(--swap-ms) cubic-bezier(.35,0,.25,1) both;
+      animation:curtain var(--swap-ms) var(--swap-ease) both;
     }
 
     .intro-brand,
@@ -409,8 +395,6 @@
 </head>
 
 <body>
-  <div class="clock intro-rest" id="clockText">—</div>
-
   <div class="stack intro-rest">
     <div class="brandline" id="footerBrand">KUON</div>
     <a href="https://kuonholdings.com">HOLDINGS</a>
@@ -493,9 +477,7 @@
           contact: `
             <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
           `
-        },
-        clockZone: "Europe/London",
-        clockLabel: "LDN"
+        }
       },
       "zh-Hant": {
         htmlLang: "zh-Hant",
@@ -527,16 +509,13 @@
           contact: `
             <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
           `
-        },
-        clockZone: "Asia/Taipei",
-        clockLabel: "TPE"
+        }
       }
     };
 
     let currentLang = "en";
     let currentPanel = "studio";
 
-    const clockText = document.getElementById("clockText");
     const footerBrand = document.getElementById("footerBrand");
     const taglineText = document.getElementById("taglineText");
     const locationStatic = document.getElementById("locationStatic");
@@ -544,37 +523,6 @@
     const panelSwap = document.getElementById("panelSwap");
     const navButtons = Array.from(document.querySelectorAll(".nav button"));
     const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
-
-    function partsForTZ(date, timeZone){
-      const fmt = new Intl.DateTimeFormat("en-GB", {
-        timeZone,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false
-      });
-      const parts = fmt.formatToParts(date);
-      const get = (type) => parts.find(p => p.type === type)?.value || "";
-      return {
-        Y: get("year"),
-        M: get("month"),
-        D: get("day"),
-        h: get("hour"),
-        m: get("minute")
-      };
-    }
-
-    function formatClock(date, langKey){
-      const { clockZone, clockLabel } = CONTENT[langKey];
-      const p = partsForTZ(date, clockZone);
-      return `${p.Y}.${p.M}.${p.D} ${p.h}:${p.m} ${clockLabel}`;
-    }
-
-    function updateClock(){
-      clockText.textContent = formatClock(new Date(), currentLang);
-    }
 
     function startCurtain(box){
       box.classList.remove("is-swapping");
@@ -628,7 +576,6 @@
 
       renderPanel(currentPanel);
       setActiveLang(langKey);
-      updateClock();
     }
 
     function setLanguage(langKey){
@@ -652,8 +599,6 @@
     });
 
     applyLanguage("en");
-    updateClock();
-    setInterval(updateClock, 10000);
 
     if (!prefersReducedMotion) {
       requestAnimationFrame(() => document.body.classList.add("is-ready"));
