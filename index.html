@@ -1,371 +1,663 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>KUON STUDIO</title>
-<meta name="description" content="KUON STUDIO" />
-<meta name="theme-color" content="#ffffff" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KUON STUDIO</title>
+  <meta name="description" content="KUON STUDIO" />
+  <meta name="theme-color" content="#ffffff" />
 
-<style>
-:root{
+  <style>
+    :root{
+      --bg:#ffffff;
+      --fg:#111111;
+      --fg-soft:rgba(0,0,0,0.42);
+      --muted-1:rgba(0,0,0,0.74);
+      --muted-2:rgba(0,0,0,0.62);
+      --muted-3:rgba(0,0,0,0.42);
+      --muted-4:rgba(0,0,0,0.24);
 
---bg:#ffffff;
---fg:#111111;
---fg-soft:rgba(0,0,0,0.42);
---muted-1:rgba(0,0,0,0.74);
---muted-2:rgba(0,0,0,0.62);
---muted-3:rgba(0,0,0,0.42);
---muted-4:rgba(0,0,0,0.24);
+      --pad-x:64px;
+      --pad-y:56px;
 
---pad-x:64px;
---pad-y:56px;
+      --mark:rgba(0,0,0,0.18);
+      --mark-h:1px;
+      --mark-l:22px;
+      --mark-gap:18px;
 
---mark:rgba(0,0,0,0.18);
---mark-h:1px;
---mark-l:22px;
---mark-gap:18px;
+      --hero-top:51vh;
 
---hero-top:51vh;
+      --logo-size:56px;
+      --logo-track:0.15em;
+      --logo-pad:0.15em;
+      --logo-line-h:calc(var(--logo-size) * 1.12);
 
---logo-size:56px;
---logo-track:0.15em;
---logo-pad:0.15em;
---logo-line-h:calc(var(--logo-size) * 1.12);
+      --meta-size:12px;
+      --meta-track:0.15em;
 
---meta-size:12px;
---meta-track:0.15em;
+      --sub-size:14px;
+      --sub-line:1.85;
+      --sub-track:0.10em;
+      --sub-gap:24px;
 
---sub-size:14px;
---sub-line:1.85;
---sub-track:0.10em;
---sub-gap:24px;
+      --nav-size:12px;
+      --nav-track:0.22em;
+      --nav-gap:36px;
+      --nav-line-h:20px;
 
---nav-size:12px;
---nav-track:0.22em;
---nav-gap:36px;
+      --loc-size:12px;
+      --loc-track:0.16em;
+      --loc-gap:20px;
 
---body-size:14px;
---body-line:1.85;
---body-track:0.10em;
+      --body-size:14px;
+      --body-line:1.85;
+      --body-track:0.10em;
 
---panel-width:640px;
---panel-min-h:220px;
+      --panel-gap:18px;
+      --panel-width:640px;
+      --panel-min-h:150px;
 
---swap-ms:1200ms;
---swap-ease:cubic-bezier(.35,0,.25,1);
+      --swap-ms:1200ms;
+      --swap-ease:cubic-bezier(.35,0,.25,1);
+      --swap-inset-y:6px;
+      --swap-inset-x:12px;
+    }
 
-}
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      overflow:hidden;
+      font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
 
-body{
-margin:0;
-background:var(--bg);
-color:var(--fg);
-overflow:hidden;
-font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
--webkit-font-smoothing:antialiased;
--moz-osx-font-smoothing:grayscale;
-}
+    a, button{
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.wrap{
-position:relative;
-width:100%;
-height:100%;
-padding:var(--pad-y) var(--pad-x);
-}
+    .wrap{
+      position:relative;
+      width:100%;
+      height:100%;
+      padding:var(--pad-y) var(--pad-x);
+    }
 
-.crop{
-position:fixed;
-width:calc(var(--mark-l)+2px);
-height:calc(var(--mark-l)+2px);
-pointer-events:none;
-opacity:.8;
-}
+    .crop{
+      position:fixed;
+      width:calc(var(--mark-l) + 2px);
+      height:calc(var(--mark-l) + 2px);
+      pointer-events:none;
+      z-index:1;
+      opacity:0.78;
+      transition:opacity 300ms ease;
+    }
 
-.crop::before,
-.crop::after{
-content:"";
-position:absolute;
-background:var(--mark);
-}
+    body:hover .crop{ opacity:1; }
 
-.crop::before{width:var(--mark-l);height:var(--mark-h)}
-.crop::after{height:var(--mark-l);width:var(--mark-h)}
+    .crop::before,
+    .crop::after{
+      content:"";
+      position:absolute;
+      background:var(--mark);
+    }
 
-.crop.tl{top:var(--mark-gap);left:var(--mark-gap)}
-.crop.tr{top:var(--mark-gap);right:var(--mark-gap);transform:scaleX(-1)}
-.crop.bl{bottom:var(--mark-gap);left:var(--mark-gap);transform:scaleY(-1)}
-.crop.br{bottom:var(--mark-gap);right:var(--mark-gap);transform:scale(-1)}
+    .crop::before{
+      width:var(--mark-l);
+      height:var(--mark-h);
+      top:0;
+      left:0;
+    }
 
-.corner{
-position:fixed;
-font-size:var(--meta-size);
-letter-spacing:var(--meta-track);
-text-transform:uppercase;
-}
+    .crop::after{
+      width:var(--mark-h);
+      height:var(--mark-l);
+      top:0;
+      left:0;
+    }
 
-.top-left{top:calc(var(--mark-gap)-2px);left:calc(var(--mark-gap)+34px)}
-.top-right{top:calc(var(--mark-gap)-2px);right:calc(var(--mark-gap)+34px);color:var(--muted-3)}
-.bottom-left{left:calc(var(--mark-gap)+34px);bottom:calc(var(--mark-gap)-2px);color:var(--muted-3)}
-.bottom-right{right:calc(var(--mark-gap)+34px);bottom:calc(var(--mark-gap)-2px)}
+    .crop.tl{ top:var(--mark-gap); left:var(--mark-gap); }
+    .crop.tr{ top:var(--mark-gap); right:var(--mark-gap); transform:scaleX(-1); }
+    .crop.bl{ bottom:var(--mark-gap); left:var(--mark-gap); transform:scaleY(-1); }
+    .crop.br{ bottom:var(--mark-gap); right:var(--mark-gap); transform:scale(-1); }
 
-.sister-link{
-color:var(--muted-3);
-text-decoration:none;
-}
+    .corner{
+      position:fixed;
+      z-index:2;
+      font-size:var(--meta-size);
+      letter-spacing:var(--meta-track);
+      text-transform:uppercase;
+      line-height:1.6;
+      white-space:nowrap;
+    }
 
-.sister-link:hover{color:var(--fg)}
+    .corner a,
+    .corner button,
+    .corner span{
+      font:inherit;
+      letter-spacing:inherit;
+      text-transform:inherit;
+    }
 
-.lang-switch{
-display:flex;
-gap:10px;
-}
+    .top-left{
+      top:calc(var(--mark-gap) - 2px);
+      left:calc(var(--mark-gap) + 34px);
+    }
 
-.lang-btn{
-background:transparent;
-border:0;
-cursor:pointer;
-font:inherit;
-color:var(--muted-3);
-}
+    .top-right{
+      top:calc(var(--mark-gap) - 2px);
+      right:calc(var(--mark-gap) + 34px);
+      text-align:right;
+      color:var(--muted-3);
+      font-variant-numeric:tabular-nums;
+      user-select:none;
+    }
 
-.lang-btn[aria-current="true"]{color:var(--fg)}
+    .bottom-left{
+      left:calc(var(--mark-gap) + 34px);
+      bottom:calc(var(--mark-gap) - 2px);
+      color:var(--muted-3);
+      pointer-events:none;
+    }
 
-.center{
-position:absolute;
-left:50%;
-top:var(--hero-top);
-transform:translate(-50%,-50%);
-width:min(980px,calc(100%-40px));
-text-align:center;
-}
+    .bottom-right{
+      right:calc(var(--mark-gap) + 34px);
+      bottom:calc(var(--mark-gap) - 2px);
+      text-align:right;
+    }
 
-.logoBox{
-height:var(--logo-line-h);
-display:flex;
-align-items:center;
-justify-content:center;
-}
+    .sister-link{
+      color:var(--muted-3);
+      text-decoration:none;
+      transition:color 180ms ease;
+    }
 
-.logo{
-margin:0;
-font-size:var(--logo-size);
-letter-spacing:var(--logo-track);
-font-weight:700;
-}
+    .sister-link:hover{ color:var(--fg); }
 
-.brand{color:var(--fg)}
-.division{color:var(--fg-soft)}
+    .lang-switch{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
 
-.subtitle{
-margin:var(--sub-gap) 0 0;
-font-size:var(--sub-size);
-line-height:var(--sub-line);
-letter-spacing:var(--sub-track);
-color:var(--muted-1);
-max-width:60ch;
-margin-left:auto;
-margin-right:auto;
-}
+    .lang-btn{
+      background:transparent;
+      border:0;
+      padding:0;
+      cursor:pointer;
+      color:var(--muted-3);
+      transition:color 180ms ease;
+    }
 
-.nav{
-margin-top:var(--nav-gap);
-display:flex;
-justify-content:center;
-gap:22px;
-}
+    .lang-btn:hover{ color:var(--fg); }
 
-.nav button{
-background:transparent;
-border:0;
-cursor:pointer;
-font-size:var(--nav-size);
-letter-spacing:var(--nav-track);
-text-transform:uppercase;
-color:var(--muted-3);
-}
+    .lang-btn[aria-current="true"]{
+      color:rgba(0,0,0,0.82);
+    }
 
-.nav button.active{color:var(--fg)}
+    .lang-sep{
+      color:var(--muted-4);
+      pointer-events:none;
+    }
 
-.panel{
-margin:22px auto 0;
-max-width:var(--panel-width);
-min-height:var(--panel-min-h);
-display:flex;
-align-items:center;
-justify-content:center;
-}
+    .center{
+      position:absolute;
+      left:50%;
+      top:var(--hero-top);
+      transform:translate(-50%, -50%);
+      width:min(980px, calc(100% - 40px));
+      text-align:center;
+    }
 
-.body{
-font-size:var(--body-size);
-line-height:var(--body-line);
-letter-spacing:var(--body-track);
-color:var(--muted-1);
-max-width:60ch;
-margin:auto;
-}
+    .hero{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      min-height:355px;
+    }
 
-.email{
-font-size:13px;
-letter-spacing:.12em;
-text-decoration:none;
-color:var(--muted-2);
-}
+    .logoBox{
+      height:var(--logo-line-h);
+      min-height:var(--logo-line-h);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
 
-.email:hover{color:var(--fg)}
+    .logo{
+      margin:0;
+      font-size:var(--logo-size);
+      line-height:1;
+      letter-spacing:var(--logo-track);
+      padding-left:var(--logo-pad);
+      white-space:nowrap;
+      font-weight:700;
+    }
 
-</style>
+    .logo .brand{ color:var(--fg); }
+    .logo .division{ color:var(--fg-soft); }
+
+    .subtitle{
+      margin:var(--sub-gap) 0 0;
+      max-width:60ch;
+      min-height:56px;
+      font-size:var(--sub-size);
+      line-height:var(--sub-line);
+      letter-spacing:var(--sub-track);
+      color:var(--muted-1);
+      text-align:center;
+    }
+
+    .nav{
+      margin-top:var(--nav-gap);
+      min-height:var(--nav-line-h);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:22px;
+      flex-wrap:wrap;
+    }
+
+    .nav button{
+      background:transparent;
+      border:0;
+      padding:0;
+      cursor:pointer;
+      font-size:var(--nav-size);
+      letter-spacing:var(--nav-track);
+      text-transform:uppercase;
+      color:var(--muted-3);
+      transition:color 180ms ease;
+      position:relative;
+    }
+
+    .nav button:hover{ color:var(--fg); }
+
+    .nav button.active{
+      color:rgba(0,0,0,0.82);
+    }
+
+    .nav button.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-4px;
+      height:1px;
+      background:rgba(0,0,0,0.22);
+    }
+
+    .locationStatic{
+      margin:var(--loc-gap) 0 0;
+      min-height:20px;
+      font-size:var(--loc-size);
+      line-height:1.7;
+      letter-spacing:var(--loc-track);
+      text-transform:uppercase;
+      color:var(--muted-3);
+      text-align:center;
+    }
+
+    .panel{
+      width:min(var(--panel-width), 100%);
+      min-height:var(--panel-min-h);
+      margin:24px auto 0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+
+    .panelInner{
+      width:100%;
+      display:grid;
+      gap:var(--panel-gap);
+      justify-items:center;
+    }
+
+    .body{
+      margin:0;
+      max-width:60ch;
+      font-size:var(--body-size);
+      line-height:var(--body-line);
+      letter-spacing:var(--body-track);
+      color:var(--muted-1);
+      text-align:center;
+    }
+
+    .email{
+      font-size:13px;
+      line-height:1.7;
+      letter-spacing:0.12em;
+      text-decoration:none;
+      color:var(--muted-2);
+      transition:color 160ms ease;
+    }
+
+    .email:hover{ color:var(--fg); }
+
+    .swapBox{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+    }
+
+    .swapBox::before{
+      content:"";
+      position:absolute;
+      inset:calc(-1 * var(--swap-inset-y)) calc(-1 * var(--swap-inset-x));
+      background:var(--bg);
+      opacity:0;
+      pointer-events:none;
+    }
+
+    @keyframes curtain{
+      0%   { opacity:0; }
+      45%  { opacity:1; }
+      55%  { opacity:1; }
+      100% { opacity:0; }
+    }
+
+    .swapBox.is-swapping::before{
+      animation:curtain var(--swap-ms) var(--swap-ease) both;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .swapBox.is-swapping::before{ animation:none; opacity:0; }
+    }
+
+    @media (max-width: 720px){
+      :root{
+        --pad-x:22px;
+        --pad-y:40px;
+        --mark-l:18px;
+        --mark-gap:14px;
+        --hero-top:50vh;
+        --logo-size:42px;
+        --logo-track:0.12em;
+        --logo-pad:0.12em;
+        --sub-size:13px;
+        --meta-size:11px;
+        --nav-size:11px;
+        --body-size:13px;
+      }
+
+      .top-left{ left:calc(var(--mark-gap) + 28px); }
+      .top-right{ right:calc(var(--mark-gap) + 28px); }
+      .bottom-left{ left:calc(var(--mark-gap) + 28px); }
+      .bottom-right{ right:calc(var(--mark-gap) + 28px); }
+
+      .nav{
+        gap:16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="crop tl" aria-hidden="true"></div>
+  <div class="crop tr" aria-hidden="true"></div>
+  <div class="crop bl" aria-hidden="true"></div>
+  <div class="crop br" aria-hidden="true"></div>
 
-<div class="crop tl"></div>
-<div class="crop tr"></div>
-<div class="crop bl"></div>
-<div class="crop br"></div>
+  <div class="corner top-left">
+    <a class="sister-link" href="https://kuonholdings.com">HOLDINGS</a>
+  </div>
 
-<div class="corner top-left">
-<a class="sister-link" href="https://kuonholdings.com">HOLDINGS</a>
-</div>
+  <div class="corner top-right">
+    <span id="clockText">—</span>
+  </div>
 
-<div class="corner top-right">
-<span id="clockText"></span>
-</div>
+  <div class="corner bottom-left">
+    <span id="footerBrand">KUON</span>
+  </div>
 
-<div class="corner bottom-left">
-<span id="footerBrand">KUON</span>
-</div>
+  <div class="corner bottom-right">
+    <div class="lang-switch" aria-label="Language selector">
+      <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
+    </div>
+  </div>
 
-<div class="corner bottom-right">
-<div class="lang-switch">
-<button class="lang-btn" data-lang="en" aria-current="true">EN</button>
-<span>/</span>
-<button class="lang-btn" data-lang="zh">繁中</button>
-</div>
-</div>
+  <div class="wrap">
+    <main class="center" aria-label="KUON STUDIO">
+      <div class="hero">
+        <div class="logoBox">
+          <h1 class="logo">
+            <span class="brand">KUON</span>
+            <span class="division">STUDIO</span>
+          </h1>
+        </div>
 
-<div class="wrap">
+        <p class="subtitle" id="subtitle">
+          Objects, sound, and spatial design.
+        </p>
 
-<main class="center">
+        <div class="nav" id="nav">
+          <button data-panel="studio" class="active" type="button">STUDIO</button>
+          <button data-panel="work" type="button">WORK</button>
+          <button data-panel="contact" type="button">CONTACT</button>
+        </div>
 
-<div class="logoBox">
-<h1 class="logo">
-<span class="brand">KUON</span>
-<span class="division">STUDIO</span>
-</h1>
-</div>
+        <p class="locationStatic" id="locationStatic">Taipei / London</p>
 
-<p class="subtitle" id="subtitle">
-Objects, sound, and spatial design.
-</p>
+        <div class="panel">
+          <div class="swapBox" id="panelSwap">
+            <div id="panelInner" class="panelInner"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 
-<div class="nav">
-<button data-panel="studio" class="active">Studio</button>
-<button data-panel="work">Work</button>
-<button data-panel="contact">Contact</button>
-</div>
+  <script>
+    const prefersReducedMotion =
+      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-<div class="panel">
-<div id="panelContent" class="body"></div>
-</div>
+    const SWAP_TOTAL_MS = 1200;
+    const SWAP_AT_MS = Math.round(SWAP_TOTAL_MS * 0.50);
 
-</main>
-</div>
+    const CONTENT = {
+      "en": {
+        htmlLang: "en",
+        footerBrand: "KUON",
+        subtitle: "Objects, sound, and spatial design.",
+        location: "Taipei / London",
+        nav: {
+          studio: "STUDIO",
+          work: "WORK",
+          contact: "CONTACT"
+        },
+        panels: {
+          studio: `
+            <p class="body">
+              KUON Studio explores product, sound, and spatial ideas through design research and development.
+            </p>
+          `,
+          work: `
+            <p class="body">
+              Selected work includes Neostein, ongoing instrument studies, and experimental audio objects.
+            </p>
+          `,
+          contact: `
+            <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
+          `
+        },
+        clockZone: "Europe/London",
+        clockLabel: "LDN"
+      },
 
-<script>
+      "zh-Hant": {
+        htmlLang: "zh-Hant",
+        footerBrand: "久音",
+        subtitle: "物件、聲音與空間設計。",
+        location: "台北 / 倫敦",
+        nav: {
+          studio: "工作室",
+          work: "作品",
+          contact: "聯絡"
+        },
+        panels: {
+          studio: `
+            <p class="body">
+              KUON Studio 專注於產品、聲音與空間概念的設計研究與開發。
+            </p>
+          `,
+          work: `
+            <p class="body">
+              代表性項目包括 Neostein、持續進行中的樂器研究，以及實驗性聲音物件。
+            </p>
+          `,
+          contact: `
+            <a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>
+          `
+        },
+        clockZone: "Asia/Taipei",
+        clockLabel: "TPE"
+      }
+    };
 
-const CONTENT = {
+    let currentLang = "en";
+    let currentPanel = "studio";
 
-en:{
-subtitle:"Objects, sound, and spatial design.",
+    const clockText = document.getElementById("clockText");
+    const footerBrand = document.getElementById("footerBrand");
+    const subtitle = document.getElementById("subtitle");
+    const locationStatic = document.getElementById("locationStatic");
+    const panelInner = document.getElementById("panelInner");
+    const panelSwap = document.getElementById("panelSwap");
+    const navButtons = Array.from(document.querySelectorAll(".nav button"));
+    const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
 
-studio:`KUON Studio explores product, sound, and spatial ideas through design research and development.`,
+    function partsForTZ(date, timeZone){
+      const fmt = new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
+      const parts = fmt.formatToParts(date);
+      const get = (type) => parts.find(p => p.type === type)?.value || "";
+      return {
+        Y: get("year"),
+        M: get("month"),
+        D: get("day"),
+        h: get("hour"),
+        m: get("minute")
+      };
+    }
 
-work:`Selected work includes Neostein, ongoing instrument studies, and experimental audio objects.`,
+    function formatClock(date, langKey){
+      const { clockZone, clockLabel } = CONTENT[langKey];
+      const p = partsForTZ(date, clockZone);
+      return `${p.Y}.${p.M}.${p.D} ${p.h}:${p.m} ${clockLabel}`;
+    }
 
-contact:`<a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>`,
+    function updateClock(){
+      clockText.textContent = formatClock(new Date(), currentLang);
+    }
 
-footer:"KUON",
+    function startCurtain(box){
+      box.classList.remove("is-swapping");
+      void box.offsetWidth;
+      box.classList.add("is-swapping");
+    }
 
-clockZone:"Asia/Taipei",
-clockLabel:"TPE"
+    function stopCurtain(box){
+      box.classList.remove("is-swapping");
+    }
 
-},
+    function curtainSwap(boxes, applyNewContent){
+      if (prefersReducedMotion){
+        applyNewContent();
+        return;
+      }
+      boxes.forEach(startCurtain);
+      setTimeout(applyNewContent, SWAP_AT_MS);
+      setTimeout(() => boxes.forEach(stopCurtain), SWAP_TOTAL_MS);
+    }
 
-zh:{
-subtitle:"物件、聲音與空間設計。",
+    function setActiveLang(langKey){
+      langButtons.forEach(btn => {
+        if (btn.dataset.lang === langKey) {
+          btn.setAttribute("aria-current", "true");
+        } else {
+          btn.removeAttribute("aria-current");
+        }
+      });
+    }
 
-studio:`KUON Studio 專注於產品、聲音與空間概念的設計研究與開發。`,
+    function setActivePanel(panelKey){
+      navButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.panel === panelKey);
+      });
+    }
 
-work:`代表性項目包括 Neostein、樂器研究以及實驗性聲音裝置。`,
+    function renderPanel(panelKey){
+      panelInner.innerHTML = CONTENT[currentLang].panels[panelKey];
+      setActivePanel(panelKey);
+    }
 
-contact:`<a class="email" href="mailto:info@kuon.studio">info@kuon.studio</a>`,
+    function applyLanguage(langKey){
+      const c = CONTENT[langKey];
+      document.documentElement.lang = c.htmlLang;
+      footerBrand.textContent = c.footerBrand;
+      subtitle.textContent = c.subtitle;
+      locationStatic.textContent = c.location;
 
-footer:"久音",
+      navButtons.forEach(btn => {
+        const key = btn.dataset.panel;
+        btn.textContent = c.nav[key];
+      });
 
-clockZone:"Asia/Taipei",
-clockLabel:"TPE"
-}
+      renderPanel(currentPanel);
+      setActiveLang(langKey);
+      updateClock();
+    }
 
-}
+    function setLanguage(langKey){
+      if (!CONTENT[langKey] || langKey === currentLang) return;
+      currentLang = langKey;
 
-let currentLang="en"
-let currentPanel="studio"
+      curtainSwap([panelSwap], () => {
+        applyLanguage(langKey);
+      });
+    }
 
-const panel=document.getElementById("panelContent")
-const subtitle=document.getElementById("subtitle")
-const footerBrand=document.getElementById("footerBrand")
+    function setPanel(panelKey){
+      if (!CONTENT[currentLang].panels[panelKey] || panelKey === currentPanel) return;
+      currentPanel = panelKey;
 
-function render(){
-const c=CONTENT[currentLang]
-subtitle.textContent=c.subtitle
-panel.innerHTML=c[currentPanel]
-footerBrand.textContent=c.footer
-}
+      curtainSwap([panelSwap], () => {
+        renderPanel(panelKey);
+      });
+    }
 
-document.querySelectorAll(".nav button").forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"))
-btn.classList.add("active")
-currentPanel=btn.dataset.panel
-render()
-}
-})
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        setPanel(btn.dataset.panel);
+      });
+    });
 
-document.querySelectorAll(".lang-btn").forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll(".lang-btn").forEach(b=>b.removeAttribute("aria-current"))
-btn.setAttribute("aria-current","true")
-currentLang=btn.dataset.lang
-render()
-}
-})
+    langButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        setLanguage(btn.dataset.lang);
+      });
+    });
 
-function updateClock(){
-const c=CONTENT[currentLang]
-
-const fmt=new Intl.DateTimeFormat("en-GB",{
-timeZone:c.clockZone,
-year:"numeric",
-month:"2-digit",
-day:"2-digit",
-hour:"2-digit",
-minute:"2-digit",
-hour12:false
-})
-
-document.getElementById("clockText").textContent=
-fmt.format(new Date())+" "+c.clockLabel
-}
-
-render()
-updateClock()
-setInterval(updateClock,10000)
-
-</script>
-
+    applyLanguage("en");
+    updateClock();
+    setInterval(updateClock, 10000);
+  </script>
 </body>
 </html>
