@@ -12,41 +12,48 @@
       --bg:#f5f4f1;
       --panel:#f6f5f2;
       --ink:#111111;
-      --ink-soft:#6e6e6e;
+      --ink-soft:#6f6f6f;
       --ink-mid:#8f8f8f;
-      --line:#d8d6d1;
-      --placeholder:#d4d1cb;
+      --line:#202020;
+      --placeholder:#d6d3ce;
+      --placeholder-2:#e3e1dc;
 
       --frame-radius:16px;
-      --inner-pad:46px;
+      --inner-pad:48px;
 
-      --brand-size:34px;
+      --brand-size:35px;
       --brand-track:0.02em;
 
       --utility-size:13px;
       --utility-gap:10px;
 
-      --title-size:74px;
-      --title-line:0.95;
-      --title-max:700px;
+      --hero-size:76px;
+      --hero-line:0.93;
+      --hero-max:360px;
 
       --body-size:15px;
-      --body-line:1.62;
-      --body-max:560px;
+      --body-line:1.65;
+      --body-max:390px;
 
       --switch-size:15px;
-      --switch-gap:24px;
+      --switch-gap:26px;
 
       --meta-size:16px;
       --social-size:18px;
 
-      --content-max:1380px;
-      --content-gap:88px;
+      --content-max:1460px;
+      --main-gap:44px;
 
-      --image-w:560px;
-      --image-ratio:1.72 / 1;
+      --left-col:420px;
+      --text-col:320px;
+      --rule-col:28px;
+      --media-col:620px;
 
-      --swap-ms:520ms;
+      --media-landscape-ratio:1.72 / 1;
+      --portrait-w:210px;
+      --portrait-ratio:0.76 / 1;
+
+      --swap-ms:480ms;
       --swap-ease:cubic-bezier(.22,.61,.36,1);
     }
 
@@ -62,9 +69,7 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
-    body{
-      padding:12px;
-    }
+    body{ padding:12px; }
 
     .frame{
       min-height:calc(100vh - 24px);
@@ -78,27 +83,26 @@
       min-height:calc(100vh - 24px);
       padding:var(--inner-pad);
       display:grid;
-      grid-template-columns:1fr;
       grid-template-rows:auto 1fr auto;
       row-gap:36px;
     }
 
-    /* top band */
-    .top{
+    .top,
+    .main,
+    .bottom{
       width:min(100%, var(--content-max));
       margin:0 auto;
+    }
+
+    .top{
       display:grid;
-      grid-template-columns:minmax(0, 1fr) auto;
+      grid-template-columns:1fr auto;
       align-items:start;
       gap:24px;
     }
 
-    .top-left{
-      align-self:start;
-      padding-top:18px;
-    }
-
     .brand{
+      padding-top:18px;
       font-size:var(--brand-size);
       font-weight:700;
       letter-spacing:var(--brand-track);
@@ -111,13 +115,8 @@
       color:var(--ink-soft);
     }
 
-    .top-right{
-      align-self:start;
-      justify-self:end;
-      padding-top:22px;
-    }
-
     .utility{
+      padding-top:22px;
       display:flex;
       flex-wrap:wrap;
       align-items:center;
@@ -143,40 +142,61 @@
     }
 
     .utility a:hover,
-    .utility button:hover{
-      color:var(--ink);
-    }
+    .utility button:hover{ color:var(--ink); }
 
     .utility .sep{
       color:#b8b5b0;
       pointer-events:none;
     }
 
-    .lang-btn[aria-current="true"]{
-      color:var(--ink);
-    }
+    .lang-btn[aria-current="true"]{ color:var(--ink); }
 
-    /* main band */
     .main{
-      width:min(100%, var(--content-max));
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:minmax(0, 1fr) var(--image-w);
-      column-gap:var(--content-gap);
-      align-items:center;
       align-self:center;
+      display:grid;
+      grid-template-columns:var(--left-col) var(--rule-col) var(--text-col) var(--media-col);
+      column-gap:var(--main-gap);
+      align-items:start;
+      min-height:540px;
     }
 
-    .content{
-      max-width:var(--body-max);
-      justify-self:start;
+    .heroBlock{
+      grid-column:1;
+      align-self:start;
+      padding-top:34px;
     }
 
-    .panel{
-      position:relative;
-      min-height:420px;
+    .heroTitle{
+      margin:0;
+      max-width:var(--hero-max);
+      font-size:var(--hero-size);
+      line-height:var(--hero-line);
+      letter-spacing:-0.055em;
+      font-weight:600;
+    }
+
+    .ruleWrap{
+      grid-column:2;
       display:flex;
-      align-items:center;
+      justify-content:center;
+      align-self:stretch;
+      min-height:100%;
+      padding-top:24px;
+    }
+
+    .vRule{
+      width:2px;
+      height:68%;
+      min-height:470px;
+      background:var(--line);
+      opacity:0.95;
+    }
+
+    .textBlock{
+      grid-column:3;
+      align-self:start;
+      padding-top:286px;
+      max-width:var(--body-max);
     }
 
     .panelFade{
@@ -192,15 +212,6 @@
       transform:translateY(10px);
     }
 
-    .title{
-      margin:0 0 34px 0;
-      font-size:var(--title-size);
-      line-height:var(--title-line);
-      letter-spacing:-0.05em;
-      font-weight:600;
-      max-width:var(--title-max);
-    }
-
     .copy p{
       margin:0 0 22px 0;
       font-size:var(--body-size);
@@ -208,39 +219,53 @@
       color:#2c2c2c;
     }
 
-    .copy p:last-child{
-      margin-bottom:0;
-    }
+    .copy p:last-child{ margin-bottom:0; }
 
-    .media{
-      width:100%;
-      max-width:var(--image-w);
-      justify-self:end;
-      align-self:center;
-    }
-
-    .image-box{
+    .mediaBlock{
+      grid-column:4;
+      align-self:start;
+      padding-top:168px;
       width:100%;
     }
 
-    .image-placeholder{
+    .mediaStage{
+      position:relative;
       width:100%;
-      aspect-ratio:var(--image-ratio);
-      background:var(--placeholder);
+    }
+
+    .imageLandscape{
+      width:100%;
+      aspect-ratio:var(--media-landscape-ratio);
       border-radius:8px;
+      background:var(--placeholder-2);
       transition:
         background var(--swap-ms) var(--swap-ease),
         opacity var(--swap-ms) var(--swap-ease),
         transform var(--swap-ms) var(--swap-ease);
     }
 
-    .image-placeholder.is-swapping{
+    .imagePortrait{
+      position:absolute;
+      right:44px;
+      top:34px;
+      width:var(--portrait-w);
+      aspect-ratio:var(--portrait-ratio);
+      border-radius:8px;
+      background:var(--placeholder);
+      transition:
+        background var(--swap-ms) var(--swap-ease),
+        opacity var(--swap-ms) var(--swap-ease),
+        transform var(--swap-ms) var(--swap-ease);
+    }
+
+    .imageLandscape.is-swapping,
+    .imagePortrait.is-swapping{
       opacity:0;
       transform:translateY(10px);
     }
 
     .caption{
-      margin-top:12px;
+      margin-top:14px;
       font-size:14px;
       color:var(--ink-soft);
       transition:
@@ -277,13 +302,9 @@
       transition:color 180ms ease;
     }
 
-    .switcher button:hover{
-      color:var(--ink);
-    }
+    .switcher button:hover{ color:var(--ink); }
 
-    .switcher button.active{
-      color:var(--ink);
-    }
+    .switcher button.active{ color:var(--ink); }
 
     .switcher button.active::after{
       content:"";
@@ -295,21 +316,17 @@
       background:var(--ink);
     }
 
-    /* bottom band */
     .bottom{
-      width:min(100%, var(--content-max));
-      margin:0 auto;
       display:grid;
-      grid-template-columns:minmax(0, 1fr) auto;
+      grid-template-columns:1fr auto;
       align-items:end;
       gap:24px;
     }
 
-    .footer-left{
+    .footerLeft{
       display:flex;
       flex-direction:column;
       gap:18px;
-      align-self:end;
       padding-bottom:10px;
     }
 
@@ -333,32 +350,39 @@
       color:var(--ink-soft);
     }
 
-    .footer-right{
-      align-self:end;
-      justify-self:end;
+    .footerRight{
       font-size:var(--meta-size);
       color:var(--ink-soft);
       padding-bottom:10px;
+      justify-self:end;
     }
 
-    @media (max-width: 1380px){
+    @media (max-width: 1500px){
       :root{
-        --content-max:1220px;
-        --title-size:64px;
-        --image-w:500px;
-        --content-gap:56px;
+        --content-max:1320px;
+        --hero-size:68px;
+        --left-col:370px;
+        --text-col:300px;
+        --media-col:540px;
+        --main-gap:34px;
       }
     }
 
-    @media (max-width: 1120px){
+    @media (max-width: 1220px){
       :root{
-        --title-size:56px;
-        --image-w:440px;
-        --content-gap:40px;
+        --hero-size:58px;
+        --left-col:320px;
+        --text-col:280px;
+        --media-col:460px;
+        --portrait-w:180px;
       }
+
+      .textBlock{ padding-top:236px; }
+      .mediaBlock{ padding-top:156px; }
+      .vRule{ min-height:420px; }
     }
 
-    @media (max-width: 920px){
+    @media (max-width: 980px){
       body{ padding:0; }
 
       .frame{
@@ -368,8 +392,6 @@
 
       .inner{
         min-height:100vh;
-        grid-template-rows:auto auto auto;
-        row-gap:28px;
         padding:34px 24px 32px;
       }
 
@@ -377,11 +399,6 @@
       .bottom{
         width:100%;
         grid-template-columns:1fr;
-      }
-
-      .top-right,
-      .footer-right{
-        justify-self:start;
       }
 
       .utility{
@@ -392,27 +409,45 @@
       .main{
         width:100%;
         grid-template-columns:1fr;
-        row-gap:28px;
+        row-gap:26px;
       }
 
-      .content,
-      .media{
-        max-width:none;
-        justify-self:stretch;
+      .heroBlock,
+      .ruleWrap,
+      .textBlock,
+      .mediaBlock{
+        grid-column:1;
+        padding:0;
       }
 
-      .panel{
-        min-height:auto;
-      }
-
-      .title{
+      .heroTitle{
         max-width:none;
         font-size:46px;
-        margin-bottom:24px;
       }
 
-      .switcher{
-        gap:20px;
+      .ruleWrap{
+        justify-content:flex-start;
+      }
+
+      .vRule{
+        width:100%;
+        height:1px;
+        min-height:1px;
+      }
+
+      .mediaBlock{
+        max-width:none;
+      }
+
+      .imagePortrait{
+        right:20px;
+        top:20px;
+        width:32%;
+        min-width:140px;
+      }
+
+      .footerRight{
+        justify-self:start;
       }
     }
   </style>
@@ -421,43 +456,43 @@
   <div class="frame">
     <div class="inner">
       <div class="top">
-        <div class="top-left">
-          <div class="brand">KUON <span>STUDIO</span></div>
-        </div>
+        <div class="brand">KUON <span>STUDIO</span></div>
 
-        <div class="top-right">
-          <div class="utility" aria-label="Secondary links">
-            <a href="#">Holdings</a>
-            <span class="sep">/</span>
-            <span id="utilityLocation">Taipei / London</span>
-            <span class="sep">/</span>
-            <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
-            <span class="sep">/</span>
-            <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
-          </div>
+        <div class="utility" aria-label="Secondary links">
+          <a href="#">Holdings</a>
+          <span class="sep">/</span>
+          <span id="utilityLocation">Taipei / London</span>
+          <span class="sep">/</span>
+          <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
+          <span class="sep">/</span>
+          <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
         </div>
       </div>
 
       <div class="main">
-        <div class="content">
-          <div class="panel">
-            <div id="textPanel" class="panelFade">
-              <h1 class="title" id="title">Sound Architecture Practice</h1>
+        <div class="heroBlock">
+          <h1 class="heroTitle" id="heroTitle">Sound Architecture Practice</h1>
+        </div>
 
-              <div class="copy" id="copy">
-                <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
-                <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
-                <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
-              </div>
-            </div>
+        <div class="ruleWrap" aria-hidden="true">
+          <div class="vRule"></div>
+        </div>
+
+        <div class="textBlock">
+          <div id="textPanel" class="panelFade copy">
+            <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
+            <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
+            <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
           </div>
         </div>
 
-        <div class="media">
-          <div class="image-box">
-            <div id="imagePlaceholder" class="image-placeholder" aria-hidden="true"></div>
-            <div id="caption" class="caption">Studio image placeholder</div>
+        <div class="mediaBlock">
+          <div class="mediaStage">
+            <div id="imageLandscape" class="imageLandscape" aria-hidden="true"></div>
+            <div id="imagePortrait" class="imagePortrait" aria-hidden="true"></div>
           </div>
+
+          <div id="caption" class="caption">Studio image placeholder</div>
 
           <div class="switcher" aria-label="Section switcher">
             <button type="button" class="active" data-panel="studio">Studio</button>
@@ -469,7 +504,7 @@
       </div>
 
       <div class="bottom">
-        <div class="footer-left">
+        <div class="footerLeft">
           <div class="social" aria-label="Social links">
             <span>◌</span>
             <span>⌘</span>
@@ -478,7 +513,7 @@
           <div class="location" id="footerLocation">Taipei / London</div>
         </div>
 
-        <div class="footer-right">© KUON 2026</div>
+        <div class="footerRight">© KUON 2026</div>
       </div>
     </div>
   </div>
@@ -497,7 +532,8 @@
               "Building work across Neostein, instrument studies, and future spatial audio concepts."
             ],
             caption: "Studio image placeholder",
-            color: "#d4d1cb"
+            landscape: "#e3e1dc",
+            portrait: "#d6d3ce"
           },
           work: {
             label: "Work",
@@ -508,7 +544,8 @@
               "This section can later expand into individual case studies with imagery, captions, and technical notes."
             ],
             caption: "Work image placeholder",
-            color: "#cbc8c2"
+            landscape: "#ddd9d2",
+            portrait: "#cfcac3"
           },
           research: {
             label: "Research",
@@ -519,7 +556,8 @@
               "This area can eventually host notes, diagrams, prototypes, and short essays."
             ],
             caption: "Research image placeholder",
-            color: "#d8d5cf"
+            landscape: "#e4e0d8",
+            portrait: "#d3cec7"
           },
           contact: {
             label: "Contact",
@@ -530,7 +568,8 @@
               "For now, this page can remain direct and restrained."
             ],
             caption: "Contact image placeholder",
-            color: "#cfccc6"
+            landscape: "#dedad4",
+            portrait: "#cbc6c0"
           }
         }
       },
@@ -546,7 +585,8 @@
               "目前的工作橫跨 Neostein、樂器研究，以及未來空間音響概念。"
             ],
             caption: "Studio 圖像預留區",
-            color: "#d4d1cb"
+            landscape: "#e3e1dc",
+            portrait: "#d6d3ce"
           },
           work: {
             label: "Work",
@@ -557,7 +597,8 @@
               "未來可在此延伸為個別案例頁面，加入圖像、說明與技術筆記。"
             ],
             caption: "Work 圖像預留區",
-            color: "#cbc8c2"
+            landscape: "#ddd9d2",
+            portrait: "#cfcac3"
           },
           research: {
             label: "Research",
@@ -568,7 +609,8 @@
               "未來此區可放入筆記、圖表、原型與短篇文字。"
             ],
             caption: "Research 圖像預留區",
-            color: "#d8d5cf"
+            landscape: "#e4e0d8",
+            portrait: "#d3cec7"
           },
           contact: {
             label: "Contact",
@@ -579,7 +621,8 @@
               "目前則可維持直接、克制的形式。"
             ],
             caption: "Contact 圖像預留區",
-            color: "#cfccc6"
+            landscape: "#dedad4",
+            portrait: "#cbc6c0"
           }
         }
       }
@@ -588,11 +631,11 @@
     let currentLang = "en";
     let currentPanel = "studio";
 
-    const titleEl = document.getElementById("title");
-    const copyEl = document.getElementById("copy");
+    const heroTitle = document.getElementById("heroTitle");
+    const textPanel = document.getElementById("textPanel");
     const captionEl = document.getElementById("caption");
-    const imageEl = document.getElementById("imagePlaceholder");
-    const textPanelEl = document.getElementById("textPanel");
+    const imageLandscape = document.getElementById("imageLandscape");
+    const imagePortrait = document.getElementById("imagePortrait");
     const switchButtons = Array.from(document.querySelectorAll(".switcher button"));
     const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
     const utilityLocation = document.getElementById("utilityLocation");
@@ -600,10 +643,11 @@
 
     function renderPanel() {
       const data = CONTENT[currentLang].panels[currentPanel];
-      titleEl.textContent = data.title;
-      copyEl.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
+      heroTitle.textContent = data.title;
+      textPanel.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
       captionEl.textContent = data.caption;
-      imageEl.style.background = data.color;
+      imageLandscape.style.background = data.landscape;
+      imagePortrait.style.background = data.portrait;
     }
 
     function setActivePanel() {
@@ -634,17 +678,19 @@
       if (panelKey === currentPanel) return;
       currentPanel = panelKey;
 
-      textPanelEl.classList.add("is-swapping");
-      imageEl.classList.add("is-swapping");
+      textPanel.classList.add("is-swapping");
+      imageLandscape.classList.add("is-swapping");
+      imagePortrait.classList.add("is-swapping");
       captionEl.classList.add("is-swapping");
 
       setTimeout(() => {
         renderPanel();
         setActivePanel();
-        textPanelEl.classList.remove("is-swapping");
-        imageEl.classList.remove("is-swapping");
+        textPanel.classList.remove("is-swapping");
+        imageLandscape.classList.remove("is-swapping");
+        imagePortrait.classList.remove("is-swapping");
         captionEl.classList.remove("is-swapping");
-      }, 260);
+      }, 240);
     }
 
     function setLanguage(langKey) {
