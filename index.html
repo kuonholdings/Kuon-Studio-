@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KUON STUDIO</title>
-  <meta name="description" content="KUON Studio — Sound Architecture Practice" />
+  <title>KUON</title>
   <meta name="theme-color" content="#f5f4f1" />
 
   <style>
@@ -38,11 +37,11 @@
       --hero-size:74px;
       --hero-line:0.92;
       --hero-max:300px;
-      --hero-top:22px;
+      --hero-top:40px;
 
       --index-size:16px;
       --index-line:1.55;
-      --index-top:92px;
+      --index-top:108px;
 
       --kicker-size:11px;
       --kicker-track:0.16em;
@@ -57,7 +56,7 @@
 
       --image-w:430px;
       --image-ratio:0.78 / 1;
-      --image-top:88px;
+      --image-top:64px;
 
       --rule-height:470px;
       --media-height:560px;
@@ -92,6 +91,110 @@
       border:1px solid rgba(0,0,0,0.04);
       border-radius:var(--frame-radius);
       overflow:hidden;
+      position:relative;
+    }
+
+    /* ENTRY PAGE */
+
+    .entry{
+      position:absolute;
+      inset:0;
+      background:var(--panel);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:20;
+      opacity:1;
+      visibility:visible;
+      transition:
+        opacity 480ms cubic-bezier(.22,.61,.36,1),
+        visibility 0s linear 0s;
+    }
+
+    .entry.hidden{
+      opacity:0;
+      visibility:hidden;
+      transition:
+        opacity 480ms cubic-bezier(.22,.61,.36,1),
+        visibility 0s linear 480ms;
+      pointer-events:none;
+    }
+
+    .entry-inner{
+      width:min(100%, 900px);
+      padding:40px 24px;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:28px;
+    }
+
+    .entry-mark{
+      font-size:88px;
+      line-height:0.95;
+      letter-spacing:-0.06em;
+      font-weight:600;
+      margin:0;
+    }
+
+    .entry-sub{
+      font-size:15px;
+      letter-spacing:0.16em;
+      text-transform:uppercase;
+      color:var(--ink-mid);
+    }
+
+    .entry-links{
+      display:flex;
+      gap:28px;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .entry-links button,
+    .entry-links a{
+      appearance:none;
+      background:none;
+      border:none;
+      padding:0;
+      margin:0;
+      font:inherit;
+      font-size:18px;
+      color:var(--ink);
+      cursor:pointer;
+      text-decoration:none;
+      position:relative;
+    }
+
+    .entry-links button::after,
+    .entry-links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-8px;
+      height:1px;
+      background:transparent;
+      transition:background 160ms ease;
+    }
+
+    .entry-links button:hover::after,
+    .entry-links a:hover::after{
+      background:var(--ink);
+    }
+
+    /* STUDIO PAGE */
+
+    .studio-page{
+      opacity:1;
+      transition:opacity 380ms cubic-bezier(.22,.61,.36,1);
+    }
+
+    .studio-page.hidden{
+      opacity:0;
+      pointer-events:none;
     }
 
     .inner{
@@ -477,6 +580,10 @@
         border-radius:0;
       }
 
+      .entry-mark{
+        font-size:58px;
+      }
+
       .inner{
         padding:34px 24px 32px;
       }
@@ -555,92 +662,105 @@
 </head>
 <body>
   <div class="frame">
-    <div class="inner">
-      <div class="top">
-        <div class="brand">
-          KUON <span>STUDIO</span>
-          <span class="brand-location">| TAIPEI–LONDON</span>
-        </div>
-
-        <div class="utility" aria-label="Secondary links">
-          <a href="https://kuonholdings.com">Holdings</a>
-          <span class="sep">/</span>
-          <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
-          <span class="sep">/</span>
-          <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
+    <div id="entryPage" class="entry">
+      <div class="entry-inner">
+        <h1 class="entry-mark">KUON</h1>
+        <div class="entry-sub">Taipei–London</div>
+        <div class="entry-links">
+          <button type="button" id="enterStudio">Studio</button>
+          <a href="https://kuonholdings.com">KUON Holdings</a>
         </div>
       </div>
+    </div>
 
-      <div class="main">
-        <div class="heroBlock">
-          <h1 class="heroTitle" id="heroTitle">Sound Architecture Practice</h1>
-        </div>
-
-        <div class="ruleWrap" aria-hidden="true">
-          <div class="vRule"></div>
-        </div>
-
-        <div class="middleBlock">
-          <div class="index" aria-label="Section index">
-            <button type="button" class="active" data-panel="studio">Studio</button>
-            <button type="button" data-panel="work">Work</button>
-            <button type="button" data-panel="research">Research</button>
-            <button type="button" data-panel="contact">Contact</button>
+    <div id="studioPage" class="studio-page hidden">
+      <div class="inner">
+        <div class="top">
+          <div class="brand">
+            KUON <span>STUDIO</span>
+            <span class="brand-location">| TAIPEI–LONDON</span>
           </div>
 
-          <div id="textPanel" class="textPanel">
-            <p class="kicker" id="kicker">Studio</p>
-            <div class="copy" id="copy">
-              <p>KUON Studio explores sound, form, and spatial systems.</p>
-              <p>Work spans product design, acoustic architecture, and experimental instruments.</p>
-              <p>Current studies include Neostein, instrument development, and spatial audio concepts.</p>
+          <div class="utility" aria-label="Secondary links">
+            <a href="https://kuonholdings.com">KUON Holdings</a>
+            <span class="sep">/</span>
+            <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
+            <span class="sep">/</span>
+            <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
+          </div>
+        </div>
+
+        <div class="main">
+          <div class="heroBlock">
+            <h1 class="heroTitle" id="heroTitle">Sound Architecture Practice</h1>
+          </div>
+
+          <div class="ruleWrap" aria-hidden="true">
+            <div class="vRule"></div>
+          </div>
+
+          <div class="middleBlock">
+            <div class="index" aria-label="Section index">
+              <button type="button" class="active" data-panel="studio">Studio</button>
+              <button type="button" data-panel="work">Work</button>
+              <button type="button" data-panel="research">Research</button>
+              <button type="button" data-panel="contact">Contact</button>
+            </div>
+
+            <div id="textPanel" class="textPanel">
+              <p class="kicker" id="kicker">Studio</p>
+              <div class="copy" id="copy">
+                <p>KUON Studio explores sound, form, and spatial systems.</p>
+                <p>Work spans product design, acoustic architecture, and experimental instruments.</p>
+                <p>Current studies include Neostein, instrument development, and spatial audio concepts.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mediaBlock">
+            <div id="mediaPanel" class="mediaPanel">
+              <div id="imageState">
+                <div id="imagePortrait" class="imagePortrait" aria-hidden="true"></div>
+                <div id="caption" class="caption">Studio image placeholder</div>
+              </div>
+
+              <form id="contactState" class="contactForm" style="display:none;" onsubmit="event.preventDefault();">
+                <div class="field">
+                  <label for="nameField">Name</label>
+                  <input id="nameField" type="text" />
+                </div>
+
+                <div class="field">
+                  <label for="emailField">Email</label>
+                  <input id="emailField" type="email" />
+                </div>
+
+                <div class="field">
+                  <label for="projectField">Project / Company</label>
+                  <input id="projectField" type="text" />
+                </div>
+
+                <div class="field">
+                  <label for="messageField">Message</label>
+                  <textarea id="messageField"></textarea>
+                </div>
+
+                <button class="sendBtn" type="submit">Send</button>
+              </form>
             </div>
           </div>
         </div>
 
-        <div class="mediaBlock">
-          <div id="mediaPanel" class="mediaPanel">
-            <div id="imageState">
-              <div id="imagePortrait" class="imagePortrait" aria-hidden="true"></div>
-              <div id="caption" class="caption">Studio image placeholder</div>
+        <div class="bottom">
+          <div class="footerLeft">
+            <div class="socialWords" aria-label="Social links">
+              <a href="#">Instagram</a>
+              <a href="#">LinkedIn</a>
             </div>
-
-            <form id="contactState" class="contactForm" style="display:none;" onsubmit="event.preventDefault();">
-              <div class="field">
-                <label for="nameField">Name</label>
-                <input id="nameField" type="text" />
-              </div>
-
-              <div class="field">
-                <label for="emailField">Email</label>
-                <input id="emailField" type="email" />
-              </div>
-
-              <div class="field">
-                <label for="projectField">Project / Company</label>
-                <input id="projectField" type="text" />
-              </div>
-
-              <div class="field">
-                <label for="messageField">Message</label>
-                <textarea id="messageField"></textarea>
-              </div>
-
-              <button class="sendBtn" type="submit">Send</button>
-            </form>
           </div>
-        </div>
-      </div>
 
-      <div class="bottom">
-        <div class="footerLeft">
-          <div class="socialWords" aria-label="Social links">
-            <a href="#">Instagram</a>
-            <a href="#">LinkedIn</a>
-          </div>
+          <div class="footerRight">© KUON 2026</div>
         </div>
-
-        <div class="footerRight">© KUON 2026</div>
       </div>
     </div>
   </div>
@@ -758,6 +878,10 @@
     let currentLang = "en";
     let currentPanel = "studio";
 
+    const entryPage = document.getElementById("entryPage");
+    const studioPage = document.getElementById("studioPage");
+    const enterStudio = document.getElementById("enterStudio");
+
     const heroTitle = document.getElementById("heroTitle");
     const kickerEl = document.getElementById("kicker");
     const textPanel = document.getElementById("textPanel");
@@ -769,6 +893,11 @@
     const contactState = document.getElementById("contactState");
     const indexButtons = Array.from(document.querySelectorAll(".index button"));
     const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
+
+    function openStudio() {
+      entryPage.classList.add("hidden");
+      studioPage.classList.remove("hidden");
+    }
 
     function setActivePanelButtons() {
       indexButtons.forEach(btn => {
@@ -830,6 +959,8 @@
       renderLanguage();
       renderPanel();
     }
+
+    enterStudio.addEventListener("click", openStudio);
 
     indexButtons.forEach(btn => {
       btn.addEventListener("click", () => swapTo(btn.dataset.panel));
