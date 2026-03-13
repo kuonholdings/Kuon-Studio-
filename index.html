@@ -10,41 +10,36 @@
   <style>
     :root{
       --bg:#f5f4f1;
-      --panel:#f7f6f3;
+      --panel:#f6f5f2;
       --ink:#111111;
       --ink-soft:#666666;
-      --ink-mid:#8a8a8a;
-      --line:#d9d7d2;
-      --placeholder:#d6d4cf;
+      --ink-mid:#8b8b8b;
+      --line:#d8d6d1;
+      --placeholder:#d2d0cb;
 
-      --page-pad:26px;
-      --frame-radius:14px;
-      --frame-pad:34px;
+      --frame-radius:16px;
+      --page-pad:28px;
+      --inner-pad:52px;
 
-      --brand-size:26px;
-      --brand-track:0.08em;
+      --brand-size:34px;
+      --brand-track:0.02em;
 
-      --nav-size:13px;
-      --nav-track:0.01em;
+      --nav-size:14px;
+      --nav-gap:32px;
 
-      --title-size:58px;
-      --title-line:0.98;
+      --title-size:72px;
+      --title-line:0.96;
+      --title-max:760px;
 
       --body-size:18px;
       --body-line:1.45;
+      --body-max:620px;
 
-      --meta-size:12px;
-      --meta-track:0.12em;
+      --meta-size:16px;
+      --social-size:18px;
 
-      --button-w:210px;
-      --button-h:74px;
-      --button-radius:999px;
-
-      --image-w:430px;
-      --image-h:320px;
-
-      --hero-top:118px;
-      --right-col-top:182px;
+      --image-w:460px;
+      --image-h:360px;
     }
 
     *{ box-sizing:border-box; }
@@ -65,38 +60,39 @@
 
     .frame{
       min-height:calc(100vh - 24px);
+      background:var(--panel);
       border:1px solid rgba(0,0,0,0.04);
       border-radius:var(--frame-radius);
-      background:var(--panel);
-      position:relative;
       overflow:hidden;
     }
 
     .inner{
       min-height:calc(100vh - 24px);
-      padding:var(--frame-pad);
+      padding:var(--inner-pad);
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) var(--image-w);
+      grid-template-rows:auto auto 1fr auto;
+      column-gap:72px;
+      row-gap:28px;
       position:relative;
     }
 
     .spark{
       position:absolute;
-      top:22px;
+      top:18px;
       left:22px;
-      font-size:28px;
+      font-size:34px;
       line-height:1;
-      color:var(--ink);
-      user-select:none;
     }
 
     .toggle{
       position:absolute;
-      top:22px;
+      top:18px;
       right:22px;
-      width:56px;
-      height:38px;
+      width:64px;
+      height:40px;
       border-radius:999px;
-      background:#d2d2d2;
-      position:relative;
+      background:#d6d6d6;
     }
 
     .toggle::after{
@@ -104,21 +100,22 @@
       position:absolute;
       top:4px;
       left:4px;
-      width:30px;
-      height:30px;
+      width:32px;
+      height:32px;
       border-radius:50%;
       background:#f3f3f3;
       box-shadow:0 1px 2px rgba(0,0,0,0.08);
     }
 
     .brand{
-      position:absolute;
-      top:102px;
-      left:96px;
+      grid-column:1 / 2;
+      grid-row:1;
+      align-self:start;
+      margin-top:52px;
       font-size:var(--brand-size);
+      font-weight:700;
       letter-spacing:var(--brand-track);
       text-transform:uppercase;
-      font-weight:700;
     }
 
     .brand span{
@@ -127,211 +124,135 @@
     }
 
     .nav{
-      position:absolute;
-      top:104px;
-      right:84px;
+      grid-column:2 / 3;
+      grid-row:1;
+      align-self:start;
+      justify-self:end;
+      margin-top:58px;
       display:flex;
-      gap:28px;
-      align-items:center;
+      gap:var(--nav-gap);
+      flex-wrap:wrap;
     }
 
-    .nav button{
-      appearance:none;
-      background:none;
-      border:none;
-      padding:0;
-      margin:0;
-      font:inherit;
-      font-size:var(--nav-size);
+    .nav a{
+      text-decoration:none;
       color:var(--ink);
-      cursor:pointer;
+      font-size:var(--nav-size);
+      line-height:1;
       position:relative;
     }
 
-    .nav button.active::after{
+    .nav a.active::after{
       content:"";
       position:absolute;
       left:0;
       right:0;
-      bottom:-6px;
+      bottom:-8px;
       height:1px;
       background:var(--ink);
     }
 
     .title{
-      position:absolute;
-      top:220px;
-      left:96px;
-      max-width:760px;
+      grid-column:1 / 2;
+      grid-row:2;
+      margin:0;
       font-size:var(--title-size);
       line-height:var(--title-line);
-      letter-spacing:-0.03em;
-      font-weight:500;
-      margin:0;
+      letter-spacing:-0.045em;
+      font-weight:600;
+      max-width:var(--title-max);
+      margin-top:30px;
     }
 
     .copy{
-      position:absolute;
-      top:430px;
-      left:96px;
-      width:min(560px, calc(100vw - 220px));
-      font-size:var(--body-size);
-      line-height:var(--body-line);
-      color:#2b2b2b;
-      margin:0;
+      grid-column:1 / 2;
+      grid-row:3;
+      align-self:start;
+      max-width:var(--body-max);
+      margin-top:12px;
     }
 
     .copy p{
-      margin:0 0 16px 0;
+      margin:0 0 22px 0;
+      font-size:var(--body-size);
+      line-height:var(--body-line);
+      color:#2c2c2c;
     }
 
     .copy p:last-child{
       margin-bottom:0;
     }
 
-    .social{
-      position:absolute;
-      left:96px;
-      bottom:88px;
-      display:flex;
-      gap:24px;
-      align-items:center;
-      color:var(--ink);
-      font-size:22px;
-    }
-
-    .social span{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width:22px;
-      height:22px;
-      font-size:18px;
-      line-height:1;
-    }
-
-    .bottom-left{
-      position:absolute;
-      left:96px;
-      bottom:32px;
-      font-size:18px;
-      color:var(--ink-soft);
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .bottom-right{
-      position:absolute;
-      right:40px;
-      bottom:32px;
-      font-size:18px;
-      color:var(--ink-soft);
-    }
-
-    .menu-stack{
-      position:absolute;
-      top:350px;
-      right:68px;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-      align-items:flex-end;
-    }
-
-    .pill{
-      width:var(--button-w);
-      height:var(--button-h);
-      border-radius:var(--button-radius);
-      border:1px solid #d2d0cb;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:transparent;
-      font-size:24px;
-      line-height:1;
-      font-weight:400;
-      color:var(--ink);
-      cursor:pointer;
-      transition:background 160ms ease, border-color 160ms ease, transform 160ms ease;
-    }
-
-    .pill:hover{
-      background:rgba(0,0,0,0.02);
-      border-color:#c7c4bf;
-      transform:translateX(-2px);
-    }
-
-    .pill.active{
-      border-color:#bbb8b2;
-      background:rgba(0,0,0,0.015);
-    }
-
-    .image-wrap{
-      position:absolute;
-      right:96px;
-      bottom:102px;
-      width:var(--image-w);
+    .media{
+      grid-column:2 / 3;
+      grid-row:2 / 4;
+      align-self:center;
+      justify-self:end;
+      width:100%;
+      max-width:var(--image-w);
     }
 
     .image-placeholder{
       width:100%;
-      height:var(--image-h);
+      aspect-ratio: 1.28 / 1;
       background:var(--placeholder);
       border-radius:8px;
-      border:1px solid rgba(0,0,0,0.04);
     }
 
     .caption{
       margin-top:12px;
       font-size:14px;
       color:var(--ink-soft);
-      letter-spacing:0.01em;
     }
 
-    @media (max-width: 1380px){
+    .footer-left{
+      grid-column:1 / 2;
+      grid-row:4;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      align-self:end;
+      margin-top:12px;
+    }
+
+    .social{
+      display:flex;
+      gap:26px;
+      align-items:center;
+      font-size:var(--social-size);
+      color:var(--ink);
+    }
+
+    .location{
+      font-size:var(--meta-size);
+      color:var(--ink-soft);
+    }
+
+    .footer-right{
+      grid-column:2 / 3;
+      grid-row:4;
+      align-self:end;
+      justify-self:end;
+      font-size:var(--meta-size);
+      color:var(--ink-soft);
+    }
+
+    @media (max-width: 1180px){
       :root{
-        --title-size:48px;
-        --body-size:17px;
-        --image-w:360px;
-        --image-h:270px;
-        --button-w:185px;
-        --button-h:66px;
+        --inner-pad:38px;
+        --title-size:60px;
+        --image-w:380px;
       }
 
-      .title{ max-width:640px; }
-      .copy{ width:min(500px, calc(100vw - 220px)); }
-    }
-
-    @media (max-width: 1120px){
-      .nav{
-        right:40px;
-        gap:18px;
-      }
-
-      .brand,
-      .title,
-      .copy,
-      .social,
-      .bottom-left{
-        left:48px;
-      }
-
-      .image-wrap{
-        right:48px;
-      }
-
-      .menu-stack{
-        right:32px;
-      }
-
-      .title{
-        max-width:580px;
+      .inner{
+        column-gap:44px;
       }
     }
 
     @media (max-width: 920px){
-      body{ padding:0; }
+      body{
+        padding:0;
+      }
 
       .frame{
         min-height:100vh;
@@ -340,80 +261,48 @@
 
       .inner{
         min-height:100vh;
-        padding:28px 22px 36px;
-      }
-
-      .spark{
-        top:18px;
-        left:18px;
-      }
-
-      .toggle{
-        top:18px;
-        right:18px;
-        transform:scale(0.92);
+        grid-template-columns:1fr;
+        grid-template-rows:auto auto auto auto auto;
+        row-gap:24px;
+        padding:84px 24px 32px;
       }
 
       .brand,
       .nav,
       .title,
       .copy,
-      .menu-stack,
-      .image-wrap,
-      .social,
-      .bottom-left,
-      .bottom-right{
-        position:static;
-      }
-
-      .brand{
-        margin-top:62px;
-        margin-left:0;
+      .media,
+      .footer-left,
+      .footer-right{
+        grid-column:1;
+        grid-row:auto;
+        margin:0;
+        justify-self:stretch;
       }
 
       .nav{
-        margin-top:18px;
-        flex-wrap:wrap;
-        gap:14px 22px;
+        justify-self:start;
+        margin-top:6px;
+        gap:22px;
       }
 
       .title{
-        margin-top:34px;
+        font-size:44px;
         max-width:none;
-        font-size:42px;
+        margin-top:12px;
       }
 
       .copy{
-        width:auto;
-        margin-top:24px;
-      }
-
-      .menu-stack{
-        margin-top:30px;
-        align-items:stretch;
-      }
-
-      .pill{
-        width:100%;
         max-width:none;
       }
 
-      .image-wrap{
-        width:100%;
-        margin-top:26px;
+      .media{
+        max-width:none;
+        justify-self:stretch;
       }
 
-      .image-placeholder{
-        height:240px;
-      }
-
-      .social{
-        margin-top:28px;
-      }
-
-      .bottom-left,
-      .bottom-right{
-        margin-top:22px;
+      .footer-right{
+        justify-self:start;
       }
     }
   </style>
@@ -427,10 +316,10 @@
       <div class="brand">KUON <span>STUDIO</span></div>
 
       <nav class="nav" aria-label="Primary">
-        <button type="button" class="active">Studio</button>
-        <button type="button">Work</button>
-        <button type="button">Research</button>
-        <button type="button">Contact</button>
+        <a href="#" class="active">Studio</a>
+        <a href="#">Work</a>
+        <a href="#">Research</a>
+        <a href="#">Contact</a>
       </nav>
 
       <h1 class="title">Sound Architecture Practice</h1>
@@ -441,26 +330,21 @@
         <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
       </div>
 
-      <div class="menu-stack" aria-label="Section shortcuts">
-        <button class="pill active" type="button">Studio</button>
-        <button class="pill" type="button">Work</button>
-        <button class="pill" type="button">Research</button>
-        <button class="pill" type="button">Contact</button>
-      </div>
-
-      <div class="image-wrap">
+      <div class="media">
         <div class="image-placeholder" aria-hidden="true"></div>
         <div class="caption">Image placeholder</div>
       </div>
 
-      <div class="social" aria-label="Social links">
-        <span>◌</span>
-        <span>⌘</span>
-        <span>in</span>
+      <div class="footer-left">
+        <div class="social" aria-label="Social links">
+          <span>◌</span>
+          <span>⌘</span>
+          <span>in</span>
+        </div>
+        <div class="location">Taipei / London</div>
       </div>
 
-      <div class="bottom-left">Taipei / London</div>
-      <div class="bottom-right">© KUON 2026</div>
+      <div class="footer-right">© KUON 2026</div>
     </div>
   </div>
 </body>
