@@ -1,750 +1,508 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KUON STUDIO</title>
-  <meta name="description" content="KUON Studio — Sound Architecture Practice" />
-  <meta name="theme-color" content="#f5f4f1" />
-
-  <style>
-    :root{
-      --bg:#f5f4f1;
-      --panel:#f6f5f2;
-      --ink:#111111;
-      --ink-soft:#6f6f6f;
-      --ink-mid:#939393;
-      --line:#1c1c1c;
-      --placeholder:#d3d1cc;
-
-      --frame-radius:16px;
-      --inner-pad:48px;
-
-      --content-max:1480px;
-      --top-gap:22px;
-      --main-gap:54px;
-
-      --brand-size:28px;
-      --brand-track:0.03em;
-      --brand-loc-size:14px;
-      --brand-loc-track:0.12em;
-
-      --utility-size:14px;
-      --utility-gap:10px;
-
-      --left-col:390px;
-      --rule-col:20px;
-      --middle-col:310px;
-      --right-col:470px;
-
-      --hero-size:76px;
-      --hero-line:0.92;
-      --hero-max:320px;
-      --hero-top:48px;
-
-      --index-size:16px;
-      --index-line:1.7;
-
-      --kicker-size:12px;
-      --kicker-track:0.16em;
-
-      --body-size:15px;
-      --body-line:1.7;
-      --body-max:310px;
-
-      --meta-size:16px;
-      --social-size:15px;
-      --social-gap:26px;
-
-      --image-w:470px;
-      --image-ratio:0.78 / 1;
-      --image-top:112px;
-
-      --swap-ms:420ms;
-      --swap-ease:cubic-bezier(.22,.61,.36,1);
-    }
-
-    *{ box-sizing:border-box; }
-
-    html, body{
-      margin:0;
-      min-height:100%;
-      background:var(--bg);
-      color:var(--ink);
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    body{
-      padding:12px;
-    }
-
-    .frame{
-      min-height:calc(100vh - 24px);
-      background:var(--panel);
-      border:1px solid rgba(0,0,0,0.04);
-      border-radius:var(--frame-radius);
-      overflow:hidden;
-    }
-
-    .inner{
-      min-height:calc(100vh - 24px);
-      padding:var(--inner-pad);
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-      row-gap:34px;
-    }
-
-    .top,
-    .main,
-    .bottom{
-      width:min(100%, var(--content-max));
-      margin:0 auto;
-    }
-
-    .top{
-      display:grid;
-      grid-template-columns:1fr auto;
-      align-items:start;
-      gap:24px;
-      padding-top:var(--top-gap);
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-      font-size:var(--brand-size);
-      font-weight:700;
-      letter-spacing:var(--brand-track);
-      text-transform:uppercase;
-      line-height:1;
-      white-space:nowrap;
-    }
-
-    .brand span{
-      font-weight:400;
-      color:var(--ink-soft);
-    }
-
-    .brand-location{
-      font-size:var(--brand-loc-size);
-      letter-spacing:var(--brand-loc-track);
-      color:#8e8e8e;
-      font-weight:400;
-    }
-
-    .utility{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-      gap:var(--utility-gap);
-      font-size:var(--utility-size);
-      line-height:1.3;
-      color:var(--ink-soft);
-      text-align:right;
-    }
-
-    .utility a,
-    .utility button{
-      appearance:none;
-      background:none;
-      border:none;
-      padding:0;
-      margin:0;
-      font:inherit;
-      color:inherit;
-      text-decoration:none;
-      cursor:pointer;
-    }
-
-    .utility a:hover,
-    .utility button:hover{
-      color:var(--ink);
-    }
-
-    .utility .sep{
-      color:#bbb8b2;
-      pointer-events:none;
-    }
-
-    .lang-btn[aria-current="true"]{
-      color:var(--ink);
-    }
-
-    .main{
-      align-self:center;
-      display:grid;
-      grid-template-columns:var(--left-col) var(--rule-col) var(--middle-col) var(--right-col);
-      column-gap:var(--main-gap);
-      align-items:start;
-      min-height:620px;
-    }
-
-    .heroBlock{
-      grid-column:1;
-      padding-top:var(--hero-top);
-    }
-
-    .heroTitle{
-      margin:0;
-      max-width:var(--hero-max);
-      font-size:var(--hero-size);
-      line-height:var(--hero-line);
-      letter-spacing:-0.058em;
-      font-weight:600;
-    }
-
-    .ruleWrap{
-      grid-column:2;
-      display:flex;
-      justify-content:center;
-      align-self:start;
-      padding-top:18px;
-    }
-
-    .vRule{
-      width:2px;
-      height:594px;
-      background:var(--line);
-      opacity:0.96;
-      transition:height 220ms ease;
-    }
-
-    .middleBlock{
-      grid-column:3;
-      display:grid;
-      grid-template-rows:auto auto;
-      row-gap:106px;
-      padding-top:86px;
-      max-width:var(--body-max);
-    }
-
-    .index{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-      gap:2px;
-    }
-
-    .index button{
-      appearance:none;
-      background:none;
-      border:none;
-      padding:0;
-      margin:0;
-      font:inherit;
-      font-size:var(--index-size);
-      line-height:var(--index-line);
-      font-weight:600;
-      color:var(--ink);
-      cursor:pointer;
-      transition:color 160ms ease;
-      text-align:left;
-    }
-
-    .index button:hover{
-      color:var(--ink-soft);
-    }
-
-    .index button.active{
-      color:var(--ink);
-    }
-
-    .textPanel{
-      opacity:1;
-      transform:translateY(0);
-      transition:
-        opacity var(--swap-ms) var(--swap-ease),
-        transform var(--swap-ms) var(--swap-ease);
-    }
-
-    .textPanel.is-swapping{
-      opacity:0;
-      transform:translateY(10px);
-    }
-
-    .kicker{
-      margin:0 0 18px 0;
-      font-size:var(--kicker-size);
-      line-height:1.3;
-      letter-spacing:var(--kicker-track);
-      text-transform:uppercase;
-      color:var(--ink-mid);
-    }
-
-    .copy p{
-      margin:0 0 22px 0;
-      font-size:var(--body-size);
-      line-height:var(--body-line);
-      color:#2d2d2d;
-    }
-
-    .copy p:last-child{
-      margin-bottom:0;
-    }
-
-    .mediaBlock{
-      grid-column:4;
-      padding-top:var(--image-top);
-    }
-
-    .imagePortrait{
-      width:100%;
-      max-width:var(--image-w);
-      aspect-ratio:var(--image-ratio);
-      border-radius:6px;
-      background:var(--placeholder);
-      transition:
-        background var(--swap-ms) var(--swap-ease),
-        opacity var(--swap-ms) var(--swap-ease),
-        transform var(--swap-ms) var(--swap-ease);
-    }
-
-    .imagePortrait.is-swapping{
-      opacity:0;
-      transform:translateY(10px);
-    }
-
-    .caption{
-      margin-top:14px;
-      font-size:14px;
-      color:var(--ink-soft);
-      transition:
-        opacity var(--swap-ms) var(--swap-ease),
-        transform var(--swap-ms) var(--swap-ease);
-    }
-
-    .caption.is-swapping{
-      opacity:0;
-      transform:translateY(10px);
-    }
-
-    .bottom{
-      display:grid;
-      grid-template-columns:1fr auto;
-      align-items:end;
-      gap:24px;
-    }
-
-    .footerLeft{
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-      padding-bottom:10px;
-    }
-
-    .socialWords{
-      display:flex;
-      gap:var(--social-gap);
-      align-items:center;
-      flex-wrap:wrap;
-      font-size:var(--social-size);
-      color:var(--ink);
-    }
-
-    .socialWords a{
-      color:inherit;
-      text-decoration:none;
-    }
-
-    .socialWords a:hover{
-      color:var(--ink-soft);
-    }
-
-    .footerRight{
-      font-size:var(--meta-size);
-      color:var(--ink-soft);
-      padding-bottom:10px;
-      justify-self:end;
-    }
-
-    @media (max-width: 1520px){
-      :root{
-        --content-max:1340px;
-        --left-col:340px;
-        --middle-col:290px;
-        --right-col:420px;
-        --hero-size:68px;
-        --image-w:420px;
-      }
-    }
-
-    @media (max-width: 1240px){
-      :root{
-        --left-col:290px;
-        --middle-col:270px;
-        --right-col:360px;
-        --hero-size:58px;
-        --main-gap:34px;
-        --image-w:360px;
-      }
-
-      .middleBlock{
-        row-gap:90px;
-        padding-top:76px;
-      }
-
-      .mediaBlock{
-        padding-top:104px;
-      }
-
-      .vRule{
-        height:540px;
-      }
-    }
-
-    @media (max-width: 980px){
-      body{
-        padding:0;
-      }
-
-      .frame{
-        min-height:100vh;
-        border-radius:0;
-      }
-
-      .inner{
-        padding:34px 24px 32px;
-      }
-
-      .top,
-      .bottom{
-        width:100%;
-        grid-template-columns:1fr;
-      }
-
-      .brand{
-        white-space:normal;
-        gap:8px;
-        row-gap:8px;
-        flex-wrap:wrap;
-      }
-
-      .utility{
-        justify-content:flex-start;
-        text-align:left;
-      }
-
-      .main{
-        width:100%;
-        grid-template-columns:1fr;
-        row-gap:28px;
-        min-height:auto;
-      }
-
-      .heroBlock,
-      .ruleWrap,
-      .middleBlock,
-      .mediaBlock{
-        grid-column:1;
-        padding:0;
-        max-width:none;
-      }
-
-      .heroTitle{
-        max-width:none;
-        font-size:46px;
-      }
-
-      .ruleWrap{
-        justify-content:flex-start;
-      }
-
-      .vRule{
-        width:100%;
-        height:1px !important;
-      }
-
-      .middleBlock{
-        row-gap:28px;
-      }
-
-      .mediaBlock{
-        max-width:none;
-      }
-
-      .imagePortrait{
-        max-width:340px;
-      }
-
-      .footerRight{
-        justify-self:start;
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>KUON STUDIO</title>
+
+<style>
+
+:root{
+
+--bg:#f5f4f1;
+--panel:#f6f5f2;
+--ink:#111;
+--soft:#7a7a7a;
+--rule:#1c1c1c;
+--image:#d3d1cc;
+
+--frame-radius:16px;
+
+--content-max:1480px;
+
+--brand-size:28px;
+
+--hero-size:76px;
+
+--body-size:15px;
+
+--left-col:390px;
+--rule-col:20px;
+--middle-col:320px;
+--right-col:460px;
+
+--gap:54px;
+
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+padding:12px;
+background:var(--bg);
+font-family:Inter,system-ui,sans-serif;
+color:var(--ink);
+}
+
+.frame{
+background:var(--panel);
+border-radius:var(--frame-radius);
+min-height:calc(100vh - 24px);
+border:1px solid rgba(0,0,0,0.04);
+}
+
+.inner{
+max-width:var(--content-max);
+margin:auto;
+padding:40px 48px 36px;
+display:grid;
+grid-template-rows:auto 1fr auto;
+row-gap:32px;
+height:100%;
+}
+
+/* HEADER */
+
+.top{
+display:grid;
+grid-template-columns:1fr auto;
+align-items:start;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:var(--brand-size);
+font-weight:700;
+letter-spacing:.03em;
+text-transform:uppercase;
+}
+
+.brand span{
+font-weight:400;
+color:#6f6f6f;
+}
+
+.brand-location{
+font-size:var(--brand-size);
+font-weight:300;
+letter-spacing:.10em;
+color:#9a9a9a;
+}
+
+.utility{
+font-size:14px;
+color:#7a7a7a;
+display:flex;
+gap:10px;
+}
+
+.utility a{
+text-decoration:none;
+color:inherit;
+}
+
+.utility a:hover{
+color:#111;
+}
+
+/* MAIN GRID */
+
+.main{
+
+display:grid;
+grid-template-columns:
+var(--left-col)
+var(--rule-col)
+var(--middle-col)
+var(--right-col);
+
+column-gap:var(--gap);
+
+}
+
+/* TITLE */
+
+.hero{
+padding-top:34px;
+}
+
+.hero h1{
+font-size:var(--hero-size);
+line-height:.92;
+margin:0;
+letter-spacing:-.055em;
+max-width:320px;
+}
+
+/* RULE */
+
+.rule{
+display:flex;
+justify-content:center;
+}
+
+.rule div{
+width:2px;
+height:520px;
+background:var(--rule);
+}
+
+/* MIDDLE */
+
+.middle{
+display:grid;
+grid-template-rows:auto auto;
+row-gap:72px;
+padding-top:110px;
+max-width:320px;
+}
+
+.index{
+display:flex;
+flex-direction:column;
+font-size:16px;
+gap:4px;
+}
+
+.index button{
+border:none;
+background:none;
+font:inherit;
+cursor:pointer;
+text-align:left;
+font-weight:600;
+color:#111;
+}
+
+.index button:hover{
+color:#7a7a7a;
+}
+
+.kicker{
+font-size:11px;
+letter-spacing:.16em;
+color:#8e8e8e;
+margin-bottom:16px;
+}
+
+.copy p{
+font-size:var(--body-size);
+line-height:1.7;
+margin-bottom:22px;
+}
+
+/* MEDIA AREA */
+
+.media{
+padding-top:100px;
+}
+
+.image{
+width:100%;
+aspect-ratio:.78/1;
+background:var(--image);
+border-radius:6px;
+}
+
+.caption{
+margin-top:14px;
+font-size:14px;
+color:#7a7a7a;
+}
+
+/* CONTACT FORM */
+
+.contact{
+display:none;
+width:100%;
+}
+
+.field{
+display:flex;
+flex-direction:column;
+margin-bottom:22px;
+}
+
+.field label{
+font-size:11px;
+letter-spacing:.15em;
+text-transform:uppercase;
+color:#8e8e8e;
+margin-bottom:8px;
+}
+
+.field input,
+.field textarea{
+
+border:none;
+border-bottom:1px solid #cfcac4;
+background:transparent;
+padding:8px 0;
+font:inherit;
+font-size:15px;
+outline:none;
+
+}
+
+.field textarea{
+min-height:110px;
+resize:none;
+}
+
+.field input:focus,
+.field textarea:focus{
+border-bottom-color:#111;
+}
+
+.send{
+border:none;
+background:none;
+font:inherit;
+font-size:16px;
+cursor:pointer;
+position:relative;
+padding:0;
+}
+
+.send:after{
+content:"";
+display:block;
+height:1px;
+background:#111;
+margin-top:6px;
+}
+
+/* FOOTER */
+
+.bottom{
+display:grid;
+grid-template-columns:1fr auto;
+align-items:end;
+}
+
+.social{
+display:flex;
+gap:26px;
+font-size:15px;
+}
+
+.social a{
+text-decoration:none;
+color:#111;
+}
+
+.social a:hover{
+color:#7a7a7a;
+}
+
+.copyright{
+font-size:15px;
+color:#7a7a7a;
+}
+
+</style>
 </head>
+
+
 <body>
-  <div class="frame">
-    <div class="inner">
-      <div class="top">
-        <div class="brand">
-          KUON <span>STUDIO</span>
-          <span class="brand-location">| TAIPEI–LONDON</span>
-        </div>
 
-        <div class="utility" aria-label="Secondary links">
-          <a href="https://kuonholdings.com">Holdings</a>
-          <span class="sep">/</span>
-          <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
-          <span class="sep">/</span>
-          <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
-        </div>
-      </div>
+<div class="frame">
+<div class="inner">
 
-      <div class="main">
-        <div class="heroBlock">
-          <h1 class="heroTitle" id="heroTitle">Sound Architecture Practice</h1>
-        </div>
+<div class="top">
 
-        <div class="ruleWrap" aria-hidden="true">
-          <div class="vRule" id="vRule"></div>
-        </div>
+<div class="brand">
+KUON <span>STUDIO</span>
+<span class="brand-location">| TAIPEI–LONDON</span>
+</div>
 
-        <div class="middleBlock">
-          <div class="index" aria-label="Section index">
-            <button type="button" class="active" data-panel="studio">Studio</button>
-            <button type="button" data-panel="work">Work</button>
-            <button type="button" data-panel="research">Research</button>
-            <button type="button" data-panel="contact">Contact</button>
-          </div>
+<div class="utility">
+<a href="https://kuonholdings.com">Holdings</a>
+/
+<a href="#">EN</a>
+/
+<a href="#">繁中</a>
+</div>
 
-          <div id="textPanel" class="textPanel">
-            <p class="kicker" id="kicker">Studio</p>
-            <div class="copy" id="copy">
-              <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
-              <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
-              <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
-            </div>
-          </div>
-        </div>
+</div>
 
-        <div class="mediaBlock">
-          <div id="imagePortrait" class="imagePortrait" aria-hidden="true"></div>
-          <div id="caption" class="caption">Studio image placeholder</div>
-        </div>
-      </div>
 
-      <div class="bottom">
-        <div class="footerLeft">
-          <div class="socialWords" aria-label="Social links">
-            <a href="#">Instagram</a>
-            <a href="#">LinkedIn</a>
-          </div>
-        </div>
+<div class="main">
 
-        <div class="footerRight">© KUON 2026</div>
-      </div>
-    </div>
-  </div>
+<div class="hero">
+<h1 id="title">
+Sound<br>
+Architecture<br>
+Practice
+</h1>
+</div>
 
-  <script>
-    const CONTENT = {
-      en: {
-        panels: {
-          studio: {
-            label: "Studio",
-            kicker: "Studio",
-            title: "Sound Architecture Practice",
-            copy: [
-              "KUON Studio is a research-led practice exploring sound, form, and spatial systems.",
-              "Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.",
-              "Building work across Neostein, instrument studies, and future spatial audio concepts."
-            ],
-            caption: "Studio image placeholder",
-            portrait: "#d3d1cc",
-            ruleHeight: 594
-          },
-          work: {
-            label: "Work",
-            kicker: "Selected Work",
-            title: "Selected Work",
-            copy: [
-              "Studio work includes product systems, acoustic objects, and spatial interventions developed across commercial and experimental contexts.",
-              "Current and recent projects include Neostein product direction, instrument studies, and material-led investigations into resonance and form.",
-              "This section can later expand into individual case studies with imagery, captions, and technical notes."
-            ],
-            caption: "Work image placeholder",
-            portrait: "#cbc6c0",
-            ruleHeight: 594
-          },
-          research: {
-            label: "Research",
-            kicker: "Research",
-            title: "Research and Development",
-            copy: [
-              "Research at KUON Studio focuses on sound behaviour, material response, and the relationship between objects and architectural space.",
-              "Prototyping and testing form an important part of the process, helping translate abstract acoustic thinking into physical outcomes.",
-              "This area can eventually host notes, diagrams, prototypes, and short essays."
-            ],
-            caption: "Research image placeholder",
-            portrait: "#d7d2cb",
-            ruleHeight: 594
-          },
-          contact: {
-            label: "Contact",
-            kicker: "Contact",
-            title: "Contact",
-            copy: [
-              "For collaborations, project enquiries, and studio conversations, KUON Studio can be contacted directly through its Taipei and London base.",
-              "The site can later be expanded with project submissions, press information, and a fuller contact structure if needed.",
-              "For now, this page can remain direct and restrained."
-            ],
-            caption: "Contact image placeholder",
-            portrait: "#cfcac4",
-            ruleHeight: 594
-          }
-        }
-      },
-      "zh-Hant": {
-        panels: {
-          studio: {
-            label: "Studio",
-            kicker: "Studio",
-            title: "聲音建築實踐",
-            copy: [
-              "KUON Studio 是一個以研究為導向的實踐，探索聲音、形式與空間系統之間的關係。",
-              "我們的工作涵蓋產品設計、聲學建築與實驗性樂器，研究聲音如何與物件、材料與環境互動。",
-              "目前的工作橫跨 Neostein、樂器研究，以及未來空間音響概念。"
-            ],
-            caption: "Studio 圖像預留區",
-            portrait: "#d3d1cc",
-            ruleHeight: 594
-          },
-          work: {
-            label: "Work",
-            kicker: "Selected Work",
-            title: "精選作品",
-            copy: [
-              "工作內容涵蓋產品系統、聲學物件與空間介入，並在商業與實驗脈絡中持續發展。",
-              "近期與現行項目包括 Neostein 的產品方向、樂器研究，以及關於共鳴與形式的材料探索。",
-              "未來可在此延伸為個別案例頁面，加入圖像、說明與技術筆記。"
-            ],
-            caption: "Work 圖像預留區",
-            portrait: "#cbc6c0",
-            ruleHeight: 594
-          },
-          research: {
-            label: "Research",
-            kicker: "Research",
-            title: "研究與開發",
-            copy: [
-              "KUON Studio 的研究聚焦於聲音行為、材料反應，以及物件與建築空間之間的關係。",
-              "打樣與測試是流程的重要部分，幫助將抽象的聲學思考轉化為可實現的物理成果。",
-              "未來此區可放入筆記、圖表、原型與短篇文字。"
-            ],
-            caption: "Research 圖像預留區",
-            portrait: "#d7d2cb",
-            ruleHeight: 594
-          },
-          contact: {
-            label: "Contact",
-            kicker: "Contact",
-            title: "聯絡",
-            copy: [
-              "如有合作、專案洽詢或任何與工作室相關的交流，可透過 KUON Studio 的台北與倫敦據點直接聯絡。",
-              "之後也可擴充為更完整的聯絡頁面，加入投稿、媒體資訊與專案往來方式。",
-              "目前則可維持直接、克制的形式。"
-            ],
-            caption: "Contact 圖像預留區",
-            portrait: "#cfcac4",
-            ruleHeight: 594
-          }
-        }
-      }
-    };
+<div class="rule">
+<div></div>
+</div>
 
-    let currentLang = "en";
-    let currentPanel = "studio";
+<div class="middle">
 
-    const heroTitle = document.getElementById("heroTitle");
-    const kickerEl = document.getElementById("kicker");
-    const textPanel = document.getElementById("textPanel");
-    const copyEl = document.getElementById("copy");
-    const captionEl = document.getElementById("caption");
-    const imagePortrait = document.getElementById("imagePortrait");
-    const ruleEl = document.getElementById("vRule");
-    const indexButtons = Array.from(document.querySelectorAll(".index button"));
-    const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
+<div class="index">
+<button data-panel="studio">Studio</button>
+<button data-panel="work">Work</button>
+<button data-panel="research">Research</button>
+<button data-panel="contact">Contact</button>
+</div>
 
-    function setActivePanelButtons() {
-      indexButtons.forEach(btn => {
-        const active = btn.dataset.panel === currentPanel;
-        btn.classList.toggle("active", active);
-        btn.textContent = CONTENT[currentLang].panels[btn.dataset.panel].label;
-      });
-    }
+<div>
 
-    function renderPanel() {
-      const data = CONTENT[currentLang].panels[currentPanel];
-      heroTitle.textContent = data.title;
-      kickerEl.textContent = data.kicker;
-      copyEl.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
-      captionEl.textContent = data.caption;
-      imagePortrait.style.background = data.portrait;
-      if (window.innerWidth > 980) {
-        ruleEl.style.height = `${data.ruleHeight}px`;
-      }
-    }
+<div class="kicker" id="kicker">STUDIO</div>
 
-    function setActiveLang() {
-      langButtons.forEach(btn => {
-        if (btn.dataset.lang === currentLang) btn.setAttribute("aria-current", "true");
-        else btn.removeAttribute("aria-current");
-      });
-    }
+<div class="copy" id="copy">
 
-    function renderLanguage() {
-      document.documentElement.lang = currentLang === "en" ? "en" : "zh-Hant";
-      setActivePanelButtons();
-      setActiveLang();
-    }
+<p>
+KUON Studio is a research-led practice exploring sound,
+form, and spatial systems.
+</p>
 
-    function swapTo(panelKey) {
-      if (panelKey === currentPanel) return;
-      currentPanel = panelKey;
+<p>
+Our work spans product design, acoustic architecture,
+and experimental instruments, investigating how sound
+interacts with objects, materials, and environments.
+</p>
 
-      textPanel.classList.add("is-swapping");
-      imagePortrait.classList.add("is-swapping");
-      captionEl.classList.add("is-swapping");
+<p>
+Building work across Neostein, instrument studies,
+and future spatial audio concepts.
+</p>
 
-      setTimeout(() => {
-        renderPanel();
-        setActivePanelButtons();
-        textPanel.classList.remove("is-swapping");
-        imagePortrait.classList.remove("is-swapping");
-        captionEl.classList.remove("is-swapping");
-      }, 220);
-    }
+</div>
 
-    function setLanguage(langKey) {
-      if (langKey === currentLang) return;
-      currentLang = langKey;
-      renderLanguage();
-      renderPanel();
-    }
+</div>
 
-    indexButtons.forEach(btn => {
-      btn.addEventListener("click", () => swapTo(btn.dataset.panel));
-    });
+</div>
 
-    langButtons.forEach(btn => {
-      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
-    });
+<div class="media">
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth <= 980) {
-        ruleEl.style.height = "1px";
-      } else {
-        ruleEl.style.height = `${CONTENT[currentLang].panels[currentPanel].ruleHeight}px`;
-      }
-    });
+<div class="image" id="image"></div>
 
-    renderLanguage();
-    renderPanel();
-  </script>
+<div class="caption" id="caption">
+Studio image placeholder
+</div>
+
+<div class="contact" id="contact">
+
+<form>
+
+<div class="field">
+<label>Name</label>
+<input type="text">
+</div>
+
+<div class="field">
+<label>Email</label>
+<input type="email">
+</div>
+
+<div class="field">
+<label>Project / Company</label>
+<input type="text">
+</div>
+
+<div class="field">
+<label>Message</label>
+<textarea></textarea>
+</div>
+
+<button class="send">Send</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="bottom">
+
+<div class="social">
+<a href="#">Instagram</a>
+<a href="#">LinkedIn</a>
+</div>
+
+<div class="copyright">
+© KUON 2026
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+const panels = {
+
+studio:{
+title:"Sound Architecture Practice",
+kicker:"STUDIO",
+image:true
+},
+
+work:{
+title:"Selected Work",
+kicker:"WORK",
+image:true
+},
+
+research:{
+title:"Research and Development",
+kicker:"RESEARCH",
+image:true
+},
+
+contact:{
+title:"Contact",
+kicker:"CONTACT",
+image:false
+}
+
+}
+
+document.querySelectorAll(".index button").forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+let key = btn.dataset.panel
+let p = panels[key]
+
+document.getElementById("title").innerText = p.title
+document.getElementById("kicker").innerText = p.kicker
+
+if(p.image){
+
+document.getElementById("image").style.display="block"
+document.getElementById("caption").style.display="block"
+document.getElementById("contact").style.display="none"
+
+}else{
+
+document.getElementById("image").style.display="none"
+document.getElementById("caption").style.display="none"
+document.getElementById("contact").style.display="block"
+
+}
+
+})
+
+})
+
+</script>
+
+
 </body>
 </html>
