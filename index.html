@@ -12,32 +12,39 @@
       --bg:#f5f4f1;
       --panel:#f6f5f2;
       --ink:#111111;
-      --ink-soft:#666666;
+      --ink-soft:#6e6e6e;
+      --ink-mid:#8f8f8f;
       --line:#d8d6d1;
-      --placeholder:#d2d0cb;
+      --placeholder:#d4d1cb;
 
       --frame-radius:16px;
-      --inner-pad:52px;
+      --inner-pad:46px;
 
       --brand-size:34px;
       --brand-track:0.02em;
 
-      --nav-size:14px;
-      --nav-gap:32px;
+      --utility-size:13px;
+      --utility-gap:10px;
 
-      --title-size:72px;
-      --title-line:0.96;
+      --title-size:74px;
+      --title-line:0.95;
       --title-max:760px;
 
       --body-size:15px;
       --body-line:1.62;
-      --body-max:620px;
+      --body-max:610px;
+
+      --switch-size:15px;
+      --switch-gap:24px;
 
       --meta-size:16px;
       --social-size:18px;
 
-      --image-w:460px;
-      --image-h:360px;
+      --image-w:500px;
+      --image-h:370px;
+
+      --swap-ms:520ms;
+      --swap-ease:cubic-bezier(.22,.61,.36,1);
     }
 
     *{ box-sizing:border-box; }
@@ -69,20 +76,25 @@
       padding:var(--inner-pad);
       display:grid;
       grid-template-columns:minmax(0, 1fr) var(--image-w);
-      grid-template-rows:auto auto 1fr auto;
-      column-gap:72px;
-      row-gap:28px;
+      grid-template-rows:auto 1fr auto;
+      column-gap:76px;
+      row-gap:36px;
     }
 
-    .brand{
+    /* top band */
+    .top-left{
       grid-column:1 / 2;
       grid-row:1;
       align-self:start;
-      margin-top:52px;
+      padding-top:18px;
+    }
+
+    .brand{
       font-size:var(--brand-size);
       font-weight:700;
       letter-spacing:var(--brand-track);
       text-transform:uppercase;
+      line-height:1;
     }
 
     .brand span{
@@ -90,53 +102,87 @@
       color:var(--ink-soft);
     }
 
-    .nav{
+    .top-right{
       grid-column:2 / 3;
       grid-row:1;
       align-self:start;
       justify-self:end;
-      margin-top:58px;
+      padding-top:22px;
+    }
+
+    .utility{
       display:flex;
-      gap:var(--nav-gap);
       flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      gap:var(--utility-gap);
+      font-size:var(--utility-size);
+      line-height:1.3;
+      color:var(--ink-soft);
+      text-align:right;
     }
 
-    .nav a{
+    .utility a,
+    .utility button{
+      appearance:none;
+      background:none;
+      border:none;
+      padding:0;
+      margin:0;
+      font:inherit;
+      color:inherit;
       text-decoration:none;
-      color:var(--ink);
-      font-size:var(--nav-size);
-      line-height:1;
-      position:relative;
+      cursor:pointer;
     }
 
-    .nav a.active::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:-8px;
-      height:1px;
-      background:var(--ink);
+    .utility a:hover,
+    .utility button:hover{
+      color:var(--ink);
+    }
+
+    .utility .sep{
+      color:#b8b5b0;
+      pointer-events:none;
+    }
+
+    .lang-btn[aria-current="true"]{
+      color:var(--ink);
+    }
+
+    /* main left */
+    .content{
+      grid-column:1 / 2;
+      grid-row:2;
+      align-self:center;
+      max-width:var(--body-max);
+      padding-top:12px;
+    }
+
+    .panel{
+      position:relative;
+      min-height:420px;
+    }
+
+    .panelFade{
+      opacity:1;
+      transform:translateY(0);
+      transition:
+        opacity var(--swap-ms) var(--swap-ease),
+        transform var(--swap-ms) var(--swap-ease);
+    }
+
+    .panelFade.is-swapping{
+      opacity:0;
+      transform:translateY(10px);
     }
 
     .title{
-      grid-column:1 / 2;
-      grid-row:2;
-      margin:0;
+      margin:0 0 34px 0;
       font-size:var(--title-size);
       line-height:var(--title-line);
-      letter-spacing:-0.045em;
+      letter-spacing:-0.05em;
       font-weight:600;
       max-width:var(--title-max);
-      margin-top:30px;
-    }
-
-    .copy{
-      grid-column:1 / 2;
-      grid-row:3;
-      align-self:start;
-      max-width:var(--body-max);
-      margin-top:12px;
     }
 
     .copy p{
@@ -150,36 +196,102 @@
       margin-bottom:0;
     }
 
+    /* main right */
     .media{
       grid-column:2 / 3;
-      grid-row:2 / 4;
+      grid-row:2;
       align-self:center;
       justify-self:end;
       width:100%;
       max-width:var(--image-w);
+      padding-top:30px;
+    }
+
+    .image-box{
+      width:100%;
     }
 
     .image-placeholder{
       width:100%;
-      aspect-ratio: 1.28 / 1;
+      aspect-ratio:1.35 / 1;
       background:var(--placeholder);
       border-radius:8px;
+      transition:
+        background var(--swap-ms) var(--swap-ease),
+        opacity var(--swap-ms) var(--swap-ease),
+        transform var(--swap-ms) var(--swap-ease);
+    }
+
+    .image-placeholder.is-swapping{
+      opacity:0;
+      transform:translateY(10px);
     }
 
     .caption{
       margin-top:12px;
       font-size:14px;
       color:var(--ink-soft);
+      transition:
+        opacity var(--swap-ms) var(--swap-ease),
+        transform var(--swap-ms) var(--swap-ease);
     }
 
+    .caption.is-swapping{
+      opacity:0;
+      transform:translateY(10px);
+    }
+
+    .switcher{
+      margin-top:26px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:var(--switch-gap);
+      align-items:center;
+      justify-content:flex-start;
+    }
+
+    .switcher button{
+      appearance:none;
+      background:none;
+      border:none;
+      padding:0;
+      margin:0;
+      font:inherit;
+      font-size:var(--switch-size);
+      color:var(--ink-soft);
+      cursor:pointer;
+      position:relative;
+      line-height:1;
+      transition:color 180ms ease;
+    }
+
+    .switcher button:hover{
+      color:var(--ink);
+    }
+
+    .switcher button.active{
+      color:var(--ink);
+    }
+
+    .switcher button.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-8px;
+      height:1px;
+      background:var(--ink);
+    }
+
+    /* bottom band */
     .footer-left{
       grid-column:1 / 2;
-      grid-row:4;
+      grid-row:3;
       display:flex;
       flex-direction:column;
       gap:18px;
       align-self:end;
-      margin-top:12px;
+      padding-bottom:10px;
     }
 
     .social{
@@ -190,6 +302,13 @@
       color:var(--ink);
     }
 
+    .social span{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:22px;
+    }
+
     .location{
       font-size:var(--meta-size);
       color:var(--ink-soft);
@@ -197,29 +316,25 @@
 
     .footer-right{
       grid-column:2 / 3;
-      grid-row:4;
+      grid-row:3;
       align-self:end;
       justify-self:end;
       font-size:var(--meta-size);
       color:var(--ink-soft);
+      padding-bottom:10px;
     }
 
-    @media (max-width: 1180px){
+    @media (max-width: 1240px){
       :root{
         --inner-pad:38px;
-        --title-size:60px;
-        --image-w:380px;
+        --title-size:62px;
+        --image-w:410px;
       }
-
-      .inner{
-        column-gap:44px;
-      }
+      .inner{ column-gap:44px; }
     }
 
-    @media (max-width: 920px){
-      body{
-        padding:0;
-      }
+    @media (max-width: 980px){
+      body{ padding:0; }
 
       .frame{
         min-height:100vh;
@@ -229,43 +344,53 @@
       .inner{
         min-height:100vh;
         grid-template-columns:1fr;
-        grid-template-rows:auto auto auto auto auto;
-        row-gap:24px;
-        padding:36px 24px 32px;
+        grid-template-rows:auto auto auto auto;
+        row-gap:28px;
+        padding:34px 24px 32px;
       }
 
-      .brand,
-      .nav,
-      .title,
-      .copy,
+      .top-left,
+      .top-right,
+      .content,
       .media,
       .footer-left,
       .footer-right{
         grid-column:1;
         grid-row:auto;
-        margin:0;
         justify-self:stretch;
+        align-self:start;
+        padding:0;
       }
 
-      .nav{
+      .top-right{
         justify-self:start;
-        margin-top:6px;
-        gap:22px;
+      }
+
+      .utility{
+        justify-content:flex-start;
+        text-align:left;
+      }
+
+      .content{
+        max-width:none;
+      }
+
+      .panel{
+        min-height:auto;
       }
 
       .title{
-        font-size:44px;
         max-width:none;
-        margin-top:12px;
-      }
-
-      .copy{
-        max-width:none;
+        font-size:48px;
+        margin-bottom:24px;
       }
 
       .media{
         max-width:none;
-        justify-self:stretch;
+      }
+
+      .switcher{
+        gap:20px;
       }
 
       .footer-right{
@@ -277,26 +402,48 @@
 <body>
   <div class="frame">
     <div class="inner">
-      <div class="brand">KUON <span>STUDIO</span></div>
+      <div class="top-left">
+        <div class="brand">KUON <span>STUDIO</span></div>
+      </div>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#" class="active">Studio</a>
-        <a href="#">Work</a>
-        <a href="#">Research</a>
-        <a href="#">Contact</a>
-      </nav>
+      <div class="top-right">
+        <div class="utility" aria-label="Secondary links">
+          <a href="#">Holdings</a>
+          <span class="sep">/</span>
+          <span id="utilityLocation">Taipei / London</span>
+          <span class="sep">/</span>
+          <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
+          <span class="sep">/</span>
+          <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
+        </div>
+      </div>
 
-      <h1 class="title">Sound Architecture Practice</h1>
+      <div class="content">
+        <div class="panel">
+          <div id="textPanel" class="panelFade">
+            <h1 class="title" id="title">Sound Architecture Practice</h1>
 
-      <div class="copy">
-        <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
-        <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
-        <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
+            <div class="copy" id="copy">
+              <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
+              <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
+              <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="media">
-        <div class="image-placeholder" aria-hidden="true"></div>
-        <div class="caption">Image placeholder</div>
+        <div class="image-box">
+          <div id="imagePlaceholder" class="image-placeholder" aria-hidden="true"></div>
+          <div id="caption" class="caption">Studio image placeholder</div>
+        </div>
+
+        <div class="switcher" aria-label="Section switcher">
+          <button type="button" class="active" data-panel="studio">Studio</button>
+          <button type="button" data-panel="work">Work</button>
+          <button type="button" data-panel="research">Research</button>
+          <button type="button" data-panel="contact">Contact</button>
+        </div>
       </div>
 
       <div class="footer-left">
@@ -305,11 +452,194 @@
           <span>⌘</span>
           <span>in</span>
         </div>
-        <div class="location">Taipei / London</div>
+        <div class="location" id="footerLocation">Taipei / London</div>
       </div>
 
       <div class="footer-right">© KUON 2026</div>
     </div>
   </div>
+
+  <script>
+    const CONTENT = {
+      en: {
+        location: "Taipei / London",
+        panels: {
+          studio: {
+            label: "Studio",
+            title: "Sound Architecture Practice",
+            copy: [
+              "KUON Studio is a research-led practice exploring sound, form, and spatial systems.",
+              "Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.",
+              "Building work across Neostein, instrument studies, and future spatial audio concepts."
+            ],
+            caption: "Studio image placeholder",
+            color: "#d4d1cb"
+          },
+          work: {
+            label: "Work",
+            title: "Selected Work",
+            copy: [
+              "Studio work includes product systems, acoustic objects, and spatial interventions developed across commercial and experimental contexts.",
+              "Current and recent projects include Neostein product direction, instrument studies, and material-led investigations into resonance and form.",
+              "This section can later expand into individual case studies with imagery, captions, and technical notes."
+            ],
+            caption: "Work image placeholder",
+            color: "#cbc8c2"
+          },
+          research: {
+            label: "Research",
+            title: "Research and Development",
+            copy: [
+              "Research at KUON Studio focuses on sound behaviour, material response, and the relationship between objects and architectural space.",
+              "Prototyping and testing form an important part of the process, helping translate abstract acoustic thinking into physical outcomes.",
+              "This area can eventually host notes, diagrams, prototypes, and short essays."
+            ],
+            caption: "Research image placeholder",
+            color: "#d8d5cf"
+          },
+          contact: {
+            label: "Contact",
+            title: "Contact",
+            copy: [
+              "For collaborations, project enquiries, and studio conversations, KUON Studio can be contacted directly through its Taipei and London base.",
+              "The site can later be expanded with project submissions, press information, and a fuller contact structure if needed.",
+              "For now, this page can remain direct and restrained."
+            ],
+            caption: "Contact image placeholder",
+            color: "#cfccc6"
+          }
+        }
+      },
+      "zh-Hant": {
+        location: "台北 / 倫敦",
+        panels: {
+          studio: {
+            label: "Studio",
+            title: "聲音建築實踐",
+            copy: [
+              "KUON Studio 是一個以研究為導向的實踐，探索聲音、形式與空間系統之間的關係。",
+              "我們的工作涵蓋產品設計、聲學建築與實驗性樂器，研究聲音如何與物件、材料與環境互動。",
+              "目前的工作橫跨 Neostein、樂器研究，以及未來空間音響概念。"
+            ],
+            caption: "Studio 圖像預留區",
+            color: "#d4d1cb"
+          },
+          work: {
+            label: "Work",
+            title: "精選作品",
+            copy: [
+              "工作內容涵蓋產品系統、聲學物件與空間介入，並在商業與實驗脈絡中持續發展。",
+              "近期與現行項目包括 Neostein 的產品方向、樂器研究，以及關於共鳴與形式的材料探索。",
+              "未來可在此延伸為個別案例頁面，加入圖像、說明與技術筆記。"
+            ],
+            caption: "Work 圖像預留區",
+            color: "#cbc8c2"
+          },
+          research: {
+            label: "Research",
+            title: "研究與開發",
+            copy: [
+              "KUON Studio 的研究聚焦於聲音行為、材料反應，以及物件與建築空間之間的關係。",
+              "打樣與測試是流程的重要部分，幫助將抽象的聲學思考轉化為可實現的物理成果。",
+              "未來此區可放入筆記、圖表、原型與短篇文字。"
+            ],
+            caption: "Research 圖像預留區",
+            color: "#d8d5cf"
+          },
+          contact: {
+            label: "Contact",
+            title: "聯絡",
+            copy: [
+              "如有合作、專案洽詢或任何與工作室相關的交流，可透過 KUON Studio 的台北與倫敦據點直接聯絡。",
+              "之後也可擴充為更完整的聯絡頁面，加入投稿、媒體資訊與專案往來方式。",
+              "目前則可維持直接、克制的形式。"
+            ],
+            caption: "Contact 圖像預留區",
+            color: "#cfccc6"
+          }
+        }
+      }
+    };
+
+    let currentLang = "en";
+    let currentPanel = "studio";
+
+    const titleEl = document.getElementById("title");
+    const copyEl = document.getElementById("copy");
+    const captionEl = document.getElementById("caption");
+    const imageEl = document.getElementById("imagePlaceholder");
+    const textPanelEl = document.getElementById("textPanel");
+    const switchButtons = Array.from(document.querySelectorAll(".switcher button"));
+    const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
+    const utilityLocation = document.getElementById("utilityLocation");
+    const footerLocation = document.getElementById("footerLocation");
+
+    function renderPanel() {
+      const data = CONTENT[currentLang].panels[currentPanel];
+      titleEl.textContent = data.title;
+      copyEl.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
+      captionEl.textContent = data.caption;
+      imageEl.style.background = data.color;
+    }
+
+    function setActivePanel() {
+      switchButtons.forEach(btn => {
+        const active = btn.dataset.panel === currentPanel;
+        btn.classList.toggle("active", active);
+        btn.textContent = CONTENT[currentLang].panels[btn.dataset.panel].label;
+      });
+    }
+
+    function setActiveLang() {
+      langButtons.forEach(btn => {
+        if (btn.dataset.lang === currentLang) btn.setAttribute("aria-current", "true");
+        else btn.removeAttribute("aria-current");
+      });
+    }
+
+    function renderLanguage() {
+      const data = CONTENT[currentLang];
+      utilityLocation.textContent = data.location;
+      footerLocation.textContent = data.location;
+      document.documentElement.lang = currentLang === "en" ? "en" : "zh-Hant";
+      setActivePanel();
+      setActiveLang();
+    }
+
+    function swapTo(panelKey) {
+      if (panelKey === currentPanel) return;
+      currentPanel = panelKey;
+
+      textPanelEl.classList.add("is-swapping");
+      imageEl.classList.add("is-swapping");
+      captionEl.classList.add("is-swapping");
+
+      setTimeout(() => {
+        renderPanel();
+        setActivePanel();
+        textPanelEl.classList.remove("is-swapping");
+        imageEl.classList.remove("is-swapping");
+        captionEl.classList.remove("is-swapping");
+      }, 260);
+    }
+
+    function setLanguage(langKey) {
+      if (langKey === currentLang) return;
+      currentLang = langKey;
+      renderLanguage();
+      renderPanel();
+    }
+
+    switchButtons.forEach(btn => {
+      btn.addEventListener("click", () => swapTo(btn.dataset.panel));
+    });
+
+    langButtons.forEach(btn => {
+      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+    });
+
+    renderLanguage();
+    renderPanel();
+  </script>
 </body>
 </html>
