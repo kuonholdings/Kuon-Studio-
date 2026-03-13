@@ -1,508 +1,858 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>KUON STUDIO</title>
-
-<style>
-
-:root{
-
---bg:#f5f4f1;
---panel:#f6f5f2;
---ink:#111;
---soft:#7a7a7a;
---rule:#1c1c1c;
---image:#d3d1cc;
-
---frame-radius:16px;
-
---content-max:1480px;
-
---brand-size:28px;
-
---hero-size:76px;
-
---body-size:15px;
-
---left-col:390px;
---rule-col:20px;
---middle-col:320px;
---right-col:460px;
-
---gap:54px;
-
-}
-
-*{box-sizing:border-box}
-
-body{
-margin:0;
-padding:12px;
-background:var(--bg);
-font-family:Inter,system-ui,sans-serif;
-color:var(--ink);
-}
-
-.frame{
-background:var(--panel);
-border-radius:var(--frame-radius);
-min-height:calc(100vh - 24px);
-border:1px solid rgba(0,0,0,0.04);
-}
-
-.inner{
-max-width:var(--content-max);
-margin:auto;
-padding:40px 48px 36px;
-display:grid;
-grid-template-rows:auto 1fr auto;
-row-gap:32px;
-height:100%;
-}
-
-/* HEADER */
-
-.top{
-display:grid;
-grid-template-columns:1fr auto;
-align-items:start;
-}
-
-.brand{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:var(--brand-size);
-font-weight:700;
-letter-spacing:.03em;
-text-transform:uppercase;
-}
-
-.brand span{
-font-weight:400;
-color:#6f6f6f;
-}
-
-.brand-location{
-font-size:var(--brand-size);
-font-weight:300;
-letter-spacing:.10em;
-color:#9a9a9a;
-}
-
-.utility{
-font-size:14px;
-color:#7a7a7a;
-display:flex;
-gap:10px;
-}
-
-.utility a{
-text-decoration:none;
-color:inherit;
-}
-
-.utility a:hover{
-color:#111;
-}
-
-/* MAIN GRID */
-
-.main{
-
-display:grid;
-grid-template-columns:
-var(--left-col)
-var(--rule-col)
-var(--middle-col)
-var(--right-col);
-
-column-gap:var(--gap);
-
-}
-
-/* TITLE */
-
-.hero{
-padding-top:34px;
-}
-
-.hero h1{
-font-size:var(--hero-size);
-line-height:.92;
-margin:0;
-letter-spacing:-.055em;
-max-width:320px;
-}
-
-/* RULE */
-
-.rule{
-display:flex;
-justify-content:center;
-}
-
-.rule div{
-width:2px;
-height:520px;
-background:var(--rule);
-}
-
-/* MIDDLE */
-
-.middle{
-display:grid;
-grid-template-rows:auto auto;
-row-gap:72px;
-padding-top:110px;
-max-width:320px;
-}
-
-.index{
-display:flex;
-flex-direction:column;
-font-size:16px;
-gap:4px;
-}
-
-.index button{
-border:none;
-background:none;
-font:inherit;
-cursor:pointer;
-text-align:left;
-font-weight:600;
-color:#111;
-}
-
-.index button:hover{
-color:#7a7a7a;
-}
-
-.kicker{
-font-size:11px;
-letter-spacing:.16em;
-color:#8e8e8e;
-margin-bottom:16px;
-}
-
-.copy p{
-font-size:var(--body-size);
-line-height:1.7;
-margin-bottom:22px;
-}
-
-/* MEDIA AREA */
-
-.media{
-padding-top:100px;
-}
-
-.image{
-width:100%;
-aspect-ratio:.78/1;
-background:var(--image);
-border-radius:6px;
-}
-
-.caption{
-margin-top:14px;
-font-size:14px;
-color:#7a7a7a;
-}
-
-/* CONTACT FORM */
-
-.contact{
-display:none;
-width:100%;
-}
-
-.field{
-display:flex;
-flex-direction:column;
-margin-bottom:22px;
-}
-
-.field label{
-font-size:11px;
-letter-spacing:.15em;
-text-transform:uppercase;
-color:#8e8e8e;
-margin-bottom:8px;
-}
-
-.field input,
-.field textarea{
-
-border:none;
-border-bottom:1px solid #cfcac4;
-background:transparent;
-padding:8px 0;
-font:inherit;
-font-size:15px;
-outline:none;
-
-}
-
-.field textarea{
-min-height:110px;
-resize:none;
-}
-
-.field input:focus,
-.field textarea:focus{
-border-bottom-color:#111;
-}
-
-.send{
-border:none;
-background:none;
-font:inherit;
-font-size:16px;
-cursor:pointer;
-position:relative;
-padding:0;
-}
-
-.send:after{
-content:"";
-display:block;
-height:1px;
-background:#111;
-margin-top:6px;
-}
-
-/* FOOTER */
-
-.bottom{
-display:grid;
-grid-template-columns:1fr auto;
-align-items:end;
-}
-
-.social{
-display:flex;
-gap:26px;
-font-size:15px;
-}
-
-.social a{
-text-decoration:none;
-color:#111;
-}
-
-.social a:hover{
-color:#7a7a7a;
-}
-
-.copyright{
-font-size:15px;
-color:#7a7a7a;
-}
-
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KUON STUDIO</title>
+  <meta name="description" content="KUON Studio — Sound Architecture Practice" />
+  <meta name="theme-color" content="#f5f4f1" />
+
+  <style>
+    :root{
+      --bg:#f5f4f1;
+      --panel:#f6f5f2;
+      --ink:#111111;
+      --ink-soft:#6f6f6f;
+      --ink-mid:#979797;
+      --line:#1f1f1f;
+      --placeholder:#d3d1cc;
+
+      --frame-radius:16px;
+      --inner-pad:42px;
+
+      --content-max:1460px;
+      --top-gap:14px;
+      --main-gap:48px;
+
+      --brand-size:22px;
+      --brand-track:0.03em;
+
+      --utility-size:13px;
+      --utility-gap:10px;
+
+      --left-col:380px;
+      --rule-col:18px;
+      --middle-col:280px;
+      --right-col:430px;
+
+      --hero-size:74px;
+      --hero-line:0.92;
+      --hero-max:300px;
+      --hero-top:22px;
+
+      --index-size:16px;
+      --index-line:1.55;
+      --index-top:92px;
+
+      --kicker-size:11px;
+      --kicker-track:0.16em;
+
+      --body-size:14px;
+      --body-line:1.62;
+      --body-max:280px;
+
+      --meta-size:15px;
+      --social-size:15px;
+      --social-gap:26px;
+
+      --image-w:430px;
+      --image-ratio:0.78 / 1;
+      --image-top:88px;
+
+      --rule-height:470px;
+
+      --field-size:15px;
+      --field-line:#c6c3be;
+      --field-gap:20px;
+
+      --swap-ms:320ms;
+      --swap-ease:cubic-bezier(.22,.61,.36,1);
+    }
+
+    *{ box-sizing:border-box; }
+
+    html, body{
+      margin:0;
+      min-height:100%;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    body{
+      padding:12px;
+    }
+
+    .frame{
+      min-height:calc(100vh - 24px);
+      background:var(--panel);
+      border:1px solid rgba(0,0,0,0.04);
+      border-radius:var(--frame-radius);
+      overflow:hidden;
+    }
+
+    .inner{
+      min-height:calc(100vh - 24px);
+      padding:var(--inner-pad);
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      row-gap:24px;
+    }
+
+    .top,
+    .main,
+    .bottom{
+      width:min(100%, var(--content-max));
+      margin:0 auto;
+    }
+
+    .top{
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:start;
+      gap:24px;
+      padding-top:var(--top-gap);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+      font-size:var(--brand-size);
+      font-weight:700;
+      letter-spacing:var(--brand-track);
+      text-transform:uppercase;
+      line-height:1;
+      white-space:nowrap;
+    }
+
+    .brand span{
+      font-weight:400;
+      color:var(--ink-soft);
+    }
+
+    .brand-location{
+      font-size:var(--brand-size);
+      letter-spacing:0.08em;
+      color:#9a9a9a;
+      font-weight:300;
+    }
+
+    .utility{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+      gap:var(--utility-gap);
+      font-size:var(--utility-size);
+      line-height:1.3;
+      color:var(--ink-soft);
+      text-align:right;
+    }
+
+    .utility a,
+    .utility button{
+      appearance:none;
+      background:none;
+      border:none;
+      padding:0;
+      margin:0;
+      font:inherit;
+      color:inherit;
+      text-decoration:none;
+      cursor:pointer;
+    }
+
+    .utility a:hover,
+    .utility button:hover{
+      color:var(--ink);
+    }
+
+    .utility .sep{
+      color:#bbb8b2;
+      pointer-events:none;
+    }
+
+    .lang-btn[aria-current="true"]{
+      color:var(--ink);
+    }
+
+    .main{
+      align-self:center;
+      display:grid;
+      grid-template-columns:var(--left-col) var(--rule-col) var(--middle-col) var(--right-col);
+      column-gap:var(--main-gap);
+      align-items:start;
+      min-height:500px;
+    }
+
+    .heroBlock{
+      grid-column:1;
+      padding-top:var(--hero-top);
+    }
+
+    .heroTitle{
+      margin:0;
+      max-width:var(--hero-max);
+      font-size:var(--hero-size);
+      line-height:var(--hero-line);
+      letter-spacing:-0.058em;
+      font-weight:600;
+    }
+
+    .ruleWrap{
+      grid-column:2;
+      display:flex;
+      justify-content:center;
+      align-self:start;
+      padding-top:18px;
+    }
+
+    .vRule{
+      width:2px;
+      height:var(--rule-height);
+      background:var(--line);
+      opacity:0.96;
+      transition:height 220ms ease;
+    }
+
+    .middleBlock{
+      grid-column:3;
+      display:grid;
+      grid-template-rows:auto auto;
+      row-gap:42px;
+      padding-top:var(--index-top);
+      max-width:var(--body-max);
+    }
+
+    .index{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+    }
+
+    .index button{
+      appearance:none;
+      background:none;
+      border:none;
+      padding:0;
+      margin:0;
+      font:inherit;
+      font-size:var(--index-size);
+      line-height:var(--index-line);
+      font-weight:600;
+      color:var(--ink);
+      cursor:pointer;
+      transition:color 160ms ease;
+      text-align:left;
+    }
+
+    .index button:hover{
+      color:var(--ink-soft);
+    }
+
+    .index button.active{
+      color:var(--ink);
+    }
+
+    .textPanel{
+      opacity:1;
+      transform:translateY(0);
+      transition:
+        opacity var(--swap-ms) var(--swap-ease),
+        transform var(--swap-ms) var(--swap-ease);
+    }
+
+    .textPanel.is-swapping,
+    .mediaPanel.is-swapping{
+      opacity:0;
+      transform:translateY(10px);
+    }
+
+    .kicker{
+      margin:0 0 14px 0;
+      font-size:var(--kicker-size);
+      line-height:1.3;
+      letter-spacing:var(--kicker-track);
+      text-transform:uppercase;
+      color:var(--ink-mid);
+    }
+
+    .copy p{
+      margin:0 0 18px 0;
+      font-size:var(--body-size);
+      line-height:var(--body-line);
+      color:#2d2d2d;
+    }
+
+    .copy p:last-child{
+      margin-bottom:0;
+    }
+
+    .mediaBlock{
+      grid-column:4;
+      padding-top:var(--image-top);
+    }
+
+    .mediaPanel{
+      opacity:1;
+      transform:translateY(0);
+      transition:
+        opacity var(--swap-ms) var(--swap-ease),
+        transform var(--swap-ms) var(--swap-ease);
+    }
+
+    .imagePortrait{
+      width:100%;
+      max-width:var(--image-w);
+      aspect-ratio:var(--image-ratio);
+      border-radius:6px;
+      background:var(--placeholder);
+    }
+
+    .caption{
+      margin-top:12px;
+      font-size:13px;
+      color:var(--ink-soft);
+    }
+
+    .contactForm{
+      width:100%;
+      max-width:var(--image-w);
+      display:grid;
+      gap:var(--field-gap);
+      padding-top:4px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field label{
+      font-size:11px;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--ink-mid);
+    }
+
+    .field input,
+    .field textarea{
+      width:100%;
+      border:none;
+      border-bottom:1px solid var(--field-line);
+      background:transparent;
+      padding:0 0 8px 0;
+      font:inherit;
+      font-size:var(--field-size);
+      line-height:1.5;
+      color:var(--ink);
+      border-radius:0;
+      outline:none;
+      resize:none;
+    }
+
+    .field input:focus,
+    .field textarea:focus{
+      border-bottom-color:var(--ink);
+    }
+
+    .field textarea{
+      min-height:100px;
+    }
+
+    .sendBtn{
+      appearance:none;
+      background:none;
+      border:none;
+      padding:0;
+      margin-top:4px;
+      font:inherit;
+      font-size:15px;
+      color:var(--ink);
+      cursor:pointer;
+      justify-self:start;
+      position:relative;
+    }
+
+    .sendBtn::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-6px;
+      height:1px;
+      background:var(--ink);
+    }
+
+    .bottom{
+      display:grid;
+      grid-template-columns:1fr auto;
+      align-items:end;
+      gap:24px;
+    }
+
+    .footerLeft{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      padding-bottom:6px;
+    }
+
+    .socialWords{
+      display:flex;
+      gap:var(--social-gap);
+      align-items:center;
+      flex-wrap:wrap;
+      font-size:var(--social-size);
+      color:var(--ink);
+    }
+
+    .socialWords a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .socialWords a:hover{
+      color:var(--ink-soft);
+    }
+
+    .footerRight{
+      font-size:var(--meta-size);
+      color:var(--ink-soft);
+      padding-bottom:6px;
+      justify-self:end;
+    }
+
+    @media (max-width: 1520px){
+      :root{
+        --content-max:1320px;
+        --left-col:340px;
+        --middle-col:290px;
+        --right-col:390px;
+        --hero-size:66px;
+        --image-w:390px;
+      }
+    }
+
+    @media (max-width: 1240px){
+      :root{
+        --left-col:290px;
+        --middle-col:250px;
+        --right-col:340px;
+        --hero-size:56px;
+        --main-gap:30px;
+        --image-w:340px;
+      }
+
+      .middleBlock{
+        row-gap:34px;
+        padding-top:82px;
+      }
+
+      .mediaBlock{
+        padding-top:84px;
+      }
+
+      .vRule{
+        height:430px;
+      }
+    }
+
+    @media (max-width: 980px){
+      body{
+        padding:0;
+      }
+
+      .frame{
+        min-height:100vh;
+        border-radius:0;
+      }
+
+      .inner{
+        padding:34px 24px 32px;
+      }
+
+      .top,
+      .bottom{
+        width:100%;
+        grid-template-columns:1fr;
+      }
+
+      .brand{
+        white-space:normal;
+        gap:8px;
+        row-gap:8px;
+        flex-wrap:wrap;
+      }
+
+      .utility{
+        justify-content:flex-start;
+        text-align:left;
+      }
+
+      .main{
+        width:100%;
+        grid-template-columns:1fr;
+        row-gap:24px;
+        min-height:auto;
+      }
+
+      .heroBlock,
+      .ruleWrap,
+      .middleBlock,
+      .mediaBlock{
+        grid-column:1;
+        padding:0;
+        max-width:none;
+      }
+
+      .heroTitle{
+        max-width:none;
+        font-size:46px;
+      }
+
+      .ruleWrap{
+        justify-content:flex-start;
+      }
+
+      .vRule{
+        width:100%;
+        height:1px !important;
+      }
+
+      .middleBlock{
+        row-gap:24px;
+      }
+
+      .mediaBlock{
+        max-width:none;
+      }
+
+      .imagePortrait,
+      .contactForm{
+        max-width:340px;
+      }
+
+      .footerRight{
+        justify-self:start;
+      }
+    }
+  </style>
 </head>
-
-
 <body>
+  <div class="frame">
+    <div class="inner">
+      <div class="top">
+        <div class="brand">
+          KUON <span>STUDIO</span>
+          <span class="brand-location">| TAIPEI–LONDON</span>
+        </div>
 
-<div class="frame">
-<div class="inner">
+        <div class="utility" aria-label="Secondary links">
+          <a href="https://kuonholdings.com">Holdings</a>
+          <span class="sep">/</span>
+          <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
+          <span class="sep">/</span>
+          <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
+        </div>
+      </div>
 
-<div class="top">
+      <div class="main">
+        <div class="heroBlock">
+          <h1 class="heroTitle" id="heroTitle">Sound Architecture Practice</h1>
+        </div>
 
-<div class="brand">
-KUON <span>STUDIO</span>
-<span class="brand-location">| TAIPEI–LONDON</span>
-</div>
+        <div class="ruleWrap" aria-hidden="true">
+          <div class="vRule" id="vRule"></div>
+        </div>
 
-<div class="utility">
-<a href="https://kuonholdings.com">Holdings</a>
-/
-<a href="#">EN</a>
-/
-<a href="#">繁中</a>
-</div>
+        <div class="middleBlock">
+          <div class="index" aria-label="Section index">
+            <button type="button" class="active" data-panel="studio">Studio</button>
+            <button type="button" data-panel="work">Work</button>
+            <button type="button" data-panel="research">Research</button>
+            <button type="button" data-panel="contact">Contact</button>
+          </div>
 
-</div>
+          <div id="textPanel" class="textPanel">
+            <p class="kicker" id="kicker">Studio</p>
+            <div class="copy" id="copy">
+              <p>KUON Studio explores sound, form, and spatial systems.</p>
+              <p>Work spans product design, acoustic architecture, and experimental instruments.</p>
+              <p>Current studies include Neostein, instrument development, and spatial audio concepts.</p>
+            </div>
+          </div>
+        </div>
 
+        <div class="mediaBlock">
+          <div id="mediaPanel" class="mediaPanel">
+            <div id="imageState">
+              <div id="imagePortrait" class="imagePortrait" aria-hidden="true"></div>
+              <div id="caption" class="caption">Studio image placeholder</div>
+            </div>
 
-<div class="main">
+            <form id="contactState" class="contactForm" style="display:none;" onsubmit="event.preventDefault();">
+              <div class="field">
+                <label for="nameField">Name</label>
+                <input id="nameField" type="text" />
+              </div>
 
-<div class="hero">
-<h1 id="title">
-Sound<br>
-Architecture<br>
-Practice
-</h1>
-</div>
+              <div class="field">
+                <label for="emailField">Email</label>
+                <input id="emailField" type="email" />
+              </div>
 
-<div class="rule">
-<div></div>
-</div>
+              <div class="field">
+                <label for="projectField">Project / Company</label>
+                <input id="projectField" type="text" />
+              </div>
 
-<div class="middle">
+              <div class="field">
+                <label for="messageField">Message</label>
+                <textarea id="messageField"></textarea>
+              </div>
 
-<div class="index">
-<button data-panel="studio">Studio</button>
-<button data-panel="work">Work</button>
-<button data-panel="research">Research</button>
-<button data-panel="contact">Contact</button>
-</div>
+              <button class="sendBtn" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
 
-<div>
+      <div class="bottom">
+        <div class="footerLeft">
+          <div class="socialWords" aria-label="Social links">
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
 
-<div class="kicker" id="kicker">STUDIO</div>
+        <div class="footerRight">© KUON 2026</div>
+      </div>
+    </div>
+  </div>
 
-<div class="copy" id="copy">
+  <script>
+    const CONTENT = {
+      en: {
+        panels: {
+          studio: {
+            label: "Studio",
+            kicker: "Studio",
+            title: "Sound Architecture Practice",
+            copy: [
+              "KUON Studio explores sound, form, and spatial systems.",
+              "Work spans product design, acoustic architecture, and experimental instruments.",
+              "Current studies include Neostein, instrument development, and spatial audio concepts."
+            ],
+            caption: "Studio image placeholder",
+            portrait: "#d3d1cc",
+            ruleHeight: 470,
+            kind: "image"
+          },
+          work: {
+            label: "Work",
+            kicker: "Selected Work",
+            title: "Selected Work",
+            copy: [
+              "Selected work includes product systems, acoustic objects, and spatial interventions.",
+              "Projects range from Neostein direction to material-led studies in resonance and form.",
+              "This section can expand into individual case studies over time."
+            ],
+            caption: "Work image placeholder",
+            portrait: "#cbc6c0",
+            ruleHeight: 470,
+            kind: "image"
+          },
+          research: {
+            label: "Research",
+            kicker: "Research",
+            title: "Research and Development",
+            copy: [
+              "Research focuses on sound behaviour, material response, and architectural space.",
+              "Prototyping helps translate acoustic thinking into physical outcomes.",
+              "This area can later hold notes, diagrams, and short essays."
+            ],
+            caption: "Research image placeholder",
+            portrait: "#d7d2cb",
+            ruleHeight: 470,
+            kind: "image"
+          },
+          contact: {
+            label: "Contact",
+            kicker: "Contact",
+            title: "Contact",
+            copy: [
+              "For collaborations, commissions, and studio enquiries, KUON Studio can be contacted directly.",
+              "Use the form to discuss product development, research, or general opportunities."
+            ],
+            ruleHeight: 430,
+            kind: "form"
+          }
+        }
+      },
+      "zh-Hant": {
+        panels: {
+          studio: {
+            label: "Studio",
+            kicker: "Studio",
+            title: "聲音建築實踐",
+            copy: [
+              "KUON Studio 探索聲音、形式與空間系統。",
+              "工作涵蓋產品設計、聲學建築與實驗性樂器。",
+              "目前研究包含 Neostein、樂器開發與空間音響概念。"
+            ],
+            caption: "Studio 圖像預留區",
+            portrait: "#d3d1cc",
+            ruleHeight: 470,
+            kind: "image"
+          },
+          work: {
+            label: "Work",
+            kicker: "Selected Work",
+            title: "精選作品",
+            copy: [
+              "精選工作包括產品系統、聲學物件與空間介入。",
+              "項目涵蓋 Neostein 方向規劃以及關於共鳴與形式的材料研究。",
+              "未來可逐步擴充為個別案例頁面。"
+            ],
+            caption: "Work 圖像預留區",
+            portrait: "#cbc6c0",
+            ruleHeight: 470,
+            kind: "image"
+          },
+          research: {
+            label: "Research",
+            kicker: "Research",
+            title: "研究與開發",
+            copy: [
+              "研究聚焦於聲音行為、材料反應與建築空間。",
+              "打樣協助將聲學思考轉化為具體成果。",
+              "此區之後可放入筆記、圖表與短篇文字。"
+            ],
+            caption: "Research 圖像預留區",
+            portrait: "#d7d2cb",
+            ruleHeight: 470,
+            kind: "image"
+          },
+          contact: {
+            label: "Contact",
+            kicker: "Contact",
+            title: "聯絡",
+            copy: [
+              "如有合作、委託或工作室相關洽詢，可直接與 KUON Studio 聯絡。",
+              "可使用表單討論產品開發、研究合作或一般聯繫。"
+            ],
+            ruleHeight: 430,
+            kind: "form"
+          }
+        }
+      }
+    };
 
-<p>
-KUON Studio is a research-led practice exploring sound,
-form, and spatial systems.
-</p>
+    let currentLang = "en";
+    let currentPanel = "studio";
 
-<p>
-Our work spans product design, acoustic architecture,
-and experimental instruments, investigating how sound
-interacts with objects, materials, and environments.
-</p>
+    const heroTitle = document.getElementById("heroTitle");
+    const kickerEl = document.getElementById("kicker");
+    const textPanel = document.getElementById("textPanel");
+    const copyEl = document.getElementById("copy");
+    const imagePortrait = document.getElementById("imagePortrait");
+    const captionEl = document.getElementById("caption");
+    const mediaPanel = document.getElementById("mediaPanel");
+    const imageState = document.getElementById("imageState");
+    const contactState = document.getElementById("contactState");
+    const ruleEl = document.getElementById("vRule");
+    const indexButtons = Array.from(document.querySelectorAll(".index button"));
+    const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
 
-<p>
-Building work across Neostein, instrument studies,
-and future spatial audio concepts.
-</p>
+    function setActivePanelButtons() {
+      indexButtons.forEach(btn => {
+        const active = btn.dataset.panel === currentPanel;
+        btn.classList.toggle("active", active);
+        btn.textContent = CONTENT[currentLang].panels[btn.dataset.panel].label;
+      });
+    }
 
-</div>
+    function renderPanel() {
+      const data = CONTENT[currentLang].panels[currentPanel];
 
-</div>
+      heroTitle.textContent = data.title;
+      kickerEl.textContent = data.kicker;
+      copyEl.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
 
-</div>
+      if (window.innerWidth > 980) {
+        ruleEl.style.height = `${data.ruleHeight}px`;
+      }
 
-<div class="media">
+      if (data.kind === "form") {
+        imageState.style.display = "none";
+        contactState.style.display = "grid";
+      } else {
+        imageState.style.display = "block";
+        contactState.style.display = "none";
+        captionEl.textContent = data.caption;
+        imagePortrait.style.background = data.portrait;
+      }
+    }
 
-<div class="image" id="image"></div>
+    function setActiveLang() {
+      langButtons.forEach(btn => {
+        if (btn.dataset.lang === currentLang) btn.setAttribute("aria-current", "true");
+        else btn.removeAttribute("aria-current");
+      });
+    }
 
-<div class="caption" id="caption">
-Studio image placeholder
-</div>
+    function renderLanguage() {
+      document.documentElement.lang = currentLang === "en" ? "en" : "zh-Hant";
+      setActivePanelButtons();
+      setActiveLang();
+    }
 
-<div class="contact" id="contact">
+    function swapTo(panelKey) {
+      if (panelKey === currentPanel) return;
+      currentPanel = panelKey;
 
-<form>
+      textPanel.classList.add("is-swapping");
+      mediaPanel.classList.add("is-swapping");
 
-<div class="field">
-<label>Name</label>
-<input type="text">
-</div>
+      setTimeout(() => {
+        renderPanel();
+        setActivePanelButtons();
+        textPanel.classList.remove("is-swapping");
+        mediaPanel.classList.remove("is-swapping");
+      }, 180);
+    }
 
-<div class="field">
-<label>Email</label>
-<input type="email">
-</div>
+    function setLanguage(langKey) {
+      if (langKey === currentLang) return;
+      currentLang = langKey;
+      renderLanguage();
+      renderPanel();
+    }
 
-<div class="field">
-<label>Project / Company</label>
-<input type="text">
-</div>
+    indexButtons.forEach(btn => {
+      btn.addEventListener("click", () => swapTo(btn.dataset.panel));
+    });
 
-<div class="field">
-<label>Message</label>
-<textarea></textarea>
-</div>
+    langButtons.forEach(btn => {
+      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+    });
 
-<button class="send">Send</button>
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 980) {
+        ruleEl.style.height = "1px";
+      } else {
+        ruleEl.style.height = `${CONTENT[currentLang].panels[currentPanel].ruleHeight}px`;
+      }
+    });
 
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="bottom">
-
-<div class="social">
-<a href="#">Instagram</a>
-<a href="#">LinkedIn</a>
-</div>
-
-<div class="copyright">
-© KUON 2026
-</div>
-
-</div>
-
-</div>
-</div>
-
-
-<script>
-
-const panels = {
-
-studio:{
-title:"Sound Architecture Practice",
-kicker:"STUDIO",
-image:true
-},
-
-work:{
-title:"Selected Work",
-kicker:"WORK",
-image:true
-},
-
-research:{
-title:"Research and Development",
-kicker:"RESEARCH",
-image:true
-},
-
-contact:{
-title:"Contact",
-kicker:"CONTACT",
-image:false
-}
-
-}
-
-document.querySelectorAll(".index button").forEach(btn=>{
-
-btn.addEventListener("click",()=>{
-
-let key = btn.dataset.panel
-let p = panels[key]
-
-document.getElementById("title").innerText = p.title
-document.getElementById("kicker").innerText = p.kicker
-
-if(p.image){
-
-document.getElementById("image").style.display="block"
-document.getElementById("caption").style.display="block"
-document.getElementById("contact").style.display="none"
-
-}else{
-
-document.getElementById("image").style.display="none"
-document.getElementById("caption").style.display="none"
-document.getElementById("contact").style.display="block"
-
-}
-
-})
-
-})
-
-</script>
-
-
+    renderLanguage();
+    renderPanel();
+  </script>
 </body>
 </html>
