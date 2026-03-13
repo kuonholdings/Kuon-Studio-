@@ -21,10 +21,10 @@
       --inner-pad:42px;
 
       --content-max:1460px;
-      --top-gap:14px;
+      --top-gap:12px;
       --main-gap:48px;
 
-      --brand-size:22px;
+      --brand-size:19px;
       --brand-track:0.03em;
 
       --utility-size:13px;
@@ -60,12 +60,13 @@
       --image-top:88px;
 
       --rule-height:470px;
+      --media-height:560px;
 
       --field-size:15px;
       --field-line:#c6c3be;
       --field-gap:20px;
 
-      --swap-ms:320ms;
+      --swap-ms:260ms;
       --swap-ease:cubic-bezier(.22,.61,.36,1);
     }
 
@@ -216,7 +217,6 @@
       height:var(--rule-height);
       background:var(--line);
       opacity:0.96;
-      transition:height 220ms ease;
     }
 
     .middleBlock{
@@ -270,7 +270,7 @@
     .textPanel.is-swapping,
     .mediaPanel.is-swapping{
       opacity:0;
-      transform:translateY(10px);
+      transform:translateY(8px);
     }
 
     .kicker{
@@ -296,6 +296,7 @@
     .mediaBlock{
       grid-column:4;
       padding-top:var(--image-top);
+      min-height:var(--media-height);
     }
 
     .mediaPanel{
@@ -304,6 +305,10 @@
       transition:
         opacity var(--swap-ms) var(--swap-ease),
         transform var(--swap-ms) var(--swap-ease);
+      min-height:var(--media-height);
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
     }
 
     .imagePortrait{
@@ -312,6 +317,7 @@
       aspect-ratio:var(--image-ratio);
       border-radius:6px;
       background:var(--placeholder);
+      flex:0 0 auto;
     }
 
     .caption{
@@ -326,6 +332,7 @@
       display:grid;
       gap:var(--field-gap);
       padding-top:4px;
+      flex:0 0 auto;
     }
 
     .field{
@@ -447,6 +454,7 @@
         --hero-size:56px;
         --main-gap:30px;
         --image-w:340px;
+        --media-height:500px;
       }
 
       .middleBlock{
@@ -456,10 +464,6 @@
 
       .mediaBlock{
         padding-top:84px;
-      }
-
-      .vRule{
-        height:430px;
       }
     }
 
@@ -531,6 +535,11 @@
 
       .mediaBlock{
         max-width:none;
+        min-height:auto;
+      }
+
+      .mediaPanel{
+        min-height:auto;
       }
 
       .imagePortrait,
@@ -568,7 +577,7 @@
         </div>
 
         <div class="ruleWrap" aria-hidden="true">
-          <div class="vRule" id="vRule"></div>
+          <div class="vRule"></div>
         </div>
 
         <div class="middleBlock">
@@ -651,7 +660,6 @@
             ],
             caption: "Studio image placeholder",
             portrait: "#d3d1cc",
-            ruleHeight: 470,
             kind: "image"
           },
           work: {
@@ -665,13 +673,12 @@
             ],
             caption: "Work image placeholder",
             portrait: "#cbc6c0",
-            ruleHeight: 470,
             kind: "image"
           },
           research: {
             label: "Research",
             kicker: "Research",
-            title: "Research and Development",
+            title: "Research & Development",
             copy: [
               "Research focuses on sound behaviour, material response, and architectural space.",
               "Prototyping helps translate acoustic thinking into physical outcomes.",
@@ -679,7 +686,6 @@
             ],
             caption: "Research image placeholder",
             portrait: "#d7d2cb",
-            ruleHeight: 470,
             kind: "image"
           },
           contact: {
@@ -690,7 +696,6 @@
               "For collaborations, commissions, and studio enquiries, KUON Studio can be contacted directly.",
               "Use the form to discuss product development, research, or general opportunities."
             ],
-            ruleHeight: 430,
             kind: "form"
           }
         }
@@ -708,7 +713,6 @@
             ],
             caption: "Studio 圖像預留區",
             portrait: "#d3d1cc",
-            ruleHeight: 470,
             kind: "image"
           },
           work: {
@@ -722,7 +726,6 @@
             ],
             caption: "Work 圖像預留區",
             portrait: "#cbc6c0",
-            ruleHeight: 470,
             kind: "image"
           },
           research: {
@@ -736,7 +739,6 @@
             ],
             caption: "Research 圖像預留區",
             portrait: "#d7d2cb",
-            ruleHeight: 470,
             kind: "image"
           },
           contact: {
@@ -747,7 +749,6 @@
               "如有合作、委託或工作室相關洽詢，可直接與 KUON Studio 聯絡。",
               "可使用表單討論產品開發、研究合作或一般聯繫。"
             ],
-            ruleHeight: 430,
             kind: "form"
           }
         }
@@ -766,7 +767,6 @@
     const mediaPanel = document.getElementById("mediaPanel");
     const imageState = document.getElementById("imageState");
     const contactState = document.getElementById("contactState");
-    const ruleEl = document.getElementById("vRule");
     const indexButtons = Array.from(document.querySelectorAll(".index button"));
     const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
 
@@ -784,10 +784,6 @@
       heroTitle.textContent = data.title;
       kickerEl.textContent = data.kicker;
       copyEl.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
-
-      if (window.innerWidth > 980) {
-        ruleEl.style.height = `${data.ruleHeight}px`;
-      }
 
       if (data.kind === "form") {
         imageState.style.display = "none";
@@ -825,7 +821,7 @@
         setActivePanelButtons();
         textPanel.classList.remove("is-swapping");
         mediaPanel.classList.remove("is-swapping");
-      }, 180);
+      }, 160);
     }
 
     function setLanguage(langKey) {
@@ -841,14 +837,6 @@
 
     langButtons.forEach(btn => {
       btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
-    });
-
-    window.addEventListener("resize", () => {
-      if (window.innerWidth <= 980) {
-        ruleEl.style.height = "1px";
-      } else {
-        ruleEl.style.height = `${CONTENT[currentLang].panels[currentPanel].ruleHeight}px`;
-      }
     });
 
     renderLanguage();
