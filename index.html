@@ -13,12 +13,10 @@
       --panel:#f6f5f2;
       --ink:#111111;
       --ink-soft:#666666;
-      --ink-mid:#8b8b8b;
       --line:#d8d6d1;
       --placeholder:#d2d0cb;
 
       --frame-radius:16px;
-      --page-pad:28px;
       --inner-pad:52px;
 
       --brand-size:34px;
@@ -31,8 +29,8 @@
       --title-line:0.96;
       --title-max:760px;
 
-      --body-size:18px;
-      --body-line:1.45;
+      --body-size:15px;
+      --body-line:1.62;
       --body-max:620px;
 
       --meta-size:16px;
@@ -74,37 +72,6 @@
       grid-template-rows:auto auto 1fr auto;
       column-gap:72px;
       row-gap:28px;
-      position:relative;
-    }
-
-    .spark{
-      position:absolute;
-      top:18px;
-      left:22px;
-      font-size:34px;
-      line-height:1;
-    }
-
-    .toggle{
-      position:absolute;
-      top:18px;
-      right:22px;
-      width:64px;
-      height:40px;
-      border-radius:999px;
-      background:#d6d6d6;
-    }
-
-    .toggle::after{
-      content:"";
-      position:absolute;
-      top:4px;
-      left:4px;
-      width:32px;
-      height:32px;
-      border-radius:50%;
-      background:#f3f3f3;
-      box-shadow:0 1px 2px rgba(0,0,0,0.08);
     }
 
     .brand{
@@ -264,7 +231,7 @@
         grid-template-columns:1fr;
         grid-template-rows:auto auto auto auto auto;
         row-gap:24px;
-        padding:84px 24px 32px;
+        padding:36px 24px 32px;
       }
 
       .brand,
@@ -310,9 +277,6 @@
 <body>
   <div class="frame">
     <div class="inner">
-      <div class="spark">✦</div>
-      <div class="toggle" aria-hidden="true"></div>
-
       <div class="brand">KUON <span>STUDIO</span></div>
 
       <nav class="nav" aria-label="Primary">
