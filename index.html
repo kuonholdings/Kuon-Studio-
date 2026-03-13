@@ -4,237 +4,148 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>KUON STUDIO</title>
-  <meta name="description" content="KUON STUDIO" />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="KUON Studio — Sound Architecture Practice" />
+  <meta name="theme-color" content="#f5f4f1" />
 
   <style>
     :root{
-      --bg:#ffffff;
-      --fg:#111111;
-      --fg-soft:rgba(0,0,0,0.55);
-      --muted-1:rgba(0,0,0,0.76);
-      --muted-2:rgba(0,0,0,0.58);
-      --muted-3:rgba(0,0,0,0.34);
-      --muted-4:rgba(0,0,0,0.20);
+      --bg:#f5f4f1;
+      --panel:#f7f6f3;
+      --ink:#111111;
+      --ink-soft:#666666;
+      --ink-mid:#8a8a8a;
+      --line:#d9d7d2;
+      --placeholder:#d6d4cf;
 
-      --pad-x:64px;
-      --pad-y:56px;
+      --page-pad:26px;
+      --frame-radius:14px;
+      --frame-pad:34px;
 
-      --hero-top:50vh;
+      --brand-size:26px;
+      --brand-track:0.08em;
 
-      --logo-size:56px;
-      --logo-track:0.15em;
-      --logo-pad:0.15em;
-      --logo-line-h:calc(var(--logo-size) * 1.12);
+      --nav-size:13px;
+      --nav-track:0.01em;
+
+      --title-size:58px;
+      --title-line:0.98;
+
+      --body-size:18px;
+      --body-line:1.45;
 
       --meta-size:12px;
-      --meta-track:0.14em;
+      --meta-track:0.12em;
 
-      --tag-size:16px;
-      --tag-line:1.5;
-      --tag-track:0.04em;
-      --tag-gap:18px;
+      --button-w:210px;
+      --button-h:74px;
+      --button-radius:999px;
 
-      --nav-size:12px;
-      --nav-track:0.20em;
-      --nav-gap:36px;
+      --image-w:430px;
+      --image-h:320px;
 
-      --loc-size:12px;
-      --loc-track:0.16em;
-      --loc-gap:30px;
-
-      --body-size:14px;
-      --body-line:1.8;
-      --body-track:0.08em;
-
-      --panel-gap:18px;
-      --panel-width:660px;
-      --panel-min-h:150px;
-
-      --line-y-gap:18px;
-      --horizon-color:rgba(0,0,0,0.14);
-
-      --swap-ms:900ms;
-      --swap-ease:cubic-bezier(.35,0,.25,1);
-
-      --intro-brand-ms:1000ms;
-      --intro-division-ms:1000ms;
-      --intro-line-ms:1100ms;
-      --intro-rest-ms:1000ms;
-      --intro-delay-1:260ms;
-      --intro-delay-2:760ms;
-      --intro-delay-3:1380ms;
-      --intro-delay-4:2000ms;
+      --hero-top:118px;
+      --right-col-top:182px;
     }
 
     *{ box-sizing:border-box; }
-    html, body{ height:100%; }
 
-    body{
+    html, body{
       margin:0;
+      min-height:100%;
       background:var(--bg);
-      color:var(--fg);
-      overflow:hidden;
-      font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color:var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
 
-    a, button{
-      -webkit-tap-highlight-color:transparent;
+    body{
+      padding:12px;
     }
 
-    .wrap{
+    .frame{
+      min-height:calc(100vh - 24px);
+      border:1px solid rgba(0,0,0,0.04);
+      border-radius:var(--frame-radius);
+      background:var(--panel);
       position:relative;
-      width:100%;
-      height:100%;
-      padding:var(--pad-y) var(--pad-x);
+      overflow:hidden;
     }
 
-    .stack{
-      position:fixed;
-      left:var(--pad-x);
-      bottom:var(--pad-y);
-      z-index:3;
-      display:grid;
-      gap:6px;
-      justify-items:start;
-      font-size:var(--meta-size);
-      letter-spacing:var(--meta-track);
-      text-transform:uppercase;
-      line-height:1.5;
-      color:var(--muted-3);
+    .inner{
+      min-height:calc(100vh - 24px);
+      padding:var(--frame-pad);
+      position:relative;
     }
 
-    .stack .brandline{
-      color:var(--muted-3);
-    }
-
-    .stack a{
-      color:var(--muted-3);
-      text-decoration:none;
-      transition:color 180ms ease;
-    }
-
-    .stack a:hover{
-      color:var(--fg);
-    }
-
-    .lang-switch{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .lang-btn{
-      background:transparent;
-      border:0;
-      padding:0;
-      cursor:pointer;
-      color:var(--muted-3);
-      transition:color 180ms ease;
-      font:inherit;
-      letter-spacing:inherit;
-      text-transform:inherit;
-    }
-
-    .lang-btn:hover{ color:var(--fg); }
-    .lang-btn[aria-current="true"]{ color:rgba(0,0,0,0.76); }
-
-    .lang-sep{
-      color:var(--muted-4);
-      pointer-events:none;
-    }
-
-    .center{
+    .spark{
       position:absolute;
-      left:50%;
-      top:var(--hero-top);
-      transform:translate(-50%, -50%);
-      width:min(980px, calc(100% - 40px));
-      text-align:center;
-    }
-
-    .hero{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      min-height:420px;
-      justify-content:center;
-    }
-
-    .logoBox{
-      height:var(--logo-line-h);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .logo{
-      margin:0;
-      font-size:var(--logo-size);
+      top:22px;
+      left:22px;
+      font-size:28px;
       line-height:1;
-      letter-spacing:var(--logo-track);
-      padding-left:var(--logo-pad);
-      white-space:nowrap;
+      color:var(--ink);
+      user-select:none;
+    }
+
+    .toggle{
+      position:absolute;
+      top:22px;
+      right:22px;
+      width:56px;
+      height:38px;
+      border-radius:999px;
+      background:#d2d2d2;
+      position:relative;
+    }
+
+    .toggle::after{
+      content:"";
+      position:absolute;
+      top:4px;
+      left:4px;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:#f3f3f3;
+      box-shadow:0 1px 2px rgba(0,0,0,0.08);
+    }
+
+    .brand{
+      position:absolute;
+      top:102px;
+      left:96px;
+      font-size:var(--brand-size);
+      letter-spacing:var(--brand-track);
+      text-transform:uppercase;
       font-weight:700;
     }
 
-    .logo .brand{ color:var(--fg); }
-    .logo .division{ color:var(--fg-soft); }
-
-    .horizonWrap{
-      width:100%;
-      margin-top:var(--line-y-gap);
-      padding:0;
-    }
-
-    .horizon{
-      height:1px;
-      background:var(--horizon-color);
-      transform:scaleX(0);
-      transform-origin:center center;
-    }
-
-    .tagline{
-      margin:18px 0 0;
-      max-width:60ch;
-      min-height:34px;
-      font-size:var(--tag-size);
-      line-height:var(--tag-line);
-      letter-spacing:var(--tag-track);
-      color:var(--muted-1);
-      text-align:center;
-      font-weight:500;
+    .brand span{
+      font-weight:400;
+      color:var(--ink-soft);
     }
 
     .nav{
-      margin-top:var(--nav-gap);
-      min-height:20px;
+      position:absolute;
+      top:104px;
+      right:84px;
       display:flex;
-      justify-content:center;
+      gap:28px;
       align-items:center;
-      gap:22px;
-      flex-wrap:wrap;
     }
 
     .nav button{
-      background:transparent;
-      border:0;
+      appearance:none;
+      background:none;
+      border:none;
       padding:0;
-      cursor:pointer;
+      margin:0;
+      font:inherit;
       font-size:var(--nav-size);
-      letter-spacing:var(--nav-track);
-      text-transform:uppercase;
-      color:var(--muted-3);
-      transition:color 180ms ease;
+      color:var(--ink);
+      cursor:pointer;
       position:relative;
-    }
-
-    .nav button:hover{ color:var(--fg); }
-
-    .nav button.active{
-      color:rgba(0,0,0,0.76);
     }
 
     .nav button.active::after{
@@ -242,369 +153,315 @@
       position:absolute;
       left:0;
       right:0;
-      bottom:-4px;
+      bottom:-6px;
       height:1px;
-      background:rgba(0,0,0,0.18);
+      background:var(--ink);
     }
 
-    .locationStatic{
-      margin:var(--loc-gap) 0 0;
-      min-height:20px;
-      font-size:var(--loc-size);
-      line-height:1.7;
-      letter-spacing:var(--loc-track);
-      text-transform:uppercase;
-      color:var(--muted-3);
-      text-align:center;
-    }
-
-    .panel{
-      width:min(var(--panel-width), 100%);
-      min-height:var(--panel-min-h);
-      margin:22px auto 0;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-    }
-
-    .panelInner{
-      width:100%;
-      display:grid;
-      gap:var(--panel-gap);
-      justify-items:center;
-    }
-
-    .body{
+    .title{
+      position:absolute;
+      top:220px;
+      left:96px;
+      max-width:760px;
+      font-size:var(--title-size);
+      line-height:var(--title-line);
+      letter-spacing:-0.03em;
+      font-weight:500;
       margin:0;
-      max-width:62ch;
+    }
+
+    .copy{
+      position:absolute;
+      top:430px;
+      left:96px;
+      width:min(560px, calc(100vw - 220px));
       font-size:var(--body-size);
       line-height:var(--body-line);
-      letter-spacing:var(--body-track);
-      color:var(--muted-1);
-      text-align:center;
+      color:#2b2b2b;
+      margin:0;
     }
 
-    .email{
-      font-size:13px;
-      line-height:1.7;
-      letter-spacing:0.12em;
-      text-decoration:none;
-      color:var(--muted-2);
-      transition:color 160ms ease;
+    .copy p{
+      margin:0 0 16px 0;
     }
 
-    .email:hover{ color:var(--fg); }
+    .copy p:last-child{
+      margin-bottom:0;
+    }
 
-    .swapBox{
-      position:relative;
+    .social{
+      position:absolute;
+      left:96px;
+      bottom:88px;
+      display:flex;
+      gap:24px;
+      align-items:center;
+      color:var(--ink);
+      font-size:22px;
+    }
+
+    .social span{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      width:100%;
+      width:22px;
+      height:22px;
+      font-size:18px;
+      line-height:1;
     }
 
-    .swapBox::before{
-      content:"";
+    .bottom-left{
       position:absolute;
-      inset:-6px -12px;
-      background:var(--bg);
-      opacity:0;
-      pointer-events:none;
+      left:96px;
+      bottom:32px;
+      font-size:18px;
+      color:var(--ink-soft);
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
 
-    @keyframes curtain{
-      0%{ opacity:0; }
-      45%{ opacity:1; }
-      55%{ opacity:1; }
-      100%{ opacity:0; }
+    .bottom-right{
+      position:absolute;
+      right:40px;
+      bottom:32px;
+      font-size:18px;
+      color:var(--ink-soft);
     }
 
-    .swapBox.is-swapping::before{
-      animation:curtain var(--swap-ms) var(--swap-ease) both;
+    .menu-stack{
+      position:absolute;
+      top:350px;
+      right:68px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      align-items:flex-end;
     }
 
-    .intro-brand,
-    .intro-division,
-    .intro-line,
-    .intro-rest{
-      opacity:0;
-      transform:translateY(10px);
+    .pill{
+      width:var(--button-w);
+      height:var(--button-h);
+      border-radius:var(--button-radius);
+      border:1px solid #d2d0cb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:transparent;
+      font-size:24px;
+      line-height:1;
+      font-weight:400;
+      color:var(--ink);
+      cursor:pointer;
+      transition:background 160ms ease, border-color 160ms ease, transform 160ms ease;
     }
 
-    .is-ready .intro-brand{
-      animation:introRise var(--intro-brand-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-1) forwards;
+    .pill:hover{
+      background:rgba(0,0,0,0.02);
+      border-color:#c7c4bf;
+      transform:translateX(-2px);
     }
 
-    .is-ready .intro-division{
-      animation:introRise var(--intro-division-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-2) forwards;
+    .pill.active{
+      border-color:#bbb8b2;
+      background:rgba(0,0,0,0.015);
     }
 
-    .is-ready .intro-line{
-      animation:introRise var(--intro-line-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
+    .image-wrap{
+      position:absolute;
+      right:96px;
+      bottom:102px;
+      width:var(--image-w);
     }
 
-    .is-ready .intro-line .horizon{
-      animation:lineDraw var(--intro-line-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-3) forwards;
+    .image-placeholder{
+      width:100%;
+      height:var(--image-h);
+      background:var(--placeholder);
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.04);
     }
 
-    .is-ready .intro-rest{
-      animation:introRise var(--intro-rest-ms) cubic-bezier(.22,.61,.36,1) var(--intro-delay-4) forwards;
+    .caption{
+      margin-top:12px;
+      font-size:14px;
+      color:var(--ink-soft);
+      letter-spacing:0.01em;
     }
 
-    @keyframes introRise{
-      from{ opacity:0; transform:translateY(10px); }
-      to{ opacity:1; transform:translateY(0); }
-    }
-
-    @keyframes lineDraw{
-      from{ transform:scaleX(0); }
-      to{ transform:scaleX(1); }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .swapBox.is-swapping::before{ animation:none; opacity:0; }
-      .intro-brand,
-      .intro-division,
-      .intro-line,
-      .intro-rest{
-        opacity:1;
-        transform:none;
-        animation:none !important;
-      }
-      .horizon{ transform:scaleX(1); }
-    }
-
-    @media (max-width: 720px){
+    @media (max-width: 1380px){
       :root{
-        --pad-x:22px;
-        --pad-y:40px;
-        --hero-top:50vh;
-        --logo-size:42px;
-        --logo-track:0.12em;
-        --logo-pad:0.12em;
-        --tag-size:15px;
-        --meta-size:11px;
-        --nav-size:11px;
-        --body-size:13px;
-        --loc-gap:26px;
+        --title-size:48px;
+        --body-size:17px;
+        --image-w:360px;
+        --image-h:270px;
+        --button-w:185px;
+        --button-h:66px;
       }
 
-      .nav{ gap:16px; }
+      .title{ max-width:640px; }
+      .copy{ width:min(500px, calc(100vw - 220px)); }
+    }
+
+    @media (max-width: 1120px){
+      .nav{
+        right:40px;
+        gap:18px;
+      }
+
+      .brand,
+      .title,
+      .copy,
+      .social,
+      .bottom-left{
+        left:48px;
+      }
+
+      .image-wrap{
+        right:48px;
+      }
+
+      .menu-stack{
+        right:32px;
+      }
+
+      .title{
+        max-width:580px;
+      }
+    }
+
+    @media (max-width: 920px){
+      body{ padding:0; }
+
+      .frame{
+        min-height:100vh;
+        border-radius:0;
+      }
+
+      .inner{
+        min-height:100vh;
+        padding:28px 22px 36px;
+      }
+
+      .spark{
+        top:18px;
+        left:18px;
+      }
+
+      .toggle{
+        top:18px;
+        right:18px;
+        transform:scale(0.92);
+      }
+
+      .brand,
+      .nav,
+      .title,
+      .copy,
+      .menu-stack,
+      .image-wrap,
+      .social,
+      .bottom-left,
+      .bottom-right{
+        position:static;
+      }
+
+      .brand{
+        margin-top:62px;
+        margin-left:0;
+      }
+
+      .nav{
+        margin-top:18px;
+        flex-wrap:wrap;
+        gap:14px 22px;
+      }
+
+      .title{
+        margin-top:34px;
+        max-width:none;
+        font-size:42px;
+      }
+
+      .copy{
+        width:auto;
+        margin-top:24px;
+      }
+
+      .menu-stack{
+        margin-top:30px;
+        align-items:stretch;
+      }
+
+      .pill{
+        width:100%;
+        max-width:none;
+      }
+
+      .image-wrap{
+        width:100%;
+        margin-top:26px;
+      }
+
+      .image-placeholder{
+        height:240px;
+      }
+
+      .social{
+        margin-top:28px;
+      }
+
+      .bottom-left,
+      .bottom-right{
+        margin-top:22px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="stack intro-rest">
-    <div class="brandline" id="footerBrand">KUON</div>
-    <a href="https://kuonholdings.com">HOLDINGS</a>
-    <div class="lang-switch" aria-label="Language selector">
-      <button class="lang-btn" type="button" data-lang="en" aria-current="true">EN</button>
-      <span class="lang-sep">/</span>
-      <button class="lang-btn" type="button" data-lang="zh-Hant">繁中</button>
+  <div class="frame">
+    <div class="inner">
+      <div class="spark">✦</div>
+      <div class="toggle" aria-hidden="true"></div>
+
+      <div class="brand">KUON <span>STUDIO</span></div>
+
+      <nav class="nav" aria-label="Primary">
+        <button type="button" class="active">Studio</button>
+        <button type="button">Work</button>
+        <button type="button">Research</button>
+        <button type="button">Contact</button>
+      </nav>
+
+      <h1 class="title">Sound Architecture Practice</h1>
+
+      <div class="copy">
+        <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
+        <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
+        <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
+      </div>
+
+      <div class="menu-stack" aria-label="Section shortcuts">
+        <button class="pill active" type="button">Studio</button>
+        <button class="pill" type="button">Work</button>
+        <button class="pill" type="button">Research</button>
+        <button class="pill" type="button">Contact</button>
+      </div>
+
+      <div class="image-wrap">
+        <div class="image-placeholder" aria-hidden="true"></div>
+        <div class="caption">Image placeholder</div>
+      </div>
+
+      <div class="social" aria-label="Social links">
+        <span>◌</span>
+        <span>⌘</span>
+        <span>in</span>
+      </div>
+
+      <div class="bottom-left">Taipei / London</div>
+      <div class="bottom-right">© KUON 2026</div>
     </div>
   </div>
-
-  <div class="wrap">
-    <main class="center" aria-label="KUON STUDIO">
-      <div class="hero">
-        <div class="logoBox">
-          <h1 class="logo">
-            <span class="brand intro-brand">KUON</span>
-            <span class="division intro-division">STUDIO</span>
-          </h1>
-        </div>
-
-        <div class="horizonWrap intro-line">
-          <div class="horizon"></div>
-        </div>
-
-        <p class="tagline intro-rest" id="taglineText">Sound Architecture Practice</p>
-
-        <div class="nav intro-rest" id="nav">
-          <button data-panel="studio" class="active" type="button">STUDIO</button>
-          <button data-panel="work" type="button">WORK</button>
-          <button data-panel="research" type="button">RESEARCH</button>
-          <button data-panel="contact" type="button">CONTACT</button>
-        </div>
-
-        <p class="locationStatic intro-rest" id="locationStatic">Taipei / London</p>
-
-        <div class="panel intro-rest">
-          <div class="swapBox" id="panelSwap">
-            <div id="panelInner" class="panelInner"></div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    const prefersReducedMotion =
-      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const SWAP_TOTAL_MS = 900;
-    const SWAP_AT_MS = Math.round(SWAP_TOTAL_MS * 0.50);
-
-    const CONTENT = {
-      "en": {
-        htmlLang: "en",
-        footerBrand: "KUON",
-        tagline: "Sound Architecture Practice",
-        location: "Taipei / London",
-        nav: {
-          studio: "STUDIO",
-          work: "WORK",
-          research: "RESEARCH",
-          contact: "CONTACT"
-        },
-        panels: {
-          studio: `
-            <p class="body">
-              A practice working across sound, form, systems, and spatial development.
-            </p>
-          `,
-          work: `
-            <p class="body">
-              Selected projects in audio, objects, and built integration, including Neostein and instrument studies.
-            </p>
-          `,
-          research: `
-            <p class="body">
-              Ongoing studies in design rationale, spatial sound, and future product thinking.
-            </p>
-          `,
-          contact: `
-            <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-          `
-        }
-      },
-      "zh-Hant": {
-        htmlLang: "zh-Hant",
-        footerBrand: "久音",
-        tagline: "聲音建築實踐",
-        location: "台北 / 倫敦",
-        nav: {
-          studio: "工作室",
-          work: "作品",
-          research: "研究",
-          contact: "聯絡"
-        },
-        panels: {
-          studio: `
-            <p class="body">
-              一個橫跨聲音、形式、系統與空間發展的實踐。
-            </p>
-          `,
-          work: `
-            <p class="body">
-              精選項目涵蓋音響、物件與建築整合，包括 Neostein 與樂器研究。
-            </p>
-          `,
-          research: `
-            <p class="body">
-              持續中的研究包含設計理據、空間聲音，以及未來產品思考。
-            </p>
-          `,
-          contact: `
-            <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-          `
-        }
-      }
-    };
-
-    let currentLang = "en";
-    let currentPanel = "studio";
-
-    const footerBrand = document.getElementById("footerBrand");
-    const taglineText = document.getElementById("taglineText");
-    const locationStatic = document.getElementById("locationStatic");
-    const panelInner = document.getElementById("panelInner");
-    const panelSwap = document.getElementById("panelSwap");
-    const navButtons = Array.from(document.querySelectorAll(".nav button"));
-    const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
-
-    function startCurtain(box){
-      box.classList.remove("is-swapping");
-      void box.offsetWidth;
-      box.classList.add("is-swapping");
-    }
-
-    function stopCurtain(box){
-      box.classList.remove("is-swapping");
-    }
-
-    function curtainSwap(boxes, applyNewContent){
-      if (prefersReducedMotion){
-        applyNewContent();
-        return;
-      }
-      boxes.forEach(startCurtain);
-      setTimeout(applyNewContent, SWAP_AT_MS);
-      setTimeout(() => boxes.forEach(stopCurtain), SWAP_TOTAL_MS);
-    }
-
-    function setActiveLang(langKey){
-      langButtons.forEach(btn => {
-        if (btn.dataset.lang === langKey) btn.setAttribute("aria-current", "true");
-        else btn.removeAttribute("aria-current");
-      });
-    }
-
-    function setActivePanel(panelKey){
-      navButtons.forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.panel === panelKey);
-      });
-    }
-
-    function renderPanel(panelKey){
-      panelInner.innerHTML = CONTENT[currentLang].panels[panelKey];
-      setActivePanel(panelKey);
-    }
-
-    function applyLanguage(langKey){
-      const c = CONTENT[langKey];
-      document.documentElement.lang = c.htmlLang;
-      footerBrand.textContent = c.footerBrand;
-      taglineText.textContent = c.tagline;
-      locationStatic.textContent = c.location;
-
-      navButtons.forEach(btn => {
-        const key = btn.dataset.panel;
-        btn.textContent = c.nav[key];
-      });
-
-      renderPanel(currentPanel);
-      setActiveLang(langKey);
-    }
-
-    function setLanguage(langKey){
-      if (!CONTENT[langKey] || langKey === currentLang) return;
-      currentLang = langKey;
-      curtainSwap([panelSwap], () => applyLanguage(langKey));
-    }
-
-    function setPanel(panelKey){
-      if (!CONTENT[currentLang].panels[panelKey] || panelKey === currentPanel) return;
-      currentPanel = panelKey;
-      curtainSwap([panelSwap], () => renderPanel(panelKey));
-    }
-
-    navButtons.forEach(btn => {
-      btn.addEventListener("click", () => setPanel(btn.dataset.panel));
-    });
-
-    langButtons.forEach(btn => {
-      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
-    });
-
-    applyLanguage("en");
-
-    if (!prefersReducedMotion) {
-      requestAnimationFrame(() => document.body.classList.add("is-ready"));
-    } else {
-      document.body.classList.add("is-ready");
-    }
-  </script>
 </body>
 </html>
