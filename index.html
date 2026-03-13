@@ -31,26 +31,27 @@
       --hero-line:0.93;
       --hero-max:360px;
 
+      --kicker-size:12px;
+      --kicker-track:0.14em;
+
       --body-size:15px;
-      --body-line:1.65;
-      --body-max:390px;
+      --body-line:1.68;
+      --body-max:370px;
 
       --switch-size:15px;
-      --switch-gap:26px;
+      --switch-gap:24px;
 
       --meta-size:16px;
-      --social-size:18px;
 
-      --content-max:1460px;
-      --main-gap:44px;
+      --content-max:1480px;
+      --main-gap:46px;
 
       --left-col:420px;
+      --rule-col:26px;
       --text-col:320px;
-      --rule-col:28px;
-      --media-col:620px;
+      --media-col:520px;
 
-      --media-landscape-ratio:1.72 / 1;
-      --portrait-w:210px;
+      --portrait-w:300px;
       --portrait-ratio:0.76 / 1;
 
       --swap-ms:480ms;
@@ -157,7 +158,7 @@
       grid-template-columns:var(--left-col) var(--rule-col) var(--text-col) var(--media-col);
       column-gap:var(--main-gap);
       align-items:start;
-      min-height:540px;
+      min-height:560px;
     }
 
     .heroBlock{
@@ -179,15 +180,13 @@
       grid-column:2;
       display:flex;
       justify-content:center;
-      align-self:stretch;
-      min-height:100%;
-      padding-top:24px;
+      align-self:start;
+      padding-top:16px;
     }
 
     .vRule{
       width:2px;
-      height:68%;
-      min-height:470px;
+      height:530px;
       background:var(--line);
       opacity:0.95;
     }
@@ -195,7 +194,7 @@
     .textBlock{
       grid-column:3;
       align-self:start;
-      padding-top:286px;
+      padding-top:300px;
       max-width:var(--body-max);
     }
 
@@ -212,6 +211,15 @@
       transform:translateY(10px);
     }
 
+    .kicker{
+      margin:0 0 18px 0;
+      font-size:var(--kicker-size);
+      line-height:1.3;
+      letter-spacing:var(--kicker-track);
+      text-transform:uppercase;
+      color:var(--ink-mid);
+    }
+
     .copy p{
       margin:0 0 22px 0;
       font-size:var(--body-size);
@@ -224,30 +232,17 @@
     .mediaBlock{
       grid-column:4;
       align-self:start;
-      padding-top:168px;
+      padding-top:170px;
       width:100%;
     }
 
     .mediaStage{
-      position:relative;
       width:100%;
-    }
-
-    .imageLandscape{
-      width:100%;
-      aspect-ratio:var(--media-landscape-ratio);
-      border-radius:8px;
-      background:var(--placeholder-2);
-      transition:
-        background var(--swap-ms) var(--swap-ease),
-        opacity var(--swap-ms) var(--swap-ease),
-        transform var(--swap-ms) var(--swap-ease);
+      display:flex;
+      justify-content:flex-start;
     }
 
     .imagePortrait{
-      position:absolute;
-      right:44px;
-      top:34px;
       width:var(--portrait-w);
       aspect-ratio:var(--portrait-ratio);
       border-radius:8px;
@@ -258,7 +253,6 @@
         transform var(--swap-ms) var(--swap-ease);
     }
 
-    .imageLandscape.is-swapping,
     .imagePortrait.is-swapping{
       opacity:0;
       transform:translateY(10px);
@@ -279,7 +273,7 @@
     }
 
     .switcher{
-      margin-top:24px;
+      margin-top:18px;
       display:flex;
       flex-wrap:wrap;
       gap:var(--switch-gap);
@@ -303,7 +297,6 @@
     }
 
     .switcher button:hover{ color:var(--ink); }
-
     .switcher button.active{ color:var(--ink); }
 
     .switcher button.active::after{
@@ -330,19 +323,22 @@
       padding-bottom:10px;
     }
 
-    .social{
+    .socialWords{
       display:flex;
-      gap:26px;
+      gap:22px;
       align-items:center;
-      font-size:var(--social-size);
+      flex-wrap:wrap;
+      font-size:15px;
       color:var(--ink);
     }
 
-    .social span{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:22px;
+    .socialWords a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .socialWords a:hover{
+      color:var(--ink-soft);
     }
 
     .location{
@@ -359,27 +355,27 @@
 
     @media (max-width: 1500px){
       :root{
-        --content-max:1320px;
+        --content-max:1340px;
         --hero-size:68px;
-        --left-col:370px;
+        --left-col:360px;
         --text-col:300px;
-        --media-col:540px;
-        --main-gap:34px;
+        --media-col:460px;
+        --portrait-w:270px;
       }
     }
 
     @media (max-width: 1220px){
       :root{
         --hero-size:58px;
-        --left-col:320px;
+        --left-col:310px;
         --text-col:280px;
-        --media-col:460px;
-        --portrait-w:180px;
+        --media-col:390px;
+        --portrait-w:240px;
       }
 
-      .textBlock{ padding-top:236px; }
-      .mediaBlock{ padding-top:156px; }
-      .vRule{ min-height:420px; }
+      .textBlock{ padding-top:246px; }
+      .mediaBlock{ padding-top:150px; }
+      .vRule{ height:470px; }
     }
 
     @media (max-width: 980px){
@@ -391,7 +387,6 @@
       }
 
       .inner{
-        min-height:100vh;
         padding:34px 24px 32px;
       }
 
@@ -432,7 +427,6 @@
       .vRule{
         width:100%;
         height:1px;
-        min-height:1px;
       }
 
       .mediaBlock{
@@ -440,10 +434,7 @@
       }
 
       .imagePortrait{
-        right:20px;
-        top:20px;
-        width:32%;
-        min-width:140px;
+        width:min(320px, 100%);
       }
 
       .footerRight{
@@ -475,20 +466,22 @@
         </div>
 
         <div class="ruleWrap" aria-hidden="true">
-          <div class="vRule"></div>
+          <div class="vRule" id="vRule"></div>
         </div>
 
         <div class="textBlock">
-          <div id="textPanel" class="panelFade copy">
-            <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
-            <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
-            <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
+          <div id="textPanel" class="panelFade">
+            <p class="kicker" id="kicker">Studio</p>
+            <div class="copy" id="copy">
+              <p>KUON Studio is a research-led practice exploring sound, form, and spatial systems.</p>
+              <p>Our work spans product design, acoustic architecture, and experimental instruments, investigating how sound interacts with objects, materials, and environments.</p>
+              <p>Building work across Neostein, instrument studies, and future spatial audio concepts.</p>
+            </div>
           </div>
         </div>
 
         <div class="mediaBlock">
           <div class="mediaStage">
-            <div id="imageLandscape" class="imageLandscape" aria-hidden="true"></div>
             <div id="imagePortrait" class="imagePortrait" aria-hidden="true"></div>
           </div>
 
@@ -505,10 +498,9 @@
 
       <div class="bottom">
         <div class="footerLeft">
-          <div class="social" aria-label="Social links">
-            <span>◌</span>
-            <span>⌘</span>
-            <span>in</span>
+          <div class="socialWords" aria-label="Social links">
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
           </div>
           <div class="location" id="footerLocation">Taipei / London</div>
         </div>
@@ -525,6 +517,7 @@
         panels: {
           studio: {
             label: "Studio",
+            kicker: "Studio",
             title: "Sound Architecture Practice",
             copy: [
               "KUON Studio is a research-led practice exploring sound, form, and spatial systems.",
@@ -532,11 +525,11 @@
               "Building work across Neostein, instrument studies, and future spatial audio concepts."
             ],
             caption: "Studio image placeholder",
-            landscape: "#e3e1dc",
             portrait: "#d6d3ce"
           },
           work: {
             label: "Work",
+            kicker: "Selected Work",
             title: "Selected Work",
             copy: [
               "Studio work includes product systems, acoustic objects, and spatial interventions developed across commercial and experimental contexts.",
@@ -544,11 +537,11 @@
               "This section can later expand into individual case studies with imagery, captions, and technical notes."
             ],
             caption: "Work image placeholder",
-            landscape: "#ddd9d2",
             portrait: "#cfcac3"
           },
           research: {
             label: "Research",
+            kicker: "Research",
             title: "Research and Development",
             copy: [
               "Research at KUON Studio focuses on sound behaviour, material response, and the relationship between objects and architectural space.",
@@ -556,11 +549,11 @@
               "This area can eventually host notes, diagrams, prototypes, and short essays."
             ],
             caption: "Research image placeholder",
-            landscape: "#e4e0d8",
             portrait: "#d3cec7"
           },
           contact: {
             label: "Contact",
+            kicker: "Contact",
             title: "Contact",
             copy: [
               "For collaborations, project enquiries, and studio conversations, KUON Studio can be contacted directly through its Taipei and London base.",
@@ -568,7 +561,6 @@
               "For now, this page can remain direct and restrained."
             ],
             caption: "Contact image placeholder",
-            landscape: "#dedad4",
             portrait: "#cbc6c0"
           }
         }
@@ -578,6 +570,7 @@
         panels: {
           studio: {
             label: "Studio",
+            kicker: "Studio",
             title: "聲音建築實踐",
             copy: [
               "KUON Studio 是一個以研究為導向的實踐，探索聲音、形式與空間系統之間的關係。",
@@ -585,11 +578,11 @@
               "目前的工作橫跨 Neostein、樂器研究，以及未來空間音響概念。"
             ],
             caption: "Studio 圖像預留區",
-            landscape: "#e3e1dc",
             portrait: "#d6d3ce"
           },
           work: {
             label: "Work",
+            kicker: "Selected Work",
             title: "精選作品",
             copy: [
               "工作內容涵蓋產品系統、聲學物件與空間介入，並在商業與實驗脈絡中持續發展。",
@@ -597,11 +590,11 @@
               "未來可在此延伸為個別案例頁面，加入圖像、說明與技術筆記。"
             ],
             caption: "Work 圖像預留區",
-            landscape: "#ddd9d2",
             portrait: "#cfcac3"
           },
           research: {
             label: "Research",
+            kicker: "Research",
             title: "研究與開發",
             copy: [
               "KUON Studio 的研究聚焦於聲音行為、材料反應，以及物件與建築空間之間的關係。",
@@ -609,11 +602,11 @@
               "未來此區可放入筆記、圖表、原型與短篇文字。"
             ],
             caption: "Research 圖像預留區",
-            landscape: "#e4e0d8",
             portrait: "#d3cec7"
           },
           contact: {
             label: "Contact",
+            kicker: "Contact",
             title: "聯絡",
             copy: [
               "如有合作、專案洽詢或任何與工作室相關的交流，可透過 KUON Studio 的台北與倫敦據點直接聯絡。",
@@ -621,7 +614,6 @@
               "目前則可維持直接、克制的形式。"
             ],
             caption: "Contact 圖像預留區",
-            landscape: "#dedad4",
             portrait: "#cbc6c0"
           }
         }
@@ -632,9 +624,10 @@
     let currentPanel = "studio";
 
     const heroTitle = document.getElementById("heroTitle");
+    const kickerEl = document.getElementById("kicker");
     const textPanel = document.getElementById("textPanel");
+    const copyEl = document.getElementById("copy");
     const captionEl = document.getElementById("caption");
-    const imageLandscape = document.getElementById("imageLandscape");
     const imagePortrait = document.getElementById("imagePortrait");
     const switchButtons = Array.from(document.querySelectorAll(".switcher button"));
     const langButtons = Array.from(document.querySelectorAll(".lang-btn"));
@@ -644,9 +637,9 @@
     function renderPanel() {
       const data = CONTENT[currentLang].panels[currentPanel];
       heroTitle.textContent = data.title;
-      textPanel.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
+      kickerEl.textContent = data.kicker;
+      copyEl.innerHTML = data.copy.map(p => `<p>${p}</p>`).join("");
       captionEl.textContent = data.caption;
-      imageLandscape.style.background = data.landscape;
       imagePortrait.style.background = data.portrait;
     }
 
@@ -679,7 +672,6 @@
       currentPanel = panelKey;
 
       textPanel.classList.add("is-swapping");
-      imageLandscape.classList.add("is-swapping");
       imagePortrait.classList.add("is-swapping");
       captionEl.classList.add("is-swapping");
 
@@ -687,7 +679,6 @@
         renderPanel();
         setActivePanel();
         textPanel.classList.remove("is-swapping");
-        imageLandscape.classList.remove("is-swapping");
         imagePortrait.classList.remove("is-swapping");
         captionEl.classList.remove("is-swapping");
       }, 240);
