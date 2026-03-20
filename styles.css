@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/*
+ * KUON Studio site stylesheet
+ *
+ * This file defines the core colours, typography, layout and navigation styles
+ * used throughout the multipage site. The design draws inspiration from
+ * premium editorial websites – calm, spacious and restrained.  
+ */
+
+:root {
+  --bg: #f5f4f2;      /* page background */
+  --card-bg: #ffffff; /* card background */
+  --text: #222222;    /* primary text colour */
+  --muted: #666666;   /* secondary text colour */
+  --border: rgba(0, 0, 0, 0.1); /* subtle border colour */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+/*
+ * Top bar
+ *
+ * A slim strip above the card used to display studio identification on the left
+ * and a descriptor on the right. The subtle, muted style keeps focus on the
+ * card content while grounding the page in a context.  
+ */
+.navbar-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 40px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  box-sizing: border-box;
+}
+
+.navbar-top .left,
+.navbar-top .right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/*
+ * Card
+ *
+ * All primary page content sits within a card to create a calm focal area.
+ * The card is centred on the page with generous padding, a light border and
+ * slight shadow. Rounded corners soften the frame without making it look
+ * playful.  
+ */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 60px 80px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+/*
+ * Main navigation
+ *
+ * Primary links live within the card. They are spaced evenly and align
+ * centrally. An active link displays a darker colour and underline.  
+ */
+.card .main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 40px;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.card .main-nav a {
+  text-decoration: none;
+  color: var(--muted);
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.card .main-nav a.active,
+.card .main-nav a:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/*
+ * Sub navigation
+ *
+ * Secondary row of links for pages with multiple sections. The spacing is
+ * smaller and text size is reduced to separate the hierarchy.  
+ */
+.sub-nav {
+  margin-top: 10px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.sub-nav a {
+  text-decoration: none;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  padding-bottom: 3px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.sub-nav a.active,
+.sub-nav a:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/*
+ * Two column layout
+ *
+ * Used for detail pages: the left side holds text and the right a placeholder
+ * for images or other media. On narrow screens they wrap gracefully.  
+ */
+.two-col {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.two-col .text {
+  flex: 1 1 45%;
+  min-width: 300px;
+}
+
+.two-col .image {
+  flex: 1 1 45%;
+  min-width: 300px;
+  background-color: #eae8e3;
+  height: 420px;
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+.two-col .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/*
+ * Typography
+ *
+ * Headings use Playfair Display for an elegant touch. Body text uses Inter
+ * throughout for consistency and readability. Lists are indented slightly.  
+ */
+.hero h1,
+.text h1,
+.text h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero p,
+.text p,
+.text ul {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.text ul {
+  padding-left: 20px;
+}
+
+.text ul li {
+  margin-bottom: 10px;
+}
