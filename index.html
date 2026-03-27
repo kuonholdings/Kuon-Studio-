@@ -4,97 +4,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KUON STUDIO | 久音</title>
-    <meta
-      name="description"
-      content="KUON STUDIO | 久音 — Sound Architecture Practice"
-    />
+
     <style>
       :root {
         --bg: #f3f1ec;
-        --text: #111111;
-        --muted: rgba(17, 17, 17, 0.58);
+        --text: #111;
+        --soft: rgba(0,0,0,0.28);
+        --mid: rgba(0,0,0,0.45);
+        --muted: rgba(0,0,0,0.55);
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
-      html,
-      body {
+      html, body {
         margin: 0;
-        min-height: 100%;
+        height: 100%;
       }
 
       body {
         background: var(--bg);
-        color: var(--text);
         font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: var(--text);
         -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
       }
 
       .page {
         position: relative;
-        min-height: 100vh;
-        padding: 36px 40px 32px;
+        height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
+        padding: 40px;
       }
 
-      .hero {
+      .center {
         text-align: center;
-        line-height: 0.92;
-        letter-spacing: -0.045em;
+        line-height: 1;
+        letter-spacing: -0.035em;
         opacity: 0;
-        transform: translateY(10px);
-        animation: fadeIn 1.2s ease forwards;
+        transform: translateY(6px);
+        animation: fade 1.2s ease forwards;
       }
 
-      .hero .latin,
-      .hero .kanji {
-        display: block;
+      .title {
+        font-size: clamp(2.6rem, 6.5vw, 5.5rem);
         font-weight: 500;
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.2em;
       }
 
-      .hero .latin {
-        font-size: clamp(3.4rem, 10vw, 8.6rem);
+      .kuon {
+        color: var(--text);
       }
 
-      .hero .kanji {
-        margin-top: 0.1em;
-        font-size: clamp(3rem, 8.5vw, 7.2rem);
+      .studio {
+        color: var(--soft);
+      }
+
+      .divider {
+        color: var(--soft);
+        margin: 0 0.1em;
+      }
+
+      .kanji {
+        color: var(--mid);
+        font-size: 0.95em;
         letter-spacing: 0.02em;
+        transform: translateY(0.04em); /* optical alignment */
       }
 
       .meta {
         position: absolute;
+        bottom: 40px;
         left: 40px;
-        bottom: 32px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        font-size: 0.76rem;
-        line-height: 1.4;
+        font-size: 0.75rem;
         letter-spacing: 0.12em;
-        text-transform: uppercase;
         color: var(--muted);
+        line-height: 1.6;
       }
 
       .email {
+        display: block;
+        text-transform: none;
+        font-size: 0.9rem;
+        letter-spacing: 0.01em;
         color: var(--text);
         text-decoration: none;
-        text-transform: none;
-        letter-spacing: 0.01em;
-        font-size: 0.95rem;
+        margin-bottom: 8px;
       }
 
       .email:hover {
-        opacity: 0.72;
+        opacity: 0.7;
       }
 
-      @keyframes fadeIn {
+      @keyframes fade {
         to {
           opacity: 1;
           transform: translateY(0);
@@ -102,19 +106,15 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .hero {
+        .center {
+          animation: none;
           opacity: 1;
           transform: none;
-          animation: none;
         }
       }
 
-      @media (max-width: 720px) {
-        .page {
-          padding: 28px 24px 24px;
-        }
-
-        .hero {
+      @media (max-width: 700px) {
+        .center {
           text-align: left;
           width: 100%;
         }
@@ -122,26 +122,28 @@
         .meta {
           left: 24px;
           bottom: 24px;
-          gap: 8px;
-        }
-
-        .email {
-          font-size: 0.9rem;
         }
       }
     </style>
   </head>
-  <body>
-    <main class="page">
-      <section class="hero" aria-label="KUON STUDIO | 久音">
-        <span class="latin">KUON STUDIO</span>
-        <span class="kanji">久音</span>
-      </section>
 
-      <aside class="meta">
+  <body>
+    <div class="page">
+
+      <div class="center">
+        <div class="title">
+          <span class="kuon">KUON</span>
+          <span class="studio">STUDIO</span>
+          <span class="divider">|</span>
+          <span class="kanji">久音</span>
+        </div>
+      </div>
+
+      <div class="meta">
         <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-        <div>London / Taipei / Tokyo</div>
-      </aside>
-    </main>
+        London / Taipei / Tokyo
+      </div>
+
+    </div>
   </body>
 </html>
