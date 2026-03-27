@@ -2,122 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KUON STUDIO | 久音</title>
 
   <style>
     :root {
       --bg: #f3f1ec;
-      --text: #111;
-      --muted: rgba(0,0,0,0.5);
-      --light: rgba(0,0,0,0.25);
+      --text: #111111;
+      --soft: rgba(0, 0, 0, 0.28);
+      --muted: rgba(0, 0, 0, 0.55);
+      --line: rgba(0, 0, 0, 0.18);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
+    html,
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100%;
+    }
+
+    body {
       background: var(--bg);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 40px;
     }
 
     .container {
       display: grid;
       grid-template-columns: auto 1px auto;
       gap: 40px;
-      align-items: center;
+      align-items: stretch;
       width: min(1100px, 90%);
+      opacity: 0;
+      transform: translateY(8px);
+      animation: fadeIn 1.2s ease forwards;
     }
 
-    /* LEFT INFO */
     .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       text-align: right;
       font-size: 0.8rem;
-      line-height: 1.6;
+      line-height: 1.65;
       letter-spacing: 0.08em;
       color: var(--muted);
     }
 
+    .practice {
+      margin-bottom: 10px;
+    }
+
     .email {
-      display: block;
-      margin-top: 10px;
+      display: inline-block;
+      margin-bottom: 10px;
       color: var(--text);
       text-decoration: none;
-      font-size: 0.95rem;
+      text-transform: none;
       letter-spacing: 0.01em;
+      font-size: 0.95rem;
     }
 
-    /* DIVIDER */
+    .email:hover {
+      opacity: 0.72;
+    }
+
     .line {
       width: 1px;
-      height: 120px;
-      background: var(--light);
+      background: var(--line);
+      align-self: stretch;
     }
 
-    /* RIGHT TITLE */
     .title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       font-size: clamp(3rem, 7vw, 6rem);
       font-weight: 600;
-      line-height: 0.9;
-      letter-spacing: -0.03em;
+      line-height: 0.88;
+      letter-spacing: -0.04em;
+    }
+
+    .kuon {
+      color: var(--text);
     }
 
     .studio {
-      color: var(--light);
+      color: var(--soft);
       font-weight: 500;
     }
 
     .kanji {
+      color: var(--text);
       font-size: 0.9em;
-      color: var(--light);
-      margin-top: 0.2em;
+      margin-top: 0.14em;
+      letter-spacing: 0.01em;
     }
 
-    /* MOBILE */
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .container {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+    }
+
     @media (max-width: 700px) {
+      .page {
+        padding: 28px 24px;
+      }
+
       .container {
         grid-template-columns: 1fr;
         gap: 20px;
+        width: 100%;
       }
 
       .info {
         text-align: left;
+        order: 2;
       }
 
       .line {
         display: none;
       }
+
+      .title {
+        order: 1;
+      }
     }
   </style>
 </head>
-
 <body>
+  <main class="page">
+    <section class="container">
+      <div class="info">
+        <div class="practice">Sound Architecture Practice</div>
+        <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
+        <div>London / Taipei / Tokyo</div>
+      </div>
 
-  <div class="container">
+      <div class="line" aria-hidden="true"></div>
 
-    <!-- LEFT -->
-    <div class="info">
-      Sound Architecture Practice<br>
-      <a href="mailto:hello@kuon.studio" class="email">hello@kuon.studio</a>
-      London / Taipei / Tokyo
-    </div>
-
-    <!-- DIVIDER -->
-    <div class="line"></div>
-
-    <!-- RIGHT -->
-    <div class="title">
-      KUON<br>
-      <span class="studio">STUDIO</span><br>
-      <div class="kanji">久音</div>
-    </div>
-
-  </div>
-
+      <div class="title" aria-label="KUON STUDIO 久音">
+        <div class="kuon">KUON</div>
+        <div class="studio">STUDIO</div>
+        <div class="kanji">久音</div>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
