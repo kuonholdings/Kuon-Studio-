@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KUON STUDIO | 久音</title>
+    <meta
+      name="description"
+      content="KUON STUDIO | 久音 — Sound Architecture Practice"
+    />
+    <style>
+      :root {
+        --bg: #f5f3ee;
+        --text: #111111;
+        --muted: #5f5a52;
+        --rule: rgba(17, 17, 17, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Times New Roman", Georgia, serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 28px;
+      }
+
+      .panel {
+        width: min(680px, 100%);
+      }
+
+      .rule {
+        width: 100%;
+        height: 1px;
+        background: var(--rule);
+        margin-bottom: 28px;
+      }
+
+      .brand {
+        margin: 0;
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        line-height: 1.2;
+      }
+
+      .descriptor {
+        margin: 10px 0 0 0;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .statement {
+        margin: 42px 0 0 0;
+        max-width: 32ch;
+        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        line-height: 1.6;
+        font-style: italic;
+      }
+
+      .meta {
+        margin-top: 42px;
+        font-size: 0.98rem;
+        line-height: 1.9;
+        color: var(--muted);
+      }
+
+      .email {
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(17, 17, 17, 0.22);
+        padding-bottom: 1px;
+      }
+
+      .email:hover {
+        border-bottom-color: rgba(17, 17, 17, 0.5);
+      }
+
+      .footer {
+        margin-top: 72px;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          align-items: flex-start;
+          padding-top: 72px;
+        }
+
+        .statement {
+          max-width: 100%;
+        }
+
+        .footer {
+          margin-top: 56px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="panel">
+        <div class="rule"></div>
+
+        <h1 class="brand">KUON STUDIO | 久音</h1>
+        <p class="descriptor">Sound Architecture Practice</p>
+
+        <p class="statement">
+          A studio concerned with sound, form, and permanence.
+        </p>
+
+        <div class="meta">
+          <div>Website in development.</div>
+          <div>
+            For enquiries:
+            <a class="email" href="mailto:guy@kuon.studio">guy@kuon.studio</a>
+          </div>
+        </div>
+
+        <div class="footer">London / Taipei / Tokyo</div>
+      </section>
+    </main>
+  </body>
+</html>
