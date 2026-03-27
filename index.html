@@ -1,134 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KUON STUDIO | 久音</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KUON STUDIO | 久音</title>
 
-    <style>
-      :root {
-        --bg: #f3f1ec;
-        --text: #111;
-        --soft: rgba(0,0,0,0.28);
-        --mid: rgba(0,0,0,0.45);
-        --muted: rgba(0,0,0,0.55);
+  <style>
+    :root {
+      --bg: #f3f1ec;
+      --text: #111;
+      --muted: rgba(0,0,0,0.5);
+      --light: rgba(0,0,0,0.25);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: auto 1px auto;
+      gap: 40px;
+      align-items: center;
+      width: min(1100px, 90%);
+    }
+
+    /* LEFT INFO */
+    .info {
+      text-align: right;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .practice {
+      margin-bottom: 2px;
+    }
+
+    .locations {
+      margin-bottom: 16px;
+    }
+
+    .email {
+      display: block;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+    }
+
+    .email:hover {
+      opacity: 0.7;
+    }
+
+    /* DIVIDER */
+    .line {
+      width: 1px;
+      height: 90px; /* OPTICAL HEIGHT */
+      background: var(--light);
+    }
+
+    /* RIGHT TITLE */
+    .title {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 600;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+    }
+
+    .studio {
+      color: var(--light);
+      font-weight: 500;
+    }
+
+    .kanji {
+      font-size: 0.9em;
+      color: var(--text);
+      margin-top: 0.2em;
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 20px;
       }
 
-      * { box-sizing: border-box; }
-
-      html, body {
-        margin: 0;
-        height: 100%;
+      .info {
+        text-align: left;
       }
 
-      body {
-        background: var(--bg);
-        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: var(--text);
+      .line {
+        display: none;
       }
+    }
+  </style>
+</head>
 
-      .page {
-        position: relative;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-      }
+<body>
 
-      .center {
-        text-align: center;
-        line-height: 1;
-        letter-spacing: -0.035em;
-        animation: fade 1.2s ease forwards;
-        opacity: 0;
-      }
+  <div class="container">
 
-      .title {
-        font-size: clamp(2.8rem, 7vw, 6rem);
-        font-weight: 500;
-        display: inline-flex;
-        align-items: baseline;
-        gap: 0.25em;
-      }
-
-      /* ===== OPTION STYLES ===== */
-
-      /* OPTION 1 (current refined) */
-      .opt1 .kuon { color: var(--text); }
-      .opt1 .studio { color: var(--soft); }
-      .opt1 .kanji { color: var(--mid); }
-
-      /* OPTION 2 (Kuon + 久音 same weight) */
-      .opt2 .kuon { color: var(--text); }
-      .opt2 .studio { color: var(--soft); }
-      .opt2 .kanji { color: var(--text); }
-
-      /* OPTION 3 (more contrast + subtle divider removal feel) */
-      .opt3 .kuon { color: var(--text); }
-      .opt3 .studio { color: var(--soft); letter-spacing: -0.01em; }
-      .opt3 .divider { opacity: 0.3; }
-      .opt3 .kanji { color: var(--mid); transform: translateY(0.04em); }
-
-      .divider {
-        color: var(--soft);
-        margin: 0 0.15em;
-      }
-
-      .kanji {
-        font-size: 0.95em;
-        letter-spacing: 0.02em;
-      }
-
-      .meta {
-        position: absolute;
-        bottom: 40px;
-        left: 40px;
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      .email {
-        display: block;
-        text-transform: none;
-        font-size: 0.9rem;
-        letter-spacing: 0.01em;
-        color: var(--text);
-        text-decoration: none;
-        margin-bottom: 8px;
-      }
-
-      @keyframes fade {
-        to { opacity: 1; }
-      }
-
-      @media (max-width: 700px) {
-        .center { text-align: left; }
-        .meta { left: 24px; bottom: 24px; }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="page">
-
-      <!-- SWITCH BETWEEN opt1 / opt2 / opt3 HERE -->
-      <div class="center opt2">
-        <div class="title">
-          <span class="kuon">KUON</span>
-          <span class="studio">STUDIO</span>
-          <span class="divider">|</span>
-          <span class="kanji">久音</span>
-        </div>
-      </div>
-
-      <div class="meta">
-        <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-        London / Taipei / Tokyo
-      </div>
-
+    <!-- LEFT -->
+    <div class="info">
+      <div class="practice">Sound Architecture Practice</div>
+      <div class="locations">London / Taipei / Tokyo</div>
+      <a href="mailto:hello@kuon.studio" class="email">hello@kuon.studio</a>
     </div>
-  </body>
+
+    <!-- DIVIDER -->
+    <div class="line"></div>
+
+    <!-- RIGHT -->
+    <div class="title">
+      KUON<br>
+      <span class="studio">STUDIO</span><br>
+      <div class="kanji">久音</div>
+    </div>
+
+  </div>
+
+</body>
 </html>
