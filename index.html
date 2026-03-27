@@ -10,10 +10,9 @@
     />
     <style>
       :root {
-        --bg: #f5f3ee;
+        --bg: #f3f1ec;
         --text: #111111;
-        --muted: #5f5a52;
-        --rule: rgba(17, 17, 17, 0.16);
+        --muted: rgba(17, 17, 17, 0.58);
       }
 
       * {
@@ -29,90 +28,70 @@
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: "Times New Roman", Georgia, serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
       }
 
       .page {
+        position: relative;
         min-height: 100vh;
+        padding: 36px 40px 32px;
         display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        padding: 120px 28px 48px 10vw;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
       }
 
-      .panel {
-        width: min(560px, 100%);
+      .hero {
+        text-align: center;
+        line-height: 0.92;
+        letter-spacing: -0.045em;
         opacity: 0;
-        transform: translateY(8px);
-        animation: fadeIn 1.4s ease forwards;
+        transform: translateY(10px);
+        animation: fadeIn 1.2s ease forwards;
       }
 
-      .rule,
-      .footer-rule {
-        width: 100%;
-        max-width: 520px;
-        height: 1px;
-        background: var(--rule);
+      .hero .latin,
+      .hero .kanji {
+        display: block;
+        font-weight: 500;
       }
 
-      .rule {
-        margin-bottom: 28px;
+      .hero .latin {
+        font-size: clamp(3.4rem, 10vw, 8.6rem);
       }
 
-      .brand {
-        margin: 0;
-        font-size: clamp(1.8rem, 3vw, 2.5rem);
-        font-weight: 400;
-        letter-spacing: 0.07em;
-        line-height: 1.2;
-      }
-
-      .descriptor {
-        margin: 10px 0 0 0;
-        font-size: 0.95rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .statement {
-        margin: 42px 0 0 0;
-        max-width: 32ch;
-        font-size: clamp(1.15rem, 2vw, 1.45rem);
-        line-height: 1.6;
-        font-style: italic;
+      .hero .kanji {
+        margin-top: 0.1em;
+        font-size: clamp(3rem, 8.5vw, 7.2rem);
+        letter-spacing: 0.02em;
       }
 
       .meta {
-        margin-top: 42px;
-        font-size: 0.98rem;
-        line-height: 1.9;
+        position: absolute;
+        left: 40px;
+        bottom: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 0.76rem;
+        line-height: 1.4;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
         color: var(--muted);
       }
 
       .email {
         color: var(--text);
         text-decoration: none;
-        border-bottom: 1px solid rgba(17, 17, 17, 0.22);
-        padding-bottom: 1px;
+        text-transform: none;
+        letter-spacing: 0.01em;
+        font-size: 0.95rem;
       }
 
       .email:hover {
-        border-bottom-color: rgba(17, 17, 17, 0.5);
-      }
-
-      .footer-rule {
-        margin-top: 56px;
-      }
-
-      .footer {
-        margin-top: 18px;
-        font-size: 0.8rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--muted);
+        opacity: 0.72;
       }
 
       @keyframes fadeIn {
@@ -123,48 +102,46 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .panel {
+        .hero {
           opacity: 1;
           transform: none;
           animation: none;
         }
       }
 
-      @media (max-width: 640px) {
+      @media (max-width: 720px) {
         .page {
-          align-items: flex-start;
-          padding-top: 72px;
+          padding: 28px 24px 24px;
         }
 
-        .statement {
-          max-width: 100%;
+        .hero {
+          text-align: left;
+          width: 100%;
         }
 
-        .footer-rule {
-          margin-top: 44px;
+        .meta {
+          left: 24px;
+          bottom: 24px;
+          gap: 8px;
+        }
+
+        .email {
+          font-size: 0.9rem;
         }
       }
     </style>
   </head>
   <body>
     <main class="page">
-      <section class="panel">
-        <div class="rule"></div>
-
-        <h1 class="brand">KUON STUDIO | 久音</h1>
-        <p class="descriptor">Sound Architecture Practice</p>
-
-        <p class="statement">
-          A studio concerned with sound, form, and permanence.
-        </p>
-
-        <div class="meta">
-          <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-        </div>
-
-        <div class="footer-rule"></div>
-        <div class="footer">London / Taipei / Tokyo</div>
+      <section class="hero" aria-label="KUON STUDIO | 久音">
+        <span class="latin">KUON STUDIO</span>
+        <span class="kanji">久音</span>
       </section>
+
+      <aside class="meta">
+        <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
+        <div>London / Taipei / Tokyo</div>
+      </aside>
     </main>
   </body>
 </html>
