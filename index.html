@@ -16,16 +16,14 @@
       --muted: rgba(0, 0, 0, 0.56);
       --soft: rgba(0, 0, 0, 0.26);
       --kanji: rgba(0, 0, 0, 0.09);
-      --enter: rgba(0, 0, 0, 0.44);
+      --nav: rgba(0, 0, 0, 0.42);
       --rule: rgba(0, 0, 0, 0.12);
+      --field-border: rgba(0, 0, 0, 0.12);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       min-height: 100%;
     }
@@ -33,89 +31,100 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: "Red Hat Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: "Red Hat Display", sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-      overflow: hidden;
     }
 
-    .page {
-      position: relative;
+    .site {
       min-height: 100vh;
-      width: 100%;
       background: var(--bg);
     }
 
-    .panel {
-      position: absolute;
-      inset: 0;
+    .nav {
+      position: fixed;
+      top: 28px;
+      right: 32px;
+      z-index: 20;
       display: flex;
+      gap: 18px;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav button {
+      appearance: none;
+      border: 0;
+      background: none;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: var(--nav);
+      cursor: pointer;
+      transition: color 180ms ease;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      color: var(--text);
+    }
+
+    .nav button:focus-visible,
+    .panel-email:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    .submit:focus-visible {
+      outline: none;
+      text-decoration: underline;
+      text-underline-offset: 0.16em;
+    }
+
+    .view {
+      display: none;
+      min-height: 100vh;
       align-items: center;
       justify-content: center;
       padding: 40px 24px;
-      background: var(--bg);
     }
 
-    .panel[hidden] {
-      display: none;
+    .view.active {
+      display: flex;
     }
 
-    .intro-wrap,
-    .about-wrap {
-      display: grid;
-      grid-template-columns: minmax(240px, 320px) 1px minmax(360px, 620px);
-      gap: 38px;
-      align-items: start;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 380ms ease, transform 380ms ease;
+    .view-wrap {
+      width: 100%;
     }
 
-    .intro-wrap {
-      opacity: 0;
-      transform: translateY(8px);
-      animation: introFade 1100ms ease forwards;
-    }
-
-    @keyframes introFade {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    /* HOME */
 
     .hero {
       display: grid;
       grid-template-columns: auto auto;
-      justify-content: center;
       align-items: center;
-      gap: 1.35em;
+      gap: 0.55em;
+      margin-left: clamp(24px, 6vw, 120px);
     }
 
     .latin {
       font-size: clamp(2.8rem, 6.5vw, 5.7rem);
       font-weight: 600;
-      line-height: 0.84;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      will-change: transform, opacity;
-      transition: transform 520ms cubic-bezier(.22,.61,.36,1), opacity 420ms ease;
+      line-height: 0.85;
     }
 
     .latin div + div {
-      margin-top: 0.04em;
+      margin-top: 0.05em;
     }
 
     .kanji {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       font-family: "Zhi Mang Xing", cursive;
-      font-size: clamp(4.7rem, 11vw, 8.7rem);
+      font-size: clamp(4.5rem, 10vw, 8rem);
       line-height: 0.9;
       color: var(--kanji);
-      will-change: transform, opacity;
-      transition: transform 560ms cubic-bezier(.22,.61,.36,1), opacity 420ms ease;
     }
 
     .kanji div:first-child {
@@ -126,200 +135,155 @@
       transform: translateY(0.08em);
     }
 
-    .entry {
-      margin-top: 2.25rem;
-      text-align: center;
-      will-change: opacity;
-      transition: opacity 220ms ease;
-    }
+    /* ABOUT */
 
-    .enter-button {
-      appearance: none;
-      border: 0;
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      font: inherit;
-      font-size: 0.82rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--enter);
-      cursor: pointer;
-      transition: color 180ms ease;
-    }
-
-    .enter-button:hover {
-      color: var(--text);
-    }
-
-    .enter-button:focus-visible,
-    .back:focus-visible {
-      outline: none;
-      text-decoration: underline;
-      text-underline-offset: 0.16em;
-    }
-
-    .is-exiting .latin {
-      opacity: 0;
-      transform: translateX(-28px);
-    }
-
-    .is-exiting .kanji {
-      opacity: 0;
-      transform: translateY(28px);
-    }
-
-    .is-exiting .entry {
-      opacity: 0;
-    }
-
-    .about-wrap {
+    .panel {
       display: grid;
-      grid-template-columns: minmax(240px, 320px) 1px minmax(340px, 560px);
-      gap: 38px;
+      grid-template-columns: 260px 1px 1fr;
+      gap: 40px;
       align-items: start;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 380ms ease, transform 380ms ease;
+      width: min(940px, 100%);
     }
 
-    .about-wrap.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .about-meta {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+    .panel-left {
       text-align: right;
-      padding-top: 0;
     }
 
-    .about-mark {
-      font-size: 1.05rem;
-      line-height: 1.15;
-      letter-spacing: 0.08em;
+    .panel-title {
+      font-size: 1rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text);
       font-weight: 600;
-      margin-bottom: 0.9rem;
+      line-height: 1.15;
     }
 
-    .about-mark .studio {
+    .panel-title span {
       color: var(--soft);
       font-weight: 500;
     }
 
-    .about-places {
-      font-size: 0.84rem;
-      line-height: 1.4;
+    .panel-meta {
+      margin-top: 1rem;
+      font-size: 0.8rem;
       letter-spacing: 0.08em;
       color: var(--text);
-      margin-bottom: 0.9rem;
     }
 
-    .about-email {
+    .panel-email {
+      margin-top: 0.5rem;
       display: inline-block;
-      align-self: flex-end;
       color: var(--soft);
       text-decoration: none;
-      letter-spacing: 0.01em;
-      font-size: 0.97rem;
       transition: color 180ms ease, text-decoration-color 180ms ease;
     }
 
-    .about-email:hover {
+    .panel-email:hover {
       color: var(--text);
       text-decoration: underline;
       text-underline-offset: 0.14em;
     }
 
-    .about-rule {
+    .panel-line {
       width: 1px;
       background: var(--rule);
-      align-self: stretch;
-      min-height: 320px;
-      margin-top: 0;
+      height: 320px;
     }
 
-    .about-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      max-width: 40rem;
-      font-size: clamp(1rem, 1.35vw, 1.13rem);
+    .panel-right {
+      padding-top: 6rem;
+      max-width: 560px;
       line-height: 1.74;
-      color: var(--text);
-      padding-top: 6.2rem;
-      margin-top: 0;
+      font-size: clamp(1rem, 1.35vw, 1.13rem);
     }
 
-    .about-text p {
+    .panel-right p {
       margin: 0;
     }
 
-    .about-text p + p {
+    .panel-right p + p {
       margin-top: 1.2rem;
     }
 
-    .back {
-      display: inline-block;
-      align-self: flex-start;
-      margin-top: 1.65rem;
-      appearance: none;
-      border: 0;
+    /* CONTACT */
+
+    .contact-wrap {
+      width: min(560px, 100%);
+      margin: 0 auto;
+    }
+
+    .contact-wrap p {
+      margin: 0 0 1.4rem 0;
+      line-height: 1.74;
+      font-size: clamp(1rem, 1.35vw, 1.13rem);
+      max-width: 34rem;
+    }
+
+    .form {
+      display: grid;
+      gap: 18px;
+      margin-top: 1.2rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px 0;
+      border: none;
+      border-bottom: 1px solid var(--field-border);
       background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 180ms ease;
+      border-radius: 0;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--soft);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-bottom: 1px solid var(--text);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit {
+      appearance: none;
+      border: none;
+      background: none;
       padding: 0;
+      margin-top: 0.25rem;
       font: inherit;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--enter);
+      color: var(--nav);
       cursor: pointer;
+      justify-self: start;
       transition: color 180ms ease;
     }
 
-    .back:hover {
+    .submit:hover {
       color: var(--text);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      body {
-        overflow: auto;
-      }
-
-      .intro-wrap,
-      .latin,
-      .kanji,
-      .entry,
-      .about-wrap,
-      .about-email,
-      .enter-button,
-      .back {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-      }
-
-      .intro-wrap,
-      .about-wrap {
-        opacity: 1 !important;
-      }
-    }
-
     @media (max-width: 780px) {
-      body {
-        overflow: auto;
-      }
-
-      .panel {
-        position: relative;
-        min-height: 100vh;
+      .nav {
+        top: 22px;
+        right: 22px;
+        gap: 14px;
       }
 
       .hero {
-        gap: 0.7em;
+        gap: 0.45em;
+        margin-left: 0;
       }
 
       .latin {
@@ -331,137 +295,95 @@
         font-size: clamp(3.5rem, 15vw, 5.8rem);
       }
 
-      .about-wrap {
+      .panel {
         grid-template-columns: 1fr;
         gap: 20px;
       }
 
-      .about-meta {
+      .panel-left {
         text-align: left;
       }
 
-      .about-email {
-        align-self: flex-start;
-      }
-
-      .about-rule {
+      .panel-line {
         display: none;
       }
 
-      .about-text {
-        margin-top: 0;
-      }
-
-      .about-mark {
-        margin-bottom: 0.65rem;
-      }
-
-      .about-places {
-        margin-bottom: 0.75rem;
+      .panel-right {
+        padding-top: 0;
       }
     }
   </style>
 </head>
 <body>
-  <main class="page" id="page">
-    <section class="panel panel--intro" id="introPanel" aria-label="Introduction">
-      <div class="intro-wrap" id="introWrap">
+  <main class="site">
+    <nav class="nav" aria-label="Primary">
+      <button class="active" data-view="home" type="button">Home</button>
+      <button data-view="about" type="button">About</button>
+      <button data-view="contact" type="button">Contact</button>
+    </nav>
+
+    <section class="view active" id="home" aria-label="Home">
+      <div class="view-wrap">
         <div class="hero" aria-label="KUON STUDIO 久音">
           <div class="latin">
             <div>KUON</div>
             <div>STUDIO</div>
           </div>
-
           <div class="kanji" aria-hidden="true">
             <div>久</div>
             <div>音</div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="entry">
-          <button class="enter-button" id="enterButton" type="button">Enter</button>
+    <section class="view" id="about" aria-label="About">
+      <div class="panel">
+        <div class="panel-left">
+          <div class="panel-title">KUON<br><span>STUDIO</span></div>
+          <div class="panel-meta">London / Taipei</div>
+          <a href="mailto:hello@kuon.studio" class="panel-email">hello@kuon.studio</a>
+        </div>
+
+        <div class="panel-line" aria-hidden="true"></div>
+
+        <div class="panel-right">
+          <p>Kuon Studio is a developing practice concerned with sound, form, and the structures that give them lasting presence.</p>
+          <p>The studio sits between object, instrument, and space, with work developing across audio pieces, musical tools, and architectural ideas for listening.</p>
+          <p>This temporary site marks the beginning of that broader body of work. A fuller presentation will follow.</p>
         </div>
       </div>
     </section>
 
-    <section class="panel panel--about" id="aboutPanel" aria-label="About Kuon Studio" hidden>
-      <div class="about-wrap" id="aboutWrap">
-        <div class="about-meta">
-          <div class="about-mark">
-            <div>KUON</div>
-            <div class="studio">STUDIO</div>
-          </div>
-          <div class="about-places">London / Taipei</div>
-          <a class="about-email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-        </div>
+    <section class="view" id="contact" aria-label="Contact">
+      <div class="contact-wrap">
+        <p>For enquiries or collaborations, please use the form below or write directly to hello@kuon.studio.</p>
 
-        <div class="about-rule" aria-hidden="true"></div>
-
-        <div class="about-text">
-          <p>
-            Kuon Studio is a developing practice concerned with sound, form,
-            and the structures that give them lasting presence.
-          </p>
-
-          <p>
-            The studio sits between object, instrument, and space, with work
-            developing across audio pieces, musical tools, and architectural
-            ideas for listening.
-          </p>
-
-          <p>
-            This temporary site marks the beginning of that broader body of
-            work. A fuller presentation will follow in due course.
-          </p>
-
-          <button class="back" id="backButton" type="button">Back</button>
-        </div>
+        <form class="form" action="mailto:hello@kuon.studio" method="post" enctype="text/plain">
+          <input type="text" name="name" placeholder="Name" />
+          <input type="email" name="email" placeholder="Email" />
+          <textarea name="message" placeholder="Message"></textarea>
+          <button class="submit" type="submit">Send</button>
+        </form>
       </div>
     </section>
   </main>
 
   <script>
-    const introPanel = document.getElementById("introPanel");
-    const introWrap = document.getElementById("introWrap");
-    const aboutPanel = document.getElementById("aboutPanel");
-    const aboutWrap = document.getElementById("aboutWrap");
-    const enterButton = document.getElementById("enterButton");
-    const backButton = document.getElementById("backButton");
+    const buttons = document.querySelectorAll('.nav button');
+    const views = document.querySelectorAll('.view');
 
-    let isAnimating = false;
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
 
-    function openAbout() {
-      if (isAnimating) return;
-      isAnimating = true;
-
-      introWrap.classList.add("is-exiting");
-
-      window.setTimeout(() => {
-        introPanel.hidden = true;
-        aboutPanel.hidden = false;
-        requestAnimationFrame(() => {
-          aboutWrap.classList.add("is-visible");
-          isAnimating = false;
+        const target = btn.dataset.view;
+        views.forEach((view) => {
+          view.classList.toggle('active', view.id === target);
         });
-      }, 520);
-    }
-
-    function openIntro() {
-      if (isAnimating) return;
-      isAnimating = true;
-
-      aboutWrap.classList.remove("is-visible");
-
-      window.setTimeout(() => {
-        aboutPanel.hidden = true;
-        introPanel.hidden = false;
-        introWrap.classList.remove("is-exiting");
-        isAnimating = false;
-      }, 320);
-    }
-
-    enterButton.addEventListener("click", openAbout);
-    backButton.addEventListener("click", openIntro);
+      });
+    });
   </script>
 </body>
 </html>
