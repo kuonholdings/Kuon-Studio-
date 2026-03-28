@@ -43,6 +43,7 @@
       position: relative;
       min-height: 100vh;
       width: 100%;
+      background: var(--bg);
     }
 
     .panel {
@@ -52,39 +53,22 @@
       align-items: center;
       justify-content: center;
       padding: 40px 24px;
+      background: var(--bg);
     }
 
-    .panel--intro {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transition: opacity 220ms ease, visibility 0s linear 0s;
-    }
-
-    .panel--about {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 360ms ease, visibility 0s linear 360ms;
-    }
-
-    .page.is-open .panel--intro {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 180ms ease, visibility 0s linear 180ms;
-    }
-
-    .page.is-open .panel--about {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transition: opacity 420ms ease 20ms, visibility 0s linear 0s;
+    .panel[hidden] {
+      display: none;
     }
 
     .intro-wrap,
     .about-wrap {
-      width: min(940px, 100%);
+      display: grid;
+      grid-template-columns: minmax(240px, 320px) 1px minmax(360px, 620px);
+      gap: 38px;
+      align-items: start;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 380ms ease, transform 380ms ease;
     }
 
     .intro-wrap {
@@ -175,25 +159,18 @@
       text-underline-offset: 0.16em;
     }
 
-    .page.is-transitioning .latin {
+    .is-exiting .latin {
       opacity: 0;
       transform: translateX(-28px);
     }
 
-    .page.is-transitioning .kanji {
+    .is-exiting .kanji {
       opacity: 0;
       transform: translateY(28px);
     }
 
-    .page.is-transitioning .entry {
+    .is-exiting .entry {
       opacity: 0;
-    }
-
-    .page.is-transitioning .panel--intro {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 180ms ease, visibility 0s linear 180ms;
     }
 
     .about-wrap {
@@ -203,10 +180,10 @@
       align-items: start;
       opacity: 0;
       transform: translateY(10px);
-      transition: opacity 480ms ease, transform 480ms ease;
+      transition: opacity 380ms ease, transform 380ms ease;
     }
 
-    .page.is-open .about-wrap {
+    .about-wrap.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
@@ -216,7 +193,7 @@
       flex-direction: column;
       justify-content: flex-start;
       text-align: right;
-      padding-top: 0rem;
+      padding-top: 0;
     }
 
     .about-mark {
@@ -262,19 +239,20 @@
       width: 1px;
       background: var(--rule);
       align-self: stretch;
-      min-height: 190px;
-      margin-top: 0rem;
+      min-height: 320px;
+      margin-top: 0;
     }
 
     .about-text {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      max-width: 36rem;
-      font-size: clamp(1rem, 1.4vw, 1.14rem);
-      line-height: 1.72;
+      max-width: 40rem;
+      font-size: clamp(1rem, 1.35vw, 1.13rem);
+      line-height: 1.74;
       color: var(--text);
-      padding-top: 0rem;
+      padding-top: 6.2rem;
+      margin-top: 0;
     }
 
     .about-text p {
@@ -315,8 +293,6 @@
       .latin,
       .kanji,
       .entry,
-      .panel--about,
-      .panel--intro,
       .about-wrap,
       .about-email,
       .enter-button,
@@ -342,10 +318,6 @@
         min-height: 100vh;
       }
 
-      .page.is-open .panel--intro {
-        display: none;
-      }
-
       .hero {
         gap: 0.7em;
       }
@@ -366,7 +338,6 @@
 
       .about-meta {
         text-align: left;
-        padding-top: 0;
       }
 
       .about-email {
@@ -378,7 +349,7 @@
       }
 
       .about-text {
-        padding-top: 0;
+        margin-top: 0;
       }
 
       .about-mark {
@@ -393,8 +364,8 @@
 </head>
 <body>
   <main class="page" id="page">
-    <section class="panel panel--intro" aria-label="Introduction">
-      <div class="intro-wrap">
+    <section class="panel panel--intro" id="introPanel" aria-label="Introduction">
+      <div class="intro-wrap" id="introWrap">
         <div class="hero" aria-label="KUON STUDIO 久音">
           <div class="latin">
             <div>KUON</div>
@@ -413,8 +384,8 @@
       </div>
     </section>
 
-    <section class="panel panel--about" aria-label="About Kuon Studio">
-      <div class="about-wrap">
+    <section class="panel panel--about" id="aboutPanel" aria-label="About Kuon Studio" hidden>
+      <div class="about-wrap" id="aboutWrap">
         <div class="about-meta">
           <div class="about-mark">
             <div>KUON</div>
@@ -433,9 +404,14 @@
           </p>
 
           <p>
-            Current work sits across instruments, audio objects, and spatial
-            ideas. A fuller presentation of the studio will follow in due
-            course.
+            The studio sits between object, instrument, and space, with work
+            developing across audio pieces, musical tools, and architectural
+            ideas for listening.
+          </p>
+
+          <p>
+            This temporary site marks the beginning of that broader body of
+            work. A fuller presentation will follow in due course.
           </p>
 
           <button class="back" id="backButton" type="button">Back</button>
@@ -445,23 +421,47 @@
   </main>
 
   <script>
-    const page = document.getElementById("page");
+    const introPanel = document.getElementById("introPanel");
+    const introWrap = document.getElementById("introWrap");
+    const aboutPanel = document.getElementById("aboutPanel");
+    const aboutWrap = document.getElementById("aboutWrap");
     const enterButton = document.getElementById("enterButton");
     const backButton = document.getElementById("backButton");
 
-    enterButton.addEventListener("click", () => {
-      if (page.classList.contains("is-transitioning") || page.classList.contains("is-open")) return;
-      page.classList.add("is-transitioning");
+    let isAnimating = false;
+
+    function openAbout() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      introWrap.classList.add("is-exiting");
 
       window.setTimeout(() => {
-        page.classList.remove("is-transitioning");
-        page.classList.add("is-open");
-      }, 540);
-    });
+        introPanel.hidden = true;
+        aboutPanel.hidden = false;
+        requestAnimationFrame(() => {
+          aboutWrap.classList.add("is-visible");
+          isAnimating = false;
+        });
+      }, 520);
+    }
 
-    backButton.addEventListener("click", () => {
-      page.classList.remove("is-open");
-    });
+    function openIntro() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      aboutWrap.classList.remove("is-visible");
+
+      window.setTimeout(() => {
+        aboutPanel.hidden = true;
+        introPanel.hidden = false;
+        introWrap.classList.remove("is-exiting");
+        isAnimating = false;
+      }, 320);
+    }
+
+    enterButton.addEventListener("click", openAbout);
+    backButton.addEventListener("click", openIntro);
   </script>
 </body>
 </html>
