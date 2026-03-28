@@ -13,17 +13,18 @@
     :root {
       --bg: #fcfbf8;
       --text: #111111;
-      --muted: rgba(0, 0, 0, 0.56);
       --soft: rgba(0, 0, 0, 0.26);
       --kanji: rgba(0, 0, 0, 0.09);
       --nav: rgba(0, 0, 0, 0.42);
       --rule: rgba(0, 0, 0, 0.12);
-      --field-border: rgba(0, 0, 0, 0.12);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
     }
@@ -47,7 +48,7 @@
       right: 32px;
       z-index: 20;
       display: flex;
-      gap: 18px;
+      gap: 16px;
       font-size: 0.78rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -71,10 +72,7 @@
     }
 
     .nav button:focus-visible,
-    .panel-email:focus-visible,
-    input:focus-visible,
-    textarea:focus-visible,
-    .submit:focus-visible {
+    .panel-email:focus-visible {
       outline: none;
       text-decoration: underline;
       text-underline-offset: 0.16em;
@@ -102,7 +100,7 @@
       display: grid;
       grid-template-columns: auto auto;
       align-items: center;
-      gap: 0.55em;
+      gap: 0.1em;
       margin-left: clamp(24px, 6vw, 120px);
     }
 
@@ -125,6 +123,7 @@
       font-size: clamp(4.5rem, 10vw, 8rem);
       line-height: 0.9;
       color: var(--kanji);
+      transform: translateX(-0.25em);
     }
 
     .kanji div:first-child {
@@ -204,76 +203,6 @@
       margin-top: 1.2rem;
     }
 
-    /* CONTACT */
-
-    .contact-wrap {
-      width: min(560px, 100%);
-      margin: 0 auto;
-    }
-
-    .contact-wrap p {
-      margin: 0 0 1.4rem 0;
-      line-height: 1.74;
-      font-size: clamp(1rem, 1.35vw, 1.13rem);
-      max-width: 34rem;
-    }
-
-    .form {
-      display: grid;
-      gap: 18px;
-      margin-top: 1.2rem;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      padding: 10px 0;
-      border: none;
-      border-bottom: 1px solid var(--field-border);
-      background: transparent;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 180ms ease;
-      border-radius: 0;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: var(--soft);
-    }
-
-    input:focus,
-    textarea:focus {
-      border-bottom: 1px solid var(--text);
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .submit {
-      appearance: none;
-      border: none;
-      background: none;
-      padding: 0;
-      margin-top: 0.25rem;
-      font: inherit;
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--nav);
-      cursor: pointer;
-      justify-self: start;
-      transition: color 180ms ease;
-    }
-
-    .submit:hover {
-      color: var(--text);
-    }
-
     @media (max-width: 780px) {
       .nav {
         top: 22px;
@@ -282,7 +211,7 @@
       }
 
       .hero {
-        gap: 0.45em;
+        gap: 0.08em;
         margin-left: 0;
       }
 
@@ -293,6 +222,7 @@
 
       .kanji {
         font-size: clamp(3.5rem, 15vw, 5.8rem);
+        transform: translateX(-0.18em);
       }
 
       .panel {
@@ -319,7 +249,6 @@
     <nav class="nav" aria-label="Primary">
       <button class="active" data-view="home" type="button">Home</button>
       <button data-view="about" type="button">About</button>
-      <button data-view="contact" type="button">Contact</button>
     </nav>
 
     <section class="view active" id="home" aria-label="Home">
@@ -329,6 +258,7 @@
             <div>KUON</div>
             <div>STUDIO</div>
           </div>
+
           <div class="kanji" aria-hidden="true">
             <div>久</div>
             <div>音</div>
@@ -352,19 +282,6 @@
           <p>The studio sits between object, instrument, and space, with work developing across audio pieces, musical tools, and architectural ideas for listening.</p>
           <p>This temporary site marks the beginning of that broader body of work. A fuller presentation will follow.</p>
         </div>
-      </div>
-    </section>
-
-    <section class="view" id="contact" aria-label="Contact">
-      <div class="contact-wrap">
-        <p>For enquiries or collaborations, please use the form below or write directly to hello@kuon.studio.</p>
-
-        <form class="form" action="mailto:hello@kuon.studio" method="post" enctype="text/plain">
-          <input type="text" name="name" placeholder="Name" />
-          <input type="email" name="email" placeholder="Email" />
-          <textarea name="message" placeholder="Message"></textarea>
-          <button class="submit" type="submit">Send</button>
-        </form>
       </div>
     </section>
   </main>
