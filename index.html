@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KUON STUDIO | 久音</title>
 
-  <!-- GOOGLE FONT -->
+  <!-- FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600&display=swap" rel="stylesheet">
@@ -13,17 +13,16 @@
   <style>
     :root {
       --bg: #fcfbf8;
-      --text: #111111;
-      --muted: rgba(0, 0, 0, 0.48);
-      --watermark: rgba(0, 0, 0, 0.07);
+      --text: #111;
+      --muted: rgba(0,0,0,0.45);
+      --kanji: rgba(0,0,0,0.12);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       min-height: 100%;
     }
@@ -33,7 +32,6 @@
       color: var(--text);
       font-family: "Red Hat Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
     }
 
     .page {
@@ -45,27 +43,26 @@
     }
 
     .wrap {
-      position: relative;
       width: min(900px, 100%);
       opacity: 0;
       transform: translateY(8px);
       animation: fadeIn 1.2s ease forwards;
     }
 
+    /* MAIN COMPOSITION */
     .hero {
-      position: relative;
-      display: inline-block;
-      margin: 0 auto;
-      left: 50%;
-      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: auto auto;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2em;
     }
 
+    /* LATIN BLOCK */
     .latin {
-      position: relative;
-      z-index: 2;
-      font-size: clamp(3rem, 7vw, 6.25rem);
+      font-size: clamp(2.8rem, 6.5vw, 5.6rem);
       font-weight: 600;
-      line-height: 0.86;
+      line-height: 0.85;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
@@ -74,34 +71,29 @@
       margin-top: 0.04em;
     }
 
+    /* KANJI BLOCK */
     .kanji {
-      position: absolute;
-      top: -0.04em;
-      right: -1.1em;
-      z-index: 1;
-      font-size: clamp(5.5rem, 13vw, 10.5rem);
-      line-height: 0.9;
-      color: var(--watermark);
-      pointer-events: none;
-      user-select: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 1.85em; /* matches KUON+STUDIO block visually */
+      font-size: clamp(3.2rem, 7.5vw, 6.4rem);
+      line-height: 1;
+      color: var(--kanji);
+      letter-spacing: 0;
     }
 
+    /* META */
     .meta {
-      margin-top: 2.2rem;
+      margin-top: 2rem;
       text-align: center;
-    }
-
-    .practice {
       font-size: 0.95rem;
-      line-height: 1.4;
-      letter-spacing: 0.02em;
       color: var(--muted);
-      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
     }
 
     .email {
       display: inline-block;
-      font-size: 0.95rem;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.18s ease, text-decoration-color 0.18s ease;
@@ -114,12 +106,10 @@
     }
 
     .locations {
-      margin-top: 0.35rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-      letter-spacing: 0.02em;
+      margin-top: 0.3rem;
     }
 
+    /* ANIMATION */
     @keyframes fadeIn {
       to {
         opacity: 1;
@@ -135,21 +125,27 @@
       }
     }
 
+    /* MOBILE */
     @media (max-width: 700px) {
+      .hero {
+        gap: 0.6em;
+      }
+
       .latin {
-        font-size: clamp(2.4rem, 12vw, 4.2rem);
-        letter-spacing: 0.1em;
+        font-size: clamp(2.2rem, 10vw, 3.8rem);
       }
 
       .kanji {
-        right: -0.8em;
-        font-size: clamp(4rem, 20vw, 7rem);
+        font-size: clamp(2.6rem, 12vw, 4.2rem);
+        height: 1.7em;
       }
     }
+
   </style>
 </head>
 
 <body>
+
   <main class="page">
     <section class="wrap">
 
@@ -158,16 +154,20 @@
           <div>KUON</div>
           <div>STUDIO</div>
         </div>
-        <div class="kanji">久音</div>
+
+        <div class="kanji">
+          <div>久</div>
+          <div>音</div>
+        </div>
       </div>
 
       <div class="meta">
-        <div class="practice">Sound Architecture Practice</div>
-        <a class="email" href="mailto:guy@kuon.studio">guy@kuon.studio</a>
+        <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
         <div class="locations">London / Taipei</div>
       </div>
 
     </section>
   </main>
+
 </body>
 </html>
