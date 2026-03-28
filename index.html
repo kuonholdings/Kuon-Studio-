@@ -2,458 +2,166 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KUON STUDIO | 久音</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #fcfbf8;
-      --text: #111111;
-      --muted: rgba(0, 0, 0, 0.56);
-      --soft: rgba(0, 0, 0, 0.26);
-      --kanji: rgba(0, 0, 0, 0.09);
-      --enter: rgba(0, 0, 0, 0.44);
-      --rule: rgba(0, 0, 0, 0.12);
+      --bg: #faf8f4;
+      --text: #111;
+      --muted: rgba(0,0,0,0.5);
+      --light: rgba(0,0,0,0.25);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
     body {
       margin: 0;
-      min-height: 100%;
-    }
-
-    body {
+      height: 100vh;
       background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: var(--text);
-      font-family: "Red Hat Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      overflow: hidden;
-    }
-
-    .page {
-      position: relative;
-      min-height: 100vh;
-      width: 100%;
-    }
-
-    .panel {
-      position: absolute;
-      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 24px;
     }
 
-    .panel--intro {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-    .panel--about {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transition: opacity 440ms ease, visibility 0s linear 440ms;
-    }
-
-    .page.is-open .panel--about {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transition: opacity 440ms ease 40ms, visibility 0s linear 0s;
-    }
-
-    .intro-wrap,
-    .about-wrap {
-      width: min(940px, 100%);
-    }
-
-    .intro-wrap {
+    .container {
+      display: grid;
+      grid-template-columns: auto 1px auto;
+      gap: 40px;
+      align-items: center;
+      width: min(1100px, 90%);
       opacity: 0;
       transform: translateY(8px);
-      animation: introFade 1100ms ease forwards;
+      animation: fadeIn 1.2s ease forwards;
     }
 
-    @keyframes introFade {
+    /* LEFT INFO */
+    .info {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 0.78rem;
+      line-height: 1.35;
+      letter-spacing: 0.08em;
+      min-height: 90px;
+    }
+
+    .practice {
+      color: var(--text);
+      margin-bottom: 0px;
+    }
+
+    .locations {
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .email {
+      display: inline-block;
+      align-self: flex-end;
+      color: var(--light);
+      text-decoration: none;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+      transition: color 0.18s ease, text-decoration-color 0.18s ease;
+    }
+
+    .email:hover {
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+      text-decoration-color: currentColor;
+    }
+
+    /* DIVIDER */
+    .line {
+      width: 1px;
+      height: 90px;
+      background: var(--light);
+    }
+
+    /* RIGHT TITLE */
+    .title {
+      font-size: clamp(2.6rem, 6.2vw, 5.2rem);
+      font-weight: 600;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+    }
+
+    .studio {
+      color: var(--light);
+      font-weight: 500;
+    }
+
+    .kanji {
+      font-size: 0.9em;
+      color: var(--light);
+      margin-top: 0.2em;
+    }
+
+    @keyframes fadeIn {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
 
-    .hero {
-      display: grid;
-      grid-template-columns: auto auto;
-      justify-content: center;
-      align-items: center;
-      gap: 1.35em;
-    }
-
-    .latin {
-      font-size: clamp(2.8rem, 6.5vw, 5.7rem);
-      font-weight: 600;
-      line-height: 0.84;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      will-change: transform, opacity;
-      transition: transform 520ms cubic-bezier(.22,.61,.36,1), opacity 420ms ease;
-    }
-
-    .latin div + div {
-      margin-top: 0.04em;
-    }
-
-    .kanji {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      font-family: "Zhi Mang Xing", cursive;
-      font-size: clamp(4.7rem, 11vw, 8.7rem);
-      line-height: 0.9;
-      color: var(--kanji);
-      will-change: transform, opacity;
-      transition: transform 560ms cubic-bezier(.22,.61,.36,1), opacity 420ms ease;
-    }
-
-    .kanji div:first-child {
-      transform: translateY(-0.08em);
-    }
-
-    .kanji div:last-child {
-      transform: translateY(0.08em);
-    }
-
-    .entry {
-      margin-top: 2.25rem;
-      text-align: center;
-      will-change: opacity;
-      transition: opacity 260ms ease;
-    }
-
-    .enter-button {
-      appearance: none;
-      border: 0;
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      font: inherit;
-      font-size: 0.82rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--enter);
-      cursor: pointer;
-      transition: color 180ms ease;
-    }
-
-    .enter-button:hover {
-      color: var(--text);
-    }
-
-    .enter-button:focus-visible,
-    .back:focus-visible {
-      outline: none;
-      text-decoration: underline;
-      text-underline-offset: 0.16em;
-    }
-
-    .intro-meta {
-      margin-top: 1rem;
-      font-size: 0.94rem;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      line-height: 1.45;
-    }
-
-    .page.is-transitioning .latin {
-      opacity: 0;
-      transform: translateX(-28px);
-    }
-
-    .page.is-transitioning .kanji {
-      opacity: 0;
-      transform: translateY(28px);
-    }
-
-    .page.is-transitioning .entry {
-      opacity: 0;
-    }
-
-    .page.is-open .panel--intro {
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .about-wrap {
-      display: grid;
-      grid-template-columns: minmax(240px, 320px) 1px minmax(340px, 560px);
-      gap: 38px;
-      align-items: stretch;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 480ms ease, transform 480ms ease;
-    }
-
-    .page.is-open .about-wrap {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .about-meta {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: right;
-    }
-
-    .about-mark {
-      font-size: 1.05rem;
-      line-height: 1.15;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text);
-      font-weight: 600;
-      margin-bottom: 0.9rem;
-    }
-
-    .about-mark .studio {
-      color: var(--soft);
-      font-weight: 500;
-    }
-
-    .about-places {
-      font-size: 0.84rem;
-      line-height: 1.4;
-      letter-spacing: 0.08em;
-      color: var(--text);
-      margin-bottom: 0.9rem;
-    }
-
-    .about-email {
-      display: inline-block;
-      align-self: flex-end;
-      color: var(--soft);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      font-size: 0.97rem;
-      transition: color 180ms ease, text-decoration-color 180ms ease;
-    }
-
-    .about-email:hover {
-      color: var(--text);
-      text-decoration: underline;
-      text-underline-offset: 0.14em;
-    }
-
-    .about-rule {
-      width: 1px;
-      background: var(--rule);
-      min-height: 190px;
-    }
-
-    .about-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      max-width: 36rem;
-      font-size: clamp(1rem, 1.4vw, 1.14rem);
-      line-height: 1.72;
-      color: var(--text);
-    }
-
-    .about-text p {
-      margin: 0;
-    }
-
-    .about-text p + p {
-      margin-top: 1.2rem;
-    }
-
-    .back {
-      display: inline-block;
-      align-self: flex-start;
-      margin-top: 1.65rem;
-      appearance: none;
-      border: 0;
-      background: transparent;
-      padding: 0;
-      font: inherit;
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--enter);
-      cursor: pointer;
-      transition: color 180ms ease;
-    }
-
-    .back:hover {
-      color: var(--text);
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      body {
-        overflow: auto;
-      }
-
-      .intro-wrap,
-      .latin,
-      .kanji,
-      .entry,
-      .panel--about,
-      .about-wrap,
-      .about-email,
-      .enter-button,
-      .back {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-      }
-
-      .intro-wrap,
-      .about-wrap {
-        opacity: 1 !important;
+      .container {
+        opacity: 1;
+        transform: none;
+        animation: none;
       }
     }
 
-    @media (max-width: 780px) {
-      body {
-        overflow: auto;
-      }
-
-      .panel {
-        position: relative;
-        min-height: 100vh;
-      }
-
-      .page.is-open .panel--intro {
-        display: none;
-      }
-
-      .hero {
-        gap: 0.7em;
-      }
-
-      .latin {
-        font-size: clamp(2.2rem, 10vw, 4rem);
-        letter-spacing: 0.1em;
-      }
-
-      .kanji {
-        font-size: clamp(3.5rem, 15vw, 5.8rem);
-      }
-
-      .about-wrap {
+    /* MOBILE */
+    @media (max-width: 700px) {
+      .container {
         grid-template-columns: 1fr;
         gap: 20px;
       }
 
-      .about-meta {
+      .info {
         text-align: left;
+        min-height: auto;
       }
 
-      .about-email {
+      .email {
         align-self: flex-start;
       }
 
-      .about-rule {
+      .line {
         display: none;
-      }
-
-      .about-mark {
-        margin-bottom: 0.65rem;
-      }
-
-      .about-places {
-        margin-bottom: 0.75rem;
       }
     }
   </style>
 </head>
+
 <body>
-  <main class="page" id="page">
-    <section class="panel panel--intro" aria-label="Introduction">
-      <div class="intro-wrap">
-        <div class="hero" aria-label="KUON STUDIO 久音">
-          <div class="latin">
-            <div>KUON</div>
-            <div>STUDIO</div>
-          </div>
 
-          <div class="kanji" aria-hidden="true">
-            <div>久</div>
-            <div>音</div>
-          </div>
-        </div>
+  <div class="container">
 
-        <div class="entry">
-          <button class="enter-button" id="enterButton" type="button">Enter</button>
-          <div class="intro-meta">
-            hello@kuon.studio<br />
-            London / Taipei
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- LEFT -->
+    <div class="info">
+      <div class="practice">Sound Architecture Practice</div>
+      <div class="locations">London / Taipei</div>
+      <a href="mailto:hello@kuon.studio" class="email">hello@kuon.studio</a>
+    </div>
 
-    <section class="panel panel--about" aria-label="About Kuon Studio">
-      <div class="about-wrap">
-        <div class="about-meta">
-          <div class="about-mark">
-            <div>KUON</div>
-            <div class="studio">STUDIO</div>
-          </div>
-          <div class="about-places">London / Taipei</div>
-          <a class="about-email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-        </div>
+    <!-- DIVIDER -->
+    <div class="line"></div>
 
-        <div class="about-rule" aria-hidden="true"></div>
+    <!-- RIGHT -->
+    <div class="title">
+      KUON<br>
+      <span class="studio">STUDIO</span><br>
+      <div class="kanji">久音</div>
+    </div>
 
-        <div class="about-text">
-          <p>
-            Kuon Studio is a developing practice concerned with sound, form,
-            and the structures that give them lasting presence.
-          </p>
+  </div>
 
-          <p>
-            Current work sits across instruments, audio objects, and spatial
-            ideas. A fuller presentation of the studio will follow in due
-            course.
-          </p>
-
-          <button class="back" id="backButton" type="button">Back</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const page = document.getElementById("page");
-    const enterButton = document.getElementById("enterButton");
-    const backButton = document.getElementById("backButton");
-
-    enterButton.addEventListener("click", () => {
-      if (page.classList.contains("is-transitioning") || page.classList.contains("is-open")) return;
-      page.classList.add("is-transitioning");
-
-      window.setTimeout(() => {
-        page.classList.remove("is-transitioning");
-        page.classList.add("is-open");
-      }, 540);
-    });
-
-    backButton.addEventListener("click", () => {
-      page.classList.remove("is-open");
-    });
-  </script>
 </body>
 </html>
