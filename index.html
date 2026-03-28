@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>KUON STUDIO | 久音</title>
 
-  <!-- FONT -->
+  <!-- LATIN FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CHINESE CALLIGRAPHY FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -18,28 +21,17 @@
       --kanji: rgba(0,0,0,0.12);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      min-height: 100%;
-    }
+    * { box-sizing: border-box; }
 
     body {
+      margin: 0;
+      min-height: 100vh;
       background: var(--bg);
       color: var(--text);
-      font-family: "Red Hat Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .page {
-      min-height: 100vh;
+      font-family: "Red Hat Display", sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 24px;
     }
 
     .wrap {
@@ -49,16 +41,16 @@
       animation: fadeIn 1.2s ease forwards;
     }
 
-    /* MAIN COMPOSITION */
+    /* LAYOUT */
     .hero {
       display: grid;
       grid-template-columns: auto auto;
       justify-content: center;
       align-items: center;
-      gap: 1.2em;
+      gap: 1.4em;
     }
 
-    /* LATIN BLOCK */
+    /* LATIN */
     .latin {
       font-size: clamp(2.8rem, 6.5vw, 5.6rem);
       font-weight: 600;
@@ -71,16 +63,23 @@
       margin-top: 0.04em;
     }
 
-    /* KANJI BLOCK */
+    /* KANJI (EXPANDED) */
     .kanji {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 1.85em; /* matches KUON+STUDIO block visually */
-      font-size: clamp(3.2rem, 7.5vw, 6.4rem);
-      line-height: 1;
+      justify-content: center;
+      font-family: "Zhi Mang Xing", cursive;
+      font-size: clamp(4.5rem, 11vw, 8.5rem);
+      line-height: 0.9;
       color: var(--kanji);
-      letter-spacing: 0;
+    }
+
+    .kanji div:first-child {
+      transform: translateY(-0.08em);
+    }
+
+    .kanji div:last-child {
+      transform: translateY(0.08em);
     }
 
     /* META */
@@ -89,14 +88,13 @@
       text-align: center;
       font-size: 0.95rem;
       color: var(--muted);
-      letter-spacing: 0.02em;
     }
 
     .email {
       display: inline-block;
       color: var(--muted);
       text-decoration: none;
-      transition: color 0.18s ease, text-decoration-color 0.18s ease;
+      transition: 0.18s;
     }
 
     .email:hover {
@@ -109,7 +107,6 @@
       margin-top: 0.3rem;
     }
 
-    /* ANIMATION */
     @keyframes fadeIn {
       to {
         opacity: 1;
@@ -125,49 +122,31 @@
       }
     }
 
-    /* MOBILE */
-    @media (max-width: 700px) {
-      .hero {
-        gap: 0.6em;
-      }
-
-      .latin {
-        font-size: clamp(2.2rem, 10vw, 3.8rem);
-      }
-
-      .kanji {
-        font-size: clamp(2.6rem, 12vw, 4.2rem);
-        height: 1.7em;
-      }
-    }
-
   </style>
 </head>
 
 <body>
 
-  <main class="page">
-    <section class="wrap">
+  <div class="wrap">
 
-      <div class="hero">
-        <div class="latin">
-          <div>KUON</div>
-          <div>STUDIO</div>
-        </div>
-
-        <div class="kanji">
-          <div>久</div>
-          <div>音</div>
-        </div>
+    <div class="hero">
+      <div class="latin">
+        <div>KUON</div>
+        <div>STUDIO</div>
       </div>
 
-      <div class="meta">
-        <a class="email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-        <div class="locations">London / Taipei</div>
+      <div class="kanji">
+        <div>久</div>
+        <div>音</div>
       </div>
+    </div>
 
-    </section>
-  </main>
+    <div class="meta">
+      <a href="mailto:hello@kuon.studio" class="email">hello@kuon.studio</a>
+      <div class="locations">London / Taipei</div>
+    </div>
+
+  </div>
 
 </body>
 </html>
