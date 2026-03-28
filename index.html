@@ -13,11 +13,11 @@
     :root {
       --bg: #fcfbf8;
       --text: #111111;
-      --muted: rgba(0, 0, 0, 0.52);
-      --soft: rgba(0, 0, 0, 0.22);
+      --muted: rgba(0, 0, 0, 0.56);
+      --soft: rgba(0, 0, 0, 0.26);
       --kanji: rgba(0, 0, 0, 0.09);
-      --enter: rgba(0, 0, 0, 0.42);
-      --rule: rgba(0, 0, 0, 0.1);
+      --enter: rgba(0, 0, 0, 0.44);
+      --rule: rgba(0, 0, 0, 0.12);
     }
 
     * {
@@ -52,44 +52,37 @@
       align-items: center;
       justify-content: center;
       padding: 40px 24px;
-      transition:
-        opacity 520ms ease,
-        visibility 520ms ease,
-        transform 520ms ease;
     }
 
     .panel--intro {
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
     }
 
     .panel--about {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-    }
-
-    .page.is-open .panel--intro {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      transition: opacity 440ms ease, visibility 0s linear 440ms;
     }
 
     .page.is-open .panel--about {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
+      transition: opacity 440ms ease 40ms, visibility 0s linear 0s;
     }
 
     .intro-wrap,
     .about-wrap {
-      width: min(920px, 100%);
+      width: min(940px, 100%);
     }
 
     .intro-wrap {
       opacity: 0;
       transform: translateY(8px);
-      animation: introFade 1200ms ease forwards;
+      animation: introFade 1100ms ease forwards;
     }
 
     @keyframes introFade {
@@ -105,8 +98,6 @@
       justify-content: center;
       align-items: center;
       gap: 1.35em;
-      transition: opacity 480ms ease, transform 480ms ease;
-      will-change: transform, opacity;
     }
 
     .latin {
@@ -115,8 +106,8 @@
       line-height: 0.84;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      transition: opacity 480ms ease, transform 480ms ease;
       will-change: transform, opacity;
+      transition: transform 520ms cubic-bezier(.22,.61,.36,1), opacity 420ms ease;
     }
 
     .latin div + div {
@@ -131,8 +122,8 @@
       font-size: clamp(4.7rem, 11vw, 8.7rem);
       line-height: 0.9;
       color: var(--kanji);
-      transition: opacity 480ms ease, transform 480ms ease;
       will-change: transform, opacity;
+      transition: transform 560ms cubic-bezier(.22,.61,.36,1), opacity 420ms ease;
     }
 
     .kanji div:first-child {
@@ -146,7 +137,8 @@
     .entry {
       margin-top: 2.25rem;
       text-align: center;
-      transition: opacity 380ms ease;
+      will-change: opacity;
+      transition: opacity 260ms ease;
     }
 
     .enter-button {
@@ -161,14 +153,15 @@
       text-transform: uppercase;
       color: var(--enter);
       cursor: pointer;
-      transition: color 180ms ease, opacity 180ms ease;
+      transition: color 180ms ease;
     }
 
     .enter-button:hover {
       color: var(--text);
     }
 
-    .enter-button:focus-visible {
+    .enter-button:focus-visible,
+    .back:focus-visible {
       outline: none;
       text-decoration: underline;
       text-underline-offset: 0.16em;
@@ -182,28 +175,33 @@
       line-height: 1.45;
     }
 
-    .page.is-opening .latin {
+    .page.is-transitioning .latin {
       opacity: 0;
-      transform: translateX(-24px);
+      transform: translateX(-28px);
     }
 
-    .page.is-opening .kanji {
+    .page.is-transitioning .kanji {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(28px);
     }
 
-    .page.is-opening .entry {
+    .page.is-transitioning .entry {
       opacity: 0;
+    }
+
+    .page.is-open .panel--intro {
+      visibility: hidden;
+      pointer-events: none;
     }
 
     .about-wrap {
       display: grid;
-      grid-template-columns: minmax(220px, 280px) 1px minmax(320px, 520px);
-      gap: 36px;
-      align-items: start;
+      grid-template-columns: minmax(240px, 320px) 1px minmax(340px, 560px);
+      gap: 38px;
+      align-items: stretch;
       opacity: 0;
       transform: translateY(10px);
-      transition: opacity 520ms ease 180ms, transform 520ms ease 180ms;
+      transition: opacity 480ms ease, transform 480ms ease;
     }
 
     .page.is-open .about-wrap {
@@ -212,23 +210,42 @@
     }
 
     .about-meta {
-      font-size: 0.82rem;
-      line-height: 1.45;
-      letter-spacing: 0.08em;
-      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: right;
     }
 
-    .about-meta .locations {
-      margin-top: 0.1rem;
+    .about-mark {
+      font-size: 1.05rem;
+      line-height: 1.15;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 0.9rem;
+    }
+
+    .about-mark .studio {
+      color: var(--soft);
+      font-weight: 500;
+    }
+
+    .about-places {
+      font-size: 0.84rem;
+      line-height: 1.4;
+      letter-spacing: 0.08em;
+      color: var(--text);
       margin-bottom: 0.9rem;
     }
 
     .about-email {
       display: inline-block;
+      align-self: flex-end;
       color: var(--soft);
       text-decoration: none;
       letter-spacing: 0.01em;
-      font-size: 0.96rem;
+      font-size: 0.97rem;
       transition: color 180ms ease, text-decoration-color 180ms ease;
     }
 
@@ -240,14 +257,17 @@
 
     .about-rule {
       width: 1px;
-      min-height: 168px;
       background: var(--rule);
+      min-height: 190px;
     }
 
     .about-text {
-      max-width: 34rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 36rem;
       font-size: clamp(1rem, 1.4vw, 1.14rem);
-      line-height: 1.7;
+      line-height: 1.72;
       color: var(--text);
     }
 
@@ -261,7 +281,8 @@
 
     .back {
       display: inline-block;
-      margin-top: 1.6rem;
+      align-self: flex-start;
+      margin-top: 1.65rem;
       appearance: none;
       border: 0;
       background: transparent;
@@ -279,23 +300,20 @@
       color: var(--text);
     }
 
-    .back:focus-visible {
-      outline: none;
-      text-decoration: underline;
-      text-underline-offset: 0.16em;
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      .panel,
-      .hero,
+      body {
+        overflow: auto;
+      }
+
+      .intro-wrap,
       .latin,
       .kanji,
       .entry,
+      .panel--about,
       .about-wrap,
       .about-email,
       .enter-button,
-      .back,
-      .intro-wrap {
+      .back {
         animation: none !important;
         transition: none !important;
         transform: none !important;
@@ -339,17 +357,24 @@
         gap: 20px;
       }
 
+      .about-meta {
+        text-align: left;
+      }
+
+      .about-email {
+        align-self: flex-start;
+      }
+
       .about-rule {
         display: none;
       }
 
-      .about-meta {
-        letter-spacing: 0.06em;
+      .about-mark {
+        margin-bottom: 0.65rem;
       }
 
-      .about-text {
-        font-size: 1rem;
-        line-height: 1.65;
+      .about-places {
+        margin-bottom: 0.75rem;
       }
     }
   </style>
@@ -383,8 +408,11 @@
     <section class="panel panel--about" aria-label="About Kuon Studio">
       <div class="about-wrap">
         <div class="about-meta">
-          <div>KUON STUDIO | 久音</div>
-          <div class="locations">London / Taipei</div>
+          <div class="about-mark">
+            <div>KUON</div>
+            <div class="studio">STUDIO</div>
+          </div>
+          <div class="about-places">London / Taipei</div>
           <a class="about-email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
         </div>
 
@@ -414,11 +442,13 @@
     const backButton = document.getElementById("backButton");
 
     enterButton.addEventListener("click", () => {
-      page.classList.add("is-opening");
+      if (page.classList.contains("is-transitioning") || page.classList.contains("is-open")) return;
+      page.classList.add("is-transitioning");
+
       window.setTimeout(() => {
-        page.classList.remove("is-opening");
+        page.classList.remove("is-transitioning");
         page.classList.add("is-open");
-      }, 460);
+      }, 540);
     });
 
     backButton.addEventListener("click", () => {
