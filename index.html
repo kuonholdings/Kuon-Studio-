@@ -2,70 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KUON STUDIO | 久音</title>
 
   <style>
     :root {
-      --bg: #faf8f4;
-      --text: #111;
-      --muted: rgba(0,0,0,0.5);
-      --light: rgba(0,0,0,0.25);
+      --bg: #fcfbf8;
+      --text: #111111;
+      --muted: rgba(0, 0, 0, 0.48);
+      --watermark: rgba(0, 0, 0, 0.08);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
+    html,
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100%;
+    }
+
+    body {
       background: var(--bg);
-      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .page {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 40px 24px;
     }
 
-    .container {
-      display: grid;
-      grid-template-columns: auto 1px auto;
-      gap: 40px;
-      align-items: center;
-      width: min(1100px, 90%);
+    .wrap {
+      position: relative;
+      width: min(900px, 100%);
       opacity: 0;
       transform: translateY(8px);
       animation: fadeIn 1.2s ease forwards;
     }
 
-    /* LEFT INFO */
-    .info {
-      text-align: right;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      font-size: 0.78rem;
-      line-height: 1.35;
+    .hero {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .latin {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(3rem, 7vw, 6.25rem);
+      font-weight: 600;
+      line-height: 0.88;
       letter-spacing: 0.08em;
-      min-height: 90px;
+      text-transform: uppercase;
+    }
+
+    .latin div + div {
+      margin-top: 0.06em;
+    }
+
+    .kanji {
+      position: absolute;
+      top: -0.06em;
+      right: -1.15em;
+      z-index: 1;
+      font-size: clamp(5.2rem, 12vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0;
+      color: var(--watermark);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .meta {
+      margin-top: 2.2rem;
+      text-align: center;
     }
 
     .practice {
-      color: var(--text);
-      margin-bottom: 0px;
-    }
-
-    .locations {
-      color: var(--text);
-      margin-bottom: 12px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+      margin-bottom: 1rem;
     }
 
     .email {
       display: inline-block;
-      align-self: flex-end;
-      color: var(--light);
-      text-decoration: none;
       font-size: 0.95rem;
-      letter-spacing: 0.01em;
+      color: var(--muted);
+      text-decoration: none;
       transition: color 0.18s ease, text-decoration-color 0.18s ease;
     }
 
@@ -73,33 +107,13 @@
       color: var(--text);
       text-decoration: underline;
       text-underline-offset: 0.14em;
-      text-decoration-color: currentColor;
     }
 
-    /* DIVIDER */
-    .line {
-      width: 1px;
-      height: 90px;
-      background: var(--light);
-    }
-
-    /* RIGHT TITLE */
-    .title {
-      font-size: clamp(2.6rem, 6.2vw, 5.2rem);
-      font-weight: 600;
-      line-height: 0.9;
-      letter-spacing: -0.03em;
-    }
-
-    .studio {
-      color: var(--light);
-      font-weight: 500;
-    }
-
-    .kanji {
-      font-size: 0.9em;
-      color: var(--light);
-      margin-top: 0.2em;
+    .locations {
+      margin-top: 0.35rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
     }
 
     @keyframes fadeIn {
@@ -110,58 +124,61 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .container {
+      .wrap {
         opacity: 1;
         transform: none;
         animation: none;
       }
     }
 
-    /* MOBILE */
     @media (max-width: 700px) {
-      .container {
-        grid-template-columns: 1fr;
-        gap: 20px;
+      .page {
+        padding: 32px 20px;
       }
 
-      .info {
-        text-align: left;
-        min-height: auto;
+      .hero {
+        left: auto;
+        transform: none;
+        display: block;
+        width: fit-content;
+        max-width: 100%;
+        margin: 0 auto;
       }
 
-      .email {
-        align-self: flex-start;
+      .latin {
+        font-size: clamp(2.4rem, 12vw, 4.2rem);
+        letter-spacing: 0.06em;
       }
 
-      .line {
-        display: none;
+      .kanji {
+        right: -0.85em;
+        top: 0;
+        font-size: clamp(4rem, 20vw, 6.5rem);
+      }
+
+      .meta {
+        margin-top: 1.8rem;
       }
     }
   </style>
 </head>
-
 <body>
+  <main class="page">
+    <section class="wrap">
+      <div class="hero" aria-label="KUON STUDIO 久音">
+        <div class="latin">
+          <div>KUON</div>
+          <div>STUDIO</div>
+        </div>
+        <div class="kanji" aria-hidden="true">久音</div>
+      </div>
 
-  <div class="container">
-
-    <!-- LEFT -->
-    <div class="info">
-      <div class="practice">Sound Architecture Practice</div>
-      <div class="locations">London / Taipei</div>
-      <a href="mailto:hello@kuon.studio" class="email">hello@kuon.studio</a>
-    </div>
-
-    <!-- DIVIDER -->
-    <div class="line"></div>
-
-    <!-- RIGHT -->
-    <div class="title">
-      KUON<br>
-      <span class="studio">STUDIO</span><br>
-      <div class="kanji">久音</div>
-    </div>
-
-  </div>
-
+      <div class="meta">
+        <div class="practice">Sound Architecture Practice</div>
+        <a class="email" href="mailto:guy@kuon.studio">guy@kuon.studio</a>
+        <div class="locations">London / Taipei</div>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
