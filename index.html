@@ -58,7 +58,7 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      transition: opacity 280ms ease, visibility 0s linear 0s;
+      transition: opacity 220ms ease, visibility 0s linear 0s;
     }
 
     .panel--about {
@@ -72,7 +72,7 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 260ms ease, visibility 0s linear 260ms;
+      transition: opacity 180ms ease, visibility 0s linear 180ms;
     }
 
     .page.is-open .panel--about {
@@ -189,6 +189,13 @@
       opacity: 0;
     }
 
+    .page.is-transitioning .panel--intro {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 180ms ease, visibility 0s linear 180ms;
+    }
+
     .about-wrap {
       display: grid;
       grid-template-columns: minmax(240px, 320px) 1px minmax(340px, 560px);
@@ -209,7 +216,7 @@
       flex-direction: column;
       justify-content: flex-start;
       text-align: right;
-      padding-top: 0.15rem;
+      padding-top: 0rem;
     }
 
     .about-mark {
@@ -256,7 +263,7 @@
       background: var(--rule);
       align-self: stretch;
       min-height: 190px;
-      margin-top: 0.15rem;
+      margin-top: 0rem;
     }
 
     .about-text {
@@ -267,7 +274,7 @@
       font-size: clamp(1rem, 1.4vw, 1.14rem);
       line-height: 1.72;
       color: var(--text);
-      padding-top: 0.15rem;
+      padding-top: 0rem;
     }
 
     .about-text p {
