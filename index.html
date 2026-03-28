@@ -97,10 +97,8 @@
     /* HOME */
 
     .hero {
-      display: grid;
-      grid-template-columns: auto auto;
-      align-items: center;
-      gap: 0.1em;
+      position: relative;
+      display: inline-block;
       margin-left: clamp(24px, 6vw, 120px);
     }
 
@@ -117,13 +115,17 @@
     }
 
     .kanji {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      margin-left: 0.15em;
+
       display: flex;
       flex-direction: column;
       font-family: "Zhi Mang Xing", cursive;
       font-size: clamp(4.5rem, 10vw, 8rem);
       line-height: 0.9;
       color: var(--kanji);
-      transform: translateX(-0.25em);
     }
 
     .kanji div:first-child {
@@ -211,7 +213,6 @@
       }
 
       .hero {
-        gap: 0.08em;
         margin-left: 0;
       }
 
@@ -222,7 +223,7 @@
 
       .kanji {
         font-size: clamp(3.5rem, 15vw, 5.8rem);
-        transform: translateX(-0.18em);
+        margin-left: 0.1em;
       }
 
       .panel {
