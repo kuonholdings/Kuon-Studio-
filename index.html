@@ -2,76 +2,137 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KUON STUDIO | 久音</title>
 
-  <!-- LATIN FONT -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- CHINESE CALLIGRAPHY FONT -->
-  <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;600&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg: #fcfbf8;
-      --text: #111;
-      --muted: rgba(0,0,0,0.45);
-      --kanji: rgba(0,0,0,0.12);
+      --text: #111111;
+      --muted: rgba(0, 0, 0, 0.52);
+      --soft: rgba(0, 0, 0, 0.22);
+      --kanji: rgba(0, 0, 0, 0.09);
+      --enter: rgba(0, 0, 0, 0.42);
+      --rule: rgba(0, 0, 0, 0.1);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
+    html,
     body {
       margin: 0;
-      min-height: 100vh;
+      min-height: 100%;
+    }
+
+    body {
       background: var(--bg);
       color: var(--text);
-      font-family: "Red Hat Display", sans-serif;
+      font-family: "Red Hat Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow: hidden;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .panel {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 40px 24px;
+      transition:
+        opacity 520ms ease,
+        visibility 520ms ease,
+        transform 520ms ease;
     }
 
-    .wrap {
-      width: min(900px, 100%);
+    .panel--intro {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .panel--about {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .page.is-open .panel--intro {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .page.is-open .panel--about {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .intro-wrap,
+    .about-wrap {
+      width: min(920px, 100%);
+    }
+
+    .intro-wrap {
       opacity: 0;
       transform: translateY(8px);
-      animation: fadeIn 1.2s ease forwards;
+      animation: introFade 1200ms ease forwards;
     }
 
-    /* LAYOUT */
+    @keyframes introFade {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .hero {
       display: grid;
       grid-template-columns: auto auto;
       justify-content: center;
       align-items: center;
-      gap: 1.4em;
+      gap: 1.35em;
+      transition: opacity 480ms ease, transform 480ms ease;
+      will-change: transform, opacity;
     }
 
-    /* LATIN */
     .latin {
-      font-size: clamp(2.8rem, 6.5vw, 5.6rem);
+      font-size: clamp(2.8rem, 6.5vw, 5.7rem);
       font-weight: 600;
-      line-height: 0.85;
+      line-height: 0.84;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      transition: opacity 480ms ease, transform 480ms ease;
+      will-change: transform, opacity;
     }
 
     .latin div + div {
       margin-top: 0.04em;
     }
 
-    /* KANJI (EXPANDED) */
     .kanji {
       display: flex;
       flex-direction: column;
       justify-content: center;
       font-family: "Zhi Mang Xing", cursive;
-      font-size: clamp(4.5rem, 11vw, 8.5rem);
+      font-size: clamp(4.7rem, 11vw, 8.7rem);
       line-height: 0.9;
       color: var(--kanji);
+      transition: opacity 480ms ease, transform 480ms ease;
+      will-change: transform, opacity;
     }
 
     .kanji div:first-child {
@@ -82,71 +143,287 @@
       transform: translateY(0.08em);
     }
 
-    /* META */
-    .meta {
-      margin-top: 2rem;
+    .entry {
+      margin-top: 2.25rem;
       text-align: center;
-      font-size: 0.95rem;
-      color: var(--muted);
+      transition: opacity 380ms ease;
     }
 
-    .email {
+    .enter-button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--enter);
+      cursor: pointer;
+      transition: color 180ms ease, opacity 180ms ease;
+    }
+
+    .enter-button:hover {
+      color: var(--text);
+    }
+
+    .enter-button:focus-visible {
+      outline: none;
+      text-decoration: underline;
+      text-underline-offset: 0.16em;
+    }
+
+    .intro-meta {
+      margin-top: 1rem;
+      font-size: 0.94rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      line-height: 1.45;
+    }
+
+    .page.is-opening .latin {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+
+    .page.is-opening .kanji {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .page.is-opening .entry {
+      opacity: 0;
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) 1px minmax(320px, 520px);
+      gap: 36px;
+      align-items: start;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 520ms ease 180ms, transform 520ms ease 180ms;
+    }
+
+    .page.is-open .about-wrap {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .about-meta {
+      font-size: 0.82rem;
+      line-height: 1.45;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .about-meta .locations {
+      margin-top: 0.1rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .about-email {
       display: inline-block;
-      color: var(--muted);
+      color: var(--soft);
       text-decoration: none;
-      transition: 0.18s;
+      letter-spacing: 0.01em;
+      font-size: 0.96rem;
+      transition: color 180ms ease, text-decoration-color 180ms ease;
     }
 
-    .email:hover {
+    .about-email:hover {
       color: var(--text);
       text-decoration: underline;
       text-underline-offset: 0.14em;
     }
 
-    .locations {
-      margin-top: 0.3rem;
+    .about-rule {
+      width: 1px;
+      min-height: 168px;
+      background: var(--rule);
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .about-text {
+      max-width: 34rem;
+      font-size: clamp(1rem, 1.4vw, 1.14rem);
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .about-text p {
+      margin: 0;
+    }
+
+    .about-text p + p {
+      margin-top: 1.2rem;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 1.6rem;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font: inherit;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--enter);
+      cursor: pointer;
+      transition: color 180ms ease;
+    }
+
+    .back:hover {
+      color: var(--text);
+    }
+
+    .back:focus-visible {
+      outline: none;
+      text-decoration: underline;
+      text-underline-offset: 0.16em;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .wrap {
-        opacity: 1;
-        transform: none;
-        animation: none;
+      .panel,
+      .hero,
+      .latin,
+      .kanji,
+      .entry,
+      .about-wrap,
+      .about-email,
+      .enter-button,
+      .back,
+      .intro-wrap {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+
+      .intro-wrap,
+      .about-wrap {
+        opacity: 1 !important;
       }
     }
 
+    @media (max-width: 780px) {
+      body {
+        overflow: auto;
+      }
+
+      .panel {
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .page.is-open .panel--intro {
+        display: none;
+      }
+
+      .hero {
+        gap: 0.7em;
+      }
+
+      .latin {
+        font-size: clamp(2.2rem, 10vw, 4rem);
+        letter-spacing: 0.1em;
+      }
+
+      .kanji {
+        font-size: clamp(3.5rem, 15vw, 5.8rem);
+      }
+
+      .about-wrap {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .about-rule {
+        display: none;
+      }
+
+      .about-meta {
+        letter-spacing: 0.06em;
+      }
+
+      .about-text {
+        font-size: 1rem;
+        line-height: 1.65;
+      }
+    }
   </style>
 </head>
-
 <body>
+  <main class="page" id="page">
+    <section class="panel panel--intro" aria-label="Introduction">
+      <div class="intro-wrap">
+        <div class="hero" aria-label="KUON STUDIO 久音">
+          <div class="latin">
+            <div>KUON</div>
+            <div>STUDIO</div>
+          </div>
 
-  <div class="wrap">
+          <div class="kanji" aria-hidden="true">
+            <div>久</div>
+            <div>音</div>
+          </div>
+        </div>
 
-    <div class="hero">
-      <div class="latin">
-        <div>KUON</div>
-        <div>STUDIO</div>
+        <div class="entry">
+          <button class="enter-button" id="enterButton" type="button">Enter</button>
+          <div class="intro-meta">
+            hello@kuon.studio<br />
+            London / Taipei
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="kanji">
-        <div>久</div>
-        <div>音</div>
+    <section class="panel panel--about" aria-label="About Kuon Studio">
+      <div class="about-wrap">
+        <div class="about-meta">
+          <div>KUON STUDIO | 久音</div>
+          <div class="locations">London / Taipei</div>
+          <a class="about-email" href="mailto:hello@kuon.studio">hello@kuon.studio</a>
+        </div>
+
+        <div class="about-rule" aria-hidden="true"></div>
+
+        <div class="about-text">
+          <p>
+            Kuon Studio is a developing practice concerned with sound, form,
+            and the structures that give them lasting presence.
+          </p>
+
+          <p>
+            Current work sits across instruments, audio objects, and spatial
+            ideas. A fuller presentation of the studio will follow in due
+            course.
+          </p>
+
+          <button class="back" id="backButton" type="button">Back</button>
+        </div>
       </div>
-    </div>
+    </section>
+  </main>
 
-    <div class="meta">
-      <a href="mailto:hello@kuon.studio" class="email">hello@kuon.studio</a>
-      <div class="locations">London / Taipei</div>
-    </div>
+  <script>
+    const page = document.getElementById("page");
+    const enterButton = document.getElementById("enterButton");
+    const backButton = document.getElementById("backButton");
 
-  </div>
+    enterButton.addEventListener("click", () => {
+      page.classList.add("is-opening");
+      window.setTimeout(() => {
+        page.classList.remove("is-opening");
+        page.classList.add("is-open");
+      }, 460);
+    });
 
+    backButton.addEventListener("click", () => {
+      page.classList.remove("is-open");
+    });
+  </script>
 </body>
 </html>
