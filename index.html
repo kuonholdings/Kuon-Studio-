@@ -16,9 +16,9 @@
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
       background: var(--bg);
       color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
@@ -34,9 +34,9 @@
     }
 
     .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: start;
       gap: 20px;
       padding: 22px 36px 10px;
       font-size: 0.9rem;
@@ -53,10 +53,12 @@
       gap: 16px;
       text-transform: uppercase;
       font-size: 0.84rem;
+      justify-self: center;
     }
     .nav-right {
       text-transform: uppercase;
       font-size: 0.84rem;
+      justify-self: end;
     }
 
     .hero {
@@ -103,9 +105,9 @@
 
     .works-header {
       display: grid;
-      grid-template-columns: 0.55fr 1fr 1fr 1fr;
+      grid-template-columns: 0.8fr 1fr 1fr 1fr;
       gap: 24px;
-      margin-bottom: 34px;
+      margin-bottom: 40px;
       align-items: end;
     }
 
@@ -126,12 +128,16 @@
 
     .works-grid {
       display: grid;
-      grid-template-columns: 0.55fr 1fr 1fr 1fr;
-      gap: 24px;
+      grid-template-columns: 0.8fr 1fr 1fr 1fr;
+      gap: 28px;
       align-items: start;
     }
 
-    .work-item { display: block; cursor: pointer; }
+    .work-item {
+      display: block;
+      cursor: pointer;
+    }
+
     .work-item:nth-child(1) { grid-column: 2; }
     .work-item:nth-child(2) { grid-column: 3; }
     .work-item:nth-child(3) { grid-column: 4; }
@@ -140,13 +146,13 @@
       width: 100%;
       aspect-ratio: 4 / 5;
       object-fit: cover;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       background: #e8e6df;
     }
 
     .work-item h3 {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: 1.28rem;
       letter-spacing: -0.03em;
     }
 
@@ -167,7 +173,9 @@
       color: white;
     }
 
-    .project-page.active { display: block; }
+    .project-page.active {
+      display: block;
+    }
 
     .project-shell {
       display: grid;
@@ -231,7 +239,10 @@
       color: rgba(255,255,255,0.72);
     }
 
-    .project-bottom .meta { display: grid; gap: 14px; }
+    .project-bottom .meta {
+      display: grid;
+      gap: 14px;
+    }
 
     .project-middle {
       background: #0d0d0d;
@@ -285,7 +296,9 @@
       align-items: start;
     }
 
-    .profile-main { grid-column: 1; }
+    .profile-main {
+      grid-column: 1;
+    }
 
     .profile-main h2 {
       font-size: clamp(3rem, 6vw, 5.6rem);
@@ -328,7 +341,10 @@
       font-weight: 700;
     }
 
-    .profile-image { grid-column: 4; }
+    .profile-image {
+      grid-column: 4;
+    }
+
     .profile-image img {
       width: 100%;
       aspect-ratio: 4 / 5;
@@ -341,8 +357,9 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
-      padding: 0 36px 60px;
-      align-items: start;
+      padding: 0 36px;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .contact h2 {
@@ -401,17 +418,17 @@
   <div class="page">
 
     <div class="nav">
-      <div class="nav-left">KUON STUDIO | 久音</div>
+      <div class="nav-left"><a href="#home">KUON STUDIO | 久音</a></div>
       <div class="nav-center">
-        <div>Home</div>
-        <div>Work</div>
-        <div>Profile</div>
+        <a href="#home">Home</a>
+        <a href="#works">Work</a>
+        <a href="#profile">Profile</a>
       </div>
-      <div class="nav-right">Contact</div>
+      <div class="nav-right"><a href="#contact">Contact</a></div>
     </div>
 
-    <section class="hero">
-      <img src="images/maso-room.jpg" alt="MASO room" />
+    <section id="home" class="hero">
+      <img src="images/maso-room.jpg" alt="MASO room image" />
       <div class="hero-content">
         <div></div>
         <div>
@@ -422,7 +439,7 @@
       </div>
     </section>
 
-    <section class="works">
+    <section id="works" class="works">
       <div class="works-header">
         <h2>Works</h2>
         <p>The work is structured across three conditions: origin, architecture, and completion.</p>
@@ -430,21 +447,21 @@
 
       <div class="works-grid">
         <div class="work-item" onclick="openProject('guitar')">
-          <img src="images/guitar.jpg" alt="Guitar" />
+          <img src="images/guitar.jpg" alt="Guitar project" />
           <h3>Guitar</h3>
           <p>Sound at origin</p>
           <p>Material, tension, and structure as the beginning of sound.</p>
         </div>
 
         <div class="work-item" onclick="openProject('neostein')">
-          <img src="images/neostein.jpg" alt="Neostein" />
+          <img src="images/neostein.jpg" alt="Neostein project" />
           <h3>Neostein</h3>
           <p>Sound in architecture</p>
           <p>Sound integrated into the fabric of space.</p>
         </div>
 
         <div class="work-item" onclick="openProject('maso')">
-          <img src="images/maso-room.jpg" alt="MASO" />
+          <img src="images/maso-room.jpg" alt="MASO project" />
           <h3>MASO</h3>
           <p>Sound as complete form</p>
           <p>Sound returned as presence within the room.</p>
@@ -452,7 +469,7 @@
       </div>
     </section>
 
-    <section class="profile">
+    <section class="profile" id="profile">
       <div class="profile-main" id="profile-copy">
         <h2>Guy Traviss</h2>
         <p>Kuon Studio is the practice of Guy Traviss.</p>
@@ -468,11 +485,11 @@
         <button data-key="form">Form</button>
       </div>
       <div class="profile-image">
-        <img id="profile-image" src="images/profile.jpg" alt="Guy Traviss" />
+        <img id="profile-image" src="images/profile.jpg" alt="Guy Traviss profile image" />
       </div>
     </section>
 
-    <section class="contact">
+    <section class="contact" id="contact">
       <h2>Contact</h2>
       <div>
         <p>For collaborations, commissions, and general enquiries, please get in touch directly.</p>
@@ -484,23 +501,28 @@
 
   </div>
 
+  <!-- PROJECT PAGE (DARK) -->
   <div id="project-page" class="project-page">
     <div class="project-shell">
       <div class="project-left">
         <div class="project-top">
           <span id="project-top-title">MASO</span>
-          <span id="project-top-subtitle">Sound as complete form</span>
+          <span class="muted" id="project-top-subtitle">Sound as complete form</span>
         </div>
+
         <div class="project-main" id="project-copy"></div>
+
         <div class="project-bottom">
           <div>← <a href="#" onclick="closeProject(); return false;">Back</a></div>
           <div class="meta" id="project-meta"></div>
           <div id="project-count">01 / 04</div>
         </div>
       </div>
+
       <div class="project-middle">
         <div class="project-sections" id="project-sections"></div>
       </div>
+
       <div class="project-right">
         <div class="project-image-panel">
           <img id="project-image" src="images/maso-room.jpg" alt="Project image" />
@@ -662,7 +684,10 @@
       }
     };
 
+    let currentProject = 'maso';
+
     function renderProject(projectKey, sectionKey) {
+      currentProject = projectKey;
       const project = projectData[projectKey];
       const keys = Object.keys(project.sections);
       const safeSection = sectionKey || keys[0];
@@ -678,7 +703,9 @@
       `;
       document.getElementById('project-image').src = section.image;
       document.getElementById('project-count').innerHTML = `${keys.indexOf(safeSection) + 1} / ${keys.length}`;
-      document.getElementById('project-sections').innerHTML = keys.map(key => `<button class="${key === safeSection ? 'active' : ''}" onclick="renderProject('${projectKey}','${key}')">${project.sections[key].kicker}</button>`).join('');
+
+      const menu = document.getElementById('project-sections');
+      menu.innerHTML = keys.map(key => `<button class="${key === safeSection ? 'active' : ''}" onclick="renderProject('${projectKey}','${key}')">${project.sections[key].kicker}</button>`).join('');
     }
 
     function openProject(projectKey) {
