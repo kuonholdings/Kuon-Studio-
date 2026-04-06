@@ -7,20 +7,22 @@
   <meta name="description" content="Kuon Studio is a sound architecture practice concerned with how sound becomes real in the world." />
   <style>
     :root {
-      --bg: #f3f2ee;
-      --panel: #f6f5f1;
-      --text: #101010;
-      --muted: #7b7a74;
-      --rule: #d8d6cf;
-      --max: 1600px;
-      --pad: clamp(22px, 3vw, 42px);
+      --bg: #f2f1ed;
+      --panel: #f7f6f2;
+      --text: #0d0d0d;
+      --muted: #7b7b75;
+      --rule: #d7d4cc;
+      --max: 1560px;
+      --pad: clamp(18px, 2.6vw, 38px);
+      --radius: 22px;
+      --shadow: 0 0 0 1px rgba(0,0,0,0.03);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: var(--bg);
+      background: #d9d8d2;
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
@@ -30,540 +32,735 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; width: 100%; height: auto; }
 
-    .wrap {
+    .page {
       width: min(var(--max), calc(100% - (var(--pad) * 2)));
-      margin: 0 auto;
+      margin: var(--pad) auto;
+      background: var(--bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .site-header {
-      padding: 22px 0 10px;
-    }
-
-    .header-grid {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 28px;
-      align-items: start;
-    }
-
-    .brand {
-      font-size: 0.92rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+    .section {
+      padding: 24px;
+      border-top: 1px solid transparent;
     }
 
     .nav {
       display: grid;
-      gap: 2px;
-      justify-items: start;
-      font-size: 0.92rem;
-      line-height: 1.2;
-      text-transform: uppercase;
-    }
-
-    .nav a { color: var(--text); }
-
-    .mode-pill {
-      width: 78px;
-      height: 34px;
-      border: 2px solid #8f8d87;
-      border-radius: 999px;
-      position: relative;
-      justify-self: end;
-    }
-
-    .mode-pill::before {
-      content: "✶";
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-54%);
-      font-size: 1.15rem;
-      line-height: 1;
-    }
-
-    section {
-      min-height: 100vh;
-      padding: 10px 0 34px;
-      border-top: 1px solid transparent;
-    }
-
-    .hero-grid,
-    .maso-grid,
-    .studio-grid,
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
+      grid-template-columns: 1fr auto auto;
+      gap: 24px;
       align-items: start;
+      padding: 22px 24px 10px;
+      font-size: 0.9rem;
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
-    .home-left { grid-column: 1 / span 4; }
-    .home-right { grid-column: 9 / span 4; }
-
-    .small-title,
-    .section-label {
-      font-size: 0.86rem;
+    .brand {
       font-weight: 700;
-      letter-spacing: -0.02em;
-      margin: 0 0 18px;
-    }
-
-    .hero-title {
-      margin: 0;
-      font-size: clamp(4.8rem, 15vw, 13rem);
-      line-height: 0.88;
-      letter-spacing: -0.085em;
-      font-weight: 700;
-      margin-top: 18vh;
-    }
-
-    .hero-kicker {
-      max-width: 7ch;
-      font-size: 0.92rem;
-      font-weight: 700;
-      line-height: 1.08;
-      text-transform: uppercase;
-    }
-
-    .hero-copy,
-    .body-copy,
-    .studio-copy,
-    .contact-copy,
-    .origin-copy {
-      font-size: clamp(1rem, 1.2vw, 1.16rem);
-      line-height: 1.72;
-    }
-
-    .hero-copy p,
-    .body-copy p,
-    .studio-copy p,
-    .contact-copy p,
-    .origin-copy p {
-      margin: 0 0 1.15rem;
-      max-width: 34rem;
-    }
-
-    .hero-copy p:last-child,
-    .body-copy p:last-child,
-    .studio-copy p:last-child,
-    .contact-copy p:last-child,
-    .origin-copy p:last-child { margin-bottom: 0; }
-
-    .hero-object {
-      grid-column: 7 / span 3;
-      align-self: end;
-      margin-top: 26vh;
-    }
-
-    .hero-object img {
-      max-width: 360px;
-      margin: 0 auto;
-      mix-blend-mode: multiply;
-    }
-
-    .maso-left,
-    .studio-left,
-    .contact-left { grid-column: 1 / span 5; }
-    .maso-right,
-    .studio-right,
-    .contact-right { grid-column: 7 / span 5; }
-
-    .section-title {
-      margin: 22vh 0 0;
-      font-size: clamp(4.6rem, 12vw, 10rem);
-      line-height: 0.9;
-      letter-spacing: -0.08em;
-      font-weight: 700;
-      max-width: 7ch;
-    }
-
-    .body-copy {
-      margin-top: 16vh;
-    }
-
-    .maso-image {
-      margin-top: 9vh;
-    }
-
-    .maso-image img {
-      width: 100%;
-      max-height: 82vh;
-      object-fit: cover;
-    }
-
-    .capture-strip {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
-      margin-top: 8vh;
-      align-items: start;
-    }
-
-    .capture-copy {
-      grid-column: 1 / span 4;
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: var(--muted);
-      max-width: 26rem;
-    }
-
-    .capture-image {
-      grid-column: 7 / span 3;
-    }
-
-    .capture-image img {
-      background: transparent;
-      mix-blend-mode: multiply;
-    }
-
-    .pull-quote {
-      margin: 14vh 0 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.9rem, 3.2vw, 3.45rem);
-      line-height: 1.08;
       letter-spacing: -0.03em;
-      max-width: 11ch;
     }
 
-    .statement-block {
-      margin-top: 12vh;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
-    }
-
-    .statement-block .statement {
-      grid-column: 7 / span 5;
-      font-size: clamp(1.2rem, 1.7vw, 1.75rem);
-      line-height: 1.32;
-      font-weight: 700;
-      max-width: 24ch;
-    }
-
-    .origin {
-      min-height: auto;
-      padding: 6vh 0 12vh;
-    }
-
-    .origin-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
-    }
-
-    .origin-copy {
-      grid-column: 7 / span 5;
-      max-width: 34rem;
-    }
-
-    .signature {
-      margin-top: 36px;
-      font-size: 1rem;
-      line-height: 1.7;
-      font-weight: 700;
-    }
-
-    .works {
-      min-height: auto;
-      padding-top: 12vh;
-      padding-bottom: 12vh;
-    }
-
-    .works-head {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
-      margin-bottom: 42px;
-    }
-
-    .works-title {
-      grid-column: 1 / span 4;
-      margin: 0;
-      font-size: clamp(2.4rem, 4vw, 4.2rem);
-      line-height: 0.98;
-      letter-spacing: -0.05em;
-      font-weight: 700;
-    }
-
-    .work-item {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
-      padding: 26px 0 30px;
-      border-top: 1px solid var(--rule);
-    }
-
-    .work-name {
-      grid-column: 1 / span 4;
-      margin: 0;
-      font-size: 2rem;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      font-weight: 700;
-    }
-
-    .work-meta {
-      grid-column: 7 / span 5;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 120px 1fr;
+    .nav-links,
+    .nav-links-right {
+      display: flex;
       gap: 18px;
-      padding: 8px 0;
+      align-items: center;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+    }
+
+    .nav-links a,
+    .nav-links-right a {
+      color: var(--text);
+      opacity: 0.92;
+    }
+
+    .hero {
+      min-height: calc(100vh - 90px);
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+      padding: 8px 24px 30px;
+    }
+
+    .hero-image {
+      min-height: 640px;
+      background: #eae7df;
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 28px;
+    }
+
+    .mini-note {
+      align-self: start;
+      justify-self: end;
+      width: min(180px, 100%);
+    }
+
+    .mini-note img {
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      background: #eceae3;
+    }
+
+    .mini-note p {
+      margin: 8px 0 0;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .hero-copy {
+      align-self: end;
+      padding-right: 3vw;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 22px;
+      font-size: clamp(3.4rem, 7vw, 6.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.09em;
+      font-weight: 700;
+      max-width: 9ch;
+    }
+
+    .hero-copy p {
+      margin: 0 0 1rem;
+      max-width: 34rem;
+      font-size: 1.02rem;
+      line-height: 1.75;
+    }
+
+    .hero-link {
+      display: inline-block;
+      margin-top: 22px;
+      font-size: 1rem;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .works-overview {
+      padding: 34px 24px 20px;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--rule);
     }
 
-    .row:last-child { border-bottom: none; }
-
-    .label {
-      color: var(--muted);
-      text-transform: uppercase;
-      font-size: 0.79rem;
+    .overview-grid h2 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
       font-weight: 700;
+    }
+
+    .overview-grid p {
+      margin: 8px 0 0;
+      max-width: 28rem;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .work-list {
+      padding: 8px 24px 24px;
+    }
+
+    .work-card {
+      display: grid;
+      grid-template-columns: 72px 1.2fr 0.95fr 1.1fr;
+      gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: start;
+    }
+
+    .work-index {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-top: 6px;
+    }
+
+    .work-head h3 {
+      margin: 0 0 6px;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .work-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .work-thumb img {
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      background: #e8e6df;
+    }
+
+    .work-text p {
+      margin: 0 0 0.9rem;
+      font-size: 0.98rem;
+      line-height: 1.74;
+      max-width: 34rem;
+    }
+
+    .work-text p:last-child { margin-bottom: 0; }
+
+    .project-page {
+      min-height: 100vh;
+      display: none;
+      padding: 0;
+    }
+
+    .project-page.active {
+      display: block;
+    }
+
+    .project-shell {
+      display: grid;
+      grid-template-columns: 1.08fr 0.16fr 1fr;
+      min-height: 100vh;
+    }
+
+    .project-left {
+      background: #0d0d0d;
+      color: #f5f3ee;
+      padding: 30px 28px 26px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: start;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .project-main {
+      align-self: center;
+      padding: 8vh 0;
+    }
+
+    .project-kicker {
+      margin: 0 0 16px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .project-main h2 {
+      margin: 0 0 20px;
+      font-size: clamp(2.6rem, 5vw, 4.8rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+      font-weight: 700;
+      max-width: 10ch;
+    }
+
+    .project-main p {
+      margin: 0 0 1rem;
+      max-width: 32rem;
+      font-size: 0.98rem;
+      line-height: 1.76;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .project-bottom {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: end;
+      gap: 24px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .project-bottom .meta {
+      display: grid;
+      gap: 14px;
+    }
+
+    .project-middle {
+      background: #0d0d0d;
+      color: rgba(255,255,255,0.74);
+      padding: 34px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-sections {
+      display: grid;
+      gap: 14px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-size: 0.84rem;
+      text-transform: uppercase;
       letter-spacing: 0.03em;
     }
 
-    .value {
-      font-size: 1rem;
-      line-height: 1.75;
-      max-width: 36rem;
+    .project-sections button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      padding: 0;
+      font: inherit;
+      opacity: 0.56;
     }
 
-    .contact-title {
-      margin: 14vh 0 0;
-      font-size: clamp(4.4rem, 10vw, 9rem);
-      line-height: 0.9;
+    .project-sections button.active {
+      opacity: 1;
+      color: #fff;
+    }
+
+    .project-right {
+      background: #131313;
+      position: relative;
+      display: grid;
+      align-items: stretch;
+    }
+
+    .project-image-panel {
+      height: 100%;
+      min-height: 100vh;
+      background: #1b1b1b;
+    }
+
+    .project-image-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .profile {
+      padding: 32px 24px 60px;
+    }
+
+    .profile-shell {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px;
+      min-height: 82vh;
+    }
+
+    .profile-left {
+      display: grid;
+      align-content: space-between;
+      padding: 4px 0;
+    }
+
+    .profile-left h2 {
+      margin: 0;
+      font-size: clamp(3rem, 6vw, 5.6rem);
+      line-height: 0.95;
       letter-spacing: -0.08em;
+      font-weight: 700;
+      max-width: 7ch;
+    }
+
+    .profile-details {
+      font-size: 0.98rem;
+      line-height: 1.78;
+      max-width: 28rem;
+    }
+
+    .profile-right img {
+      width: 100%;
+      height: 100%;
+      min-height: 700px;
+      object-fit: cover;
+      object-position: center;
+      background: #e8e6df;
+    }
+
+    .contact {
+      padding: 36px 24px 44px;
+    }
+
+    .contact-shell {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 34px;
+      min-height: 70vh;
+    }
+
+    .contact-shell h2 {
+      margin: 0;
+      font-size: clamp(4rem, 9vw, 7.8rem);
+      line-height: 0.9;
+      letter-spacing: -0.09em;
       font-weight: 700;
       max-width: 6ch;
     }
 
-    .contact-copy {
-      margin-top: 30vh;
+    .contact-right {
+      align-self: center;
+    }
+
+    .contact-right p {
+      margin: 0 0 1rem;
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 34rem;
     }
 
     .contact-rule {
-      margin: 32px 0 28px;
       border: none;
       border-top: 1px solid var(--rule);
+      margin: 28px 0 26px;
     }
 
-    .contact-grid-mini {
+    .contact-meta {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
 
-    .contact-grid-mini h4 {
-      margin: 0 0 14px;
-      font-size: 0.86rem;
+    .contact-meta h4 {
+      margin: 0 0 12px;
+      font-size: 0.84rem;
       text-transform: uppercase;
-      font-weight: 700;
     }
 
-    .contact-grid-mini p,
-    .contact-grid-mini a {
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: var(--text);
+    .contact-meta p,
+    .contact-meta a {
       display: block;
-      margin-bottom: 8px;
+      margin: 0 0 8px;
+      font-size: 0.96rem;
+      line-height: 1.7;
     }
 
-    @media (max-width: 1100px) {
-      .home-left,
-      .home-right,
-      .hero-object,
-      .maso-left,
-      .maso-right,
-      .studio-left,
-      .studio-right,
-      .contact-left,
-      .contact-right,
-      .origin-copy,
-      .work-name,
-      .work-meta,
-      .statement-block .statement,
-      .works-title,
-      .capture-copy,
-      .capture-image {
-        grid-column: 1 / -1;
-      }
+    .muted { color: var(--muted); }
 
-      .hero-title,
-      .section-title,
-      .contact-title { margin-top: 8vh; }
-      .body-copy,
-      .contact-copy,
-      .hero-object { margin-top: 6vh; }
-      .pull-quote { margin-top: 8vh; max-width: none; }
-    }
-
-    @media (max-width: 720px) {
-      .header-grid {
+    @media (max-width: 1180px) {
+      .hero,
+      .overview-grid,
+      .profile-shell,
+      .contact-shell {
         grid-template-columns: 1fr;
       }
 
-      .mode-pill { display: none; }
-      .nav { grid-auto-flow: row; }
-      .hero-title { font-size: clamp(3.7rem, 22vw, 6rem); }
-      .section-title,
-      .contact-title { font-size: clamp(3.2rem, 18vw, 5.4rem); }
-      .row {
-        grid-template-columns: 1fr;
-        gap: 6px;
+      .work-card {
+        grid-template-columns: 56px 1fr;
       }
-      .contact-grid-mini {
+
+      .work-thumb,
+      .work-text {
+        grid-column: 2;
+      }
+
+      .project-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .project-middle {
+        display: none;
+      }
+
+      .project-image-panel {
+        min-height: 60vh;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links,
+      .nav-links-right {
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image {
+        min-height: 380px;
+      }
+
+      .mini-note {
+        justify-self: start;
+      }
+
+      .contact-meta {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="wrap header-grid">
-      <a class="brand" href="#home">KUON STUDIO</a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#maso">MASO</a>
-        <a href="#studio">STUDIO</a>
-        <a href="#works">WORKS</a>
-        <a href="#contact">CONTACT</a>
+  <div class="page">
+    <header class="nav">
+      <a class="brand" href="#home">KUON STUDIO | 久音</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#works">Work</a>
+        <a href="#profile">Profile</a>
       </nav>
-      <div class="mode-pill" aria-hidden="true"></div>
-    </div>
-  </header>
-
-  <main>
-    <section id="home">
-      <div class="wrap hero-grid">
-        <div class="home-left">
-          <p class="small-title">久音</p>
-          <div class="hero-kicker">Sound Architecture Practice</div>
-        </div>
-        <div class="hero-right hero-copy">
-          <p>Kuon Studio is a sound architecture practice concerned with how sound becomes real in the world.</p>
-          <p>It works from capture to perception, shaping sound through recording, object, and space.</p>
-        </div>
-        <div class="hero-object">
-          <img src="images/kuon-object.png" alt="A translucent volumetric object representing how a work is held before it is returned as sound." />
-        </div>
-        <div class="home-left" style="grid-column: 3 / span 8;">
-          <h1 class="hero-title">Kuon</h1>
-        </div>
+      <div class="nav-links-right">
+        <a href="#contact">Contact</a>
       </div>
-    </section>
+    </header>
 
-    <section id="maso">
-      <div class="wrap maso-grid">
-        <div class="maso-left">
-          <p class="section-label">MASO</p>
-          <h2 class="section-title">Where sound becomes part of space.</h2>
+    <main>
+      <section id="home" class="section hero">
+        <div class="hero-image">
+          <img src="images/maso-room.jpg" alt="Interior atmosphere representing the spatial condition of MASO." />
         </div>
-        <div class="maso-right body-copy">
-          <p>MASO is an architectural system for sound, expressed through a single form — a plane — in which sound and image are held together within the same surface.</p>
-          <p>It is where Kuon Studio becomes complete in space, bringing together recording, form, and perception in a single, continuous presence.</p>
-          <p>Most architectural audio systems remove the visibility of sound, but in doing so diminish its presence. MASO does not hide sound — it gives it form.</p>
-          <p>The surface carries black ink gestures — marks through which sound was once written and organised. Within MASO, that gesture is captured, preserved, and returned as sound within the same plane.</p>
-          <p>A room designed for human perception is the optimal condition for listening. MASO works within this condition, allowing sound to exist without intrusion.</p>
+
+        <div class="hero-content">
+          <div class="mini-note">
+            <img src="images/kuon-object.png" alt="A held object representing sound preserved before return." />
+            <p>Held form — the work fixed before it is returned to space.</p>
+          </div>
+
+          <div class="hero-copy">
+            <h1>Sound, given structure.</h1>
+            <p>Kuon Studio is a sound architecture practice concerned with how sound becomes real in the world.</p>
+            <p>Its work spans sound at origin, sound in architecture, and sound as complete form.</p>
+            <a class="hero-link" href="#works">Discover the work →</a>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div class="wrap maso-image">
-        <img src="images/maso-room.jpg" alt="A warm architectural interior showing the type of room in which MASO belongs." />
-      </div>
-
-      <div class="wrap capture-strip">
-        <div class="capture-copy">
-          Spatial recordings are developed through dedicated capture methods, allowing the work to be preserved before it is returned as sound in space.
+      <section id="works" class="section works-overview">
+        <div class="overview-grid">
+          <h2>Works</h2>
+          <p>The work is structured across three conditions: origin, architecture, and completion.</p>
         </div>
-        <div class="capture-image">
-          <img src="images/binaural-head.jpeg" alt="A binaural recording head used as part of the spatial capture process." />
-        </div>
-      </div>
+      </section>
 
-      <div class="wrap statement-block">
-        <div class="statement">Sound is no longer placed into a room. It becomes part of its structure.</div>
-        <div class="statement" style="grid-column: 9 / span 4;">MASO allows sound to exist in a room without becoming equipment.</div>
-      </div>
-
-      <div class="wrap origin-grid origin">
-        <div class="origin-copy">
-          <p>Kuon Studio emerges from work across instruments, recording, and material processes, developed between Europe and Asia.</p>
-          <p>Sound becomes real when it is given form.</p>
-          <p>MASO is the point at which this work becomes complete in space.</p>
-          <div class="signature">— Guy Traviss<br />London | Taiwan</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="studio">
-      <div class="wrap studio-grid">
-        <div class="studio-left">
-          <p class="section-label">STUDIO</p>
-          <div class="pull-quote">Form is what makes it real.</div>
-        </div>
-        <div class="studio-right studio-copy">
-          <p>Kuon Studio is concerned with how sound is given form.</p>
-          <p>This work spans from its point of origin to its presence in space — through instruments, recording, and architectural objects.</p>
-          <p>At each stage, sound is not treated as signal, but as something shaped, fixed, and experienced.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="works" class="works">
-      <div class="wrap works-head">
-        <h2 class="works-title">Works</h2>
-      </div>
-
-      <div class="wrap">
-        <article class="work-item">
-          <h3 class="work-name">MASO</h3>
-          <div class="work-meta">
-            <div class="row"><div class="label">Project</div><div class="value">MASO Plane</div></div>
-            <div class="row"><div class="label">Intent</div><div class="value">To recreate sound in a room as presence — as if it were here, within an environment optimised for human perception.</div></div>
-            <div class="row"><div class="label">Position</div><div class="value">Form → Perception</div></div>
-            <div class="row"><div class="label">Status</div><div class="value">In development</div></div>
+      <section class="work-list">
+        <article class="work-card">
+          <div class="work-index">01.</div>
+          <div class="work-head">
+            <h3>Guitar</h3>
+            <p>Sound at origin</p>
+          </div>
+          <div class="work-thumb">
+            <img src="images/guitar.jpg" alt="Guitar project" />
+          </div>
+          <div class="work-text">
+            <p>The guitar explores sound at its point of formation — where material, tension, and structure define how sound comes into being.</p>
+            <p>Developed in collaboration with luthier Stephen Eden, the work extends from a classical understanding of the instrument into new material and structural possibilities.</p>
+            <p><a href="#project-guitar">Open project →</a></p>
           </div>
         </article>
 
-        <article class="work-item">
-          <h3 class="work-name">BMC Guitar</h3>
-          <div class="work-meta">
-            <div class="row"><div class="label">Project</div><div class="value">BMC Instrument</div></div>
-            <div class="row"><div class="label">Intent</div><div class="value">To shape sound at its point of origin — not as amplification, but as formation, where material and structure define how sound comes into being.</div></div>
-            <div class="row"><div class="label">Position</div><div class="value">Source</div></div>
-            <div class="row"><div class="label">Status</div><div class="value">Development with collaborators</div></div>
+        <article class="work-card">
+          <div class="work-index">02.</div>
+          <div class="work-head">
+            <h3>Neostein</h3>
+            <p>Sound in architecture</p>
+          </div>
+          <div class="work-thumb">
+            <img src="images/neostein.jpg" alt="Neostein project" />
+          </div>
+          <div class="work-text">
+            <p>Neostein develops architectural audio systems for integration within buildings and designed spaces.</p>
+            <p>The work explores how sound can be embedded into the fabric of architecture — through walls, surfaces, and constructed elements — balancing performance with real-world constraints.</p>
+            <p><a href="#project-neostein">Open project →</a></p>
           </div>
         </article>
-      </div>
-    </section>
 
-    <section id="contact">
-      <div class="wrap contact-grid">
-        <div class="contact-left">
-          <p class="section-label">CONTACT</p>
-          <h2 class="contact-title">Contact</h2>
-        </div>
-        <div class="contact-right contact-copy">
-          <p>For collaborations, commissions, and general enquiries, please get in touch directly.</p>
-          <hr class="contact-rule" />
-          <div class="contact-grid-mini">
-            <div>
-              <h4>General Enquiries</h4>
-              <a href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-              <p>London | Taiwan</p>
+        <article class="work-card">
+          <div class="work-index">03.</div>
+          <div class="work-head">
+            <h3>MASO</h3>
+            <p>Sound as complete form</p>
+          </div>
+          <div class="work-thumb">
+            <img src="images/maso-room.jpg" alt="MASO project" />
+          </div>
+          <div class="work-text">
+            <p>MASO is an architectural system for sound, expressed through a single form — a plane — in which sound and image are held together within the same surface, supported by a concealed architectural volume.</p>
+            <p>It brings together recording, form, and perception in a single, continuous presence.</p>
+            <p><a href="#project-maso">Open project →</a></p>
+          </div>
+        </article>
+      </section>
+
+      <section id="project-maso" class="project-page active">
+        <div class="project-shell">
+          <div class="project-left">
+            <div class="project-top">
+              <span>MASO</span>
+              <span class="muted">Sound as complete form</span>
             </div>
-            <div>
-              <h4>Studio</h4>
-              <p>Kuon Studio</p>
-              <p>Sound Architecture Practice</p>
+
+            <div class="project-main" id="maso-copy">
+              <p class="project-kicker">Intent</p>
+              <h2>MASO Edition 01</h2>
+              <p>To recreate sound in a room as presence — as if it were here, within an environment optimised for human perception.</p>
+              <p>MASO is an architectural system for sound, expressed through a single form — a plane — in which sound and image are held together within the same surface.</p>
+            </div>
+
+            <div class="project-bottom">
+              <div>← <a href="#works">Back</a></div>
+              <div class="meta">
+                <div>Project<br />MASO Plane</div>
+                <div>Status<br />In development</div>
+              </div>
+              <div>01 / 04</div>
+            </div>
+          </div>
+
+          <div class="project-middle">
+            <div class="project-sections" id="maso-sections">
+              <button class="active" data-key="intent">Intent</button>
+              <button data-key="form">Form</button>
+              <button data-key="system">System</button>
+              <button data-key="perception">Perception</button>
+            </div>
+          </div>
+
+          <div class="project-right">
+            <div class="project-image-panel">
+              <img id="maso-image" src="images/maso-room.jpg" alt="MASO project image" />
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+
+      <section id="profile" class="section profile">
+        <div class="profile-shell">
+          <div class="profile-left">
+            <div>
+              <p class="section-label">Profile</p>
+              <h2>Guy Traviss</h2>
+            </div>
+            <div class="profile-details">
+              <p>Kuon Studio is the practice of Guy Traviss.</p>
+              <p>Trained in music and recording, his work developed through instrument design, acoustic research, and manufacturing across Europe and China.</p>
+              <p>This experience spans the full path of sound — from its formation in instruments, through its capture in recording, to its realisation within architectural space.</p>
+              <p>Form is what makes it real.</p>
+            </div>
+          </div>
+          <div class="profile-right">
+            <img src="images/profile.jpg" alt="Portrait of Guy Traviss" />
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact">
+        <div class="contact-shell">
+          <div>
+            <h2 class="contact-title">Contact</h2>
+          </div>
+          <div class="contact-right">
+            <p>For collaborations, commissions, and general enquiries, please get in touch directly.</p>
+            <p>Kuon Studio welcomes conversations that extend its work across sound, object, and space.</p>
+            <hr class="contact-rule" />
+            <div class="contact-meta">
+              <div>
+                <h4>General Enquiries</h4>
+                <a href="mailto:hello@kuon.studio">hello@kuon.studio</a>
+                <p>London | Taiwan</p>
+              </div>
+              <div>
+                <h4>Studio</h4>
+                <p>Kuon Studio</p>
+                <p>Sound Architecture Practice</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const masoData = {
+      intent: {
+        kicker: 'Intent',
+        title: 'MASO Edition 01',
+        text: [
+          'To recreate sound in a room as presence — as if it were here, within an environment optimised for human perception.',
+          'MASO is an architectural system for sound, expressed through a single form — a plane — in which sound and image are held together within the same surface.'
+        ],
+        image: 'images/maso-room.jpg'
+      },
+      form: {
+        kicker: 'Form',
+        title: 'Plane and Volume',
+        text: [
+          'The MASO plane holds sound and image within the same surface, supported by a concealed architectural volume that extends its physical presence in space.',
+          'It is not conceived as equipment, but as an architectural object in which sound becomes part of the room itself.'
+        ],
+        image: 'images/maso-detail.jpg'
+      },
+      system: {
+        kicker: 'System',
+        title: 'Captured, Preserved, Returned',
+        text: [
+          'The surface carries black ink gestures — marks through which sound was once written and organised. Within the MASO system, that gesture is captured, preserved, and returned as sound within the same plane.',
+          'The work is developed through dedicated recordings, allowing it to be fixed before it is returned in space.'
+        ],
+        image: 'images/binaural-head.jpeg'
+      },
+      perception: {
+        kicker: 'Perception',
+        title: 'Sound in the Room',
+        text: [
+          'A room designed for human perception is the optimal condition for listening. MASO works within this condition, allowing sound to exist without intrusion.',
+          'Sound is no longer placed into a room. It becomes part of its structure.'
+        ],
+        image: 'images/maso-room.jpg'
+      }
+    };
+
+    const copy = document.getElementById('maso-copy');
+    const image = document.getElementById('maso-image');
+    const buttons = document.querySelectorAll('#maso-sections button');
+
+    function renderMaso(key) {
+      const data = masoData[key];
+      copy.innerHTML = `
+        <p class="project-kicker">${data.kicker}</p>
+        <h2>${data.title}</h2>
+        ${data.text.map(t => `<p>${t}</p>`).join('')}
+      `;
+      image.src = data.image;
+      buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.key === key));
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => renderMaso(btn.dataset.key));
+    });
+  </script>
 </body>
 </html>
