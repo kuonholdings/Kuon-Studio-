@@ -1,107 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KUON STUDIO</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KUON STUDIO</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
 
-<style>
-body {
-  margin: 0;
-  background: #f2f1ed;
-  color: #0d0d0d;
-  font-family: Arial, Helvetica, sans-serif;
-}
+    body {
+      background: #f2f1ed;
+      color: #111111;
+      font-family: Arial, Helvetica, sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
 
-.container {
-  padding: 80px 120px;
-  max-width: 1400px;
-}
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      white-space: nowrap;
+    }
 
-/* TOP ROW */
+    .bottom {
+      position: absolute;
+      left: 50%;
+      bottom: 42px;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      color: #444444;
+      white-space: nowrap;
+    }
 
-.top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
-}
+    @media (max-width: 640px) {
+      .center {
+        font-size: 1.5rem;
+      }
 
-.rule {
-  height: 1px;
-  background: #0d0d0d;
-  opacity: 0.3;
-  margin-bottom: 60px;
-}
-
-/* MAIN CONTENT */
-
-.title {
-  font-size: 3.5rem;
-  font-weight: bold;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-
-.text {
-  max-width: 420px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-}
-
-.small-rule {
-  width: 60px;
-  height: 3px;
-  background: #0d0d0d;
-  margin-bottom: 20px;
-}
-
-.email {
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 800px) {
-  .container {
-    padding: 40px;
-  }
-
-  .title {
-    font-size: 2.2rem;
-  }
-}
-</style>
+      .bottom {
+        font-size: 0.82rem;
+        bottom: 28px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-<div class="container">
-
-  <div class="top">
-    <div>KUON STUDIO</div>
-    <div>LONDON | TAIWAN</div>
-  </div>
-
-  <div class="rule"></div>
-
-  <div class="title">
-    SOUND, GIVEN STRUCTURE
-  </div>
-
-  <div class="text">
-    Kuon Studio is a sound architecture practice concerned with how sound becomes real in the world.
-  </div>
-
-  <div class="small-rule"></div>
-
-  <div class="email">
-    HELLO@KUON.STUDIO
-  </div>
-
-</div>
-
+  <div class="center">KUON STUDIO</div>
+  <div class="bottom">hello@kuon.studio</div>
 </body>
 </html>
