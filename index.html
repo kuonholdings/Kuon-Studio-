@@ -21,77 +21,66 @@
       overflow: hidden;
     }
 
-    /* Top */
-
-    .top {
-      position: absolute;
-      top: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.8rem;
-      color: #777777;
-      letter-spacing: 0.03em;
-    }
-
-    /* Datum line (independent) */
-
     .line {
       position: absolute;
       top: 50%;
       left: 0;
-      width: 50vw; /* reaches centre */
+      width: 100%;
       height: 1px;
       background: rgba(111, 134, 168, 0.6);
       transform: translateY(-50%);
+      z-index: 1;
     }
 
-    /* Center title */
-
-    .center {
+    .center-wrap {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -55%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .center {
       font-size: 2rem;
       font-weight: 700;
       letter-spacing: -0.04em;
       text-transform: uppercase;
       white-space: nowrap;
       text-align: center;
+      background: #f2f1ed;
+      padding: 0 12px;
     }
 
     .jp {
       margin-left: 6px;
       font-family: 'Zhi Mang Xing', cursive;
       font-size: 1.85rem;
+      line-height: 1;
       position: relative;
       top: 1px;
       text-transform: none;
     }
 
-    /* Email */
-
-    .bottom {
-      position: absolute;
-      left: 50%;
-      bottom: 42px;
-      transform: translateX(-50%);
+    .email {
+      margin-top: 28px;
       font-size: 0.9rem;
       color: #444444;
+      white-space: nowrap;
     }
 
-    .bottom a {
+    .email a {
       color: inherit;
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.25s ease;
     }
 
-    .bottom a:hover {
+    .email a:hover {
       border-bottom: 1px solid #111111;
     }
-
-    /* Responsive */
 
     @media (max-width: 640px) {
       .center {
@@ -102,9 +91,9 @@
         font-size: 1.45rem;
       }
 
-      .bottom {
+      .email {
         font-size: 0.82rem;
-        bottom: 28px;
+        margin-top: 22px;
       }
     }
   </style>
@@ -112,16 +101,16 @@
 
 <body>
 
-  <div class="top">London | Taiwan</div>
-
   <div class="line"></div>
 
-  <div class="center">
-    KUON STUDIO <span class="jp">久音</span>
-  </div>
+  <div class="center-wrap">
+    <div class="center">
+      KUON STUDIO <span class="jp">久音</span>
+    </div>
 
-  <div class="bottom">
-    <a href="mailto:hello@kuon.studio">hello@kuon.studio</a>
+    <div class="email">
+      <a href="mailto:hello@kuon.studio">hello@kuon.studio</a>
+    </div>
   </div>
 
 </body>
