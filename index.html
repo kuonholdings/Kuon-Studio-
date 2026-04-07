@@ -20,7 +20,40 @@ body {
   overflow: hidden;
 }
 
-/* Main right-aligned block */
+/* Top-right link */
+
+.nav-link {
+  position: absolute;
+  top: 28px;
+  right: 40px;
+  font-size: 0.8rem;
+  color: #777777;
+  opacity: 0.7;
+}
+
+.nav-link a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+}
+
+.arrow {
+  transition: transform 0.25s ease;
+}
+
+.nav-link a:hover {
+  color: #111111;
+  opacity: 1;
+}
+
+.nav-link a:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Main block */
 
 .wrap {
   position: absolute;
@@ -32,7 +65,7 @@ body {
   align-items: flex-end;
 }
 
-/* Annotation */
+/* Label */
 
 .label {
   margin-bottom: 6px;
@@ -40,14 +73,9 @@ body {
   color: #777777;
   letter-spacing: 0.08em;
   text-transform: lowercase;
-  opacity: 0;
-
-  transform: translateY(10px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.45s;
 }
 
-/* Datum line */
+/* Line */
 
 .line {
   height: 1px;
@@ -55,10 +83,6 @@ body {
   background: #111111;
   opacity: 0.6;
   margin-bottom: 14px;
-
-  transform-origin: left;
-  transform: scaleX(0);
-  animation: drawLine 1.2s ease forwards;
 }
 
 /* Title */
@@ -70,11 +94,6 @@ body {
   text-transform: uppercase;
   text-align: right;
   white-space: nowrap;
-
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.6s;
 }
 
 .jp {
@@ -83,20 +102,14 @@ body {
   font-size: 1.85rem;
   position: relative;
   top: 1px;
-  text-transform: none;
 }
 
-/* Email + Location */
+/* Info */
 
 .email {
   margin-top: 20px;
   font-size: 0.9rem;
   color: #444444;
-
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 1s;
 }
 
 .email a {
@@ -114,92 +127,41 @@ body {
   margin-top: 4px;
   font-size: 0.9rem;
   color: #444444;
-  letter-spacing: 0.01em;
-
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 1.15s;
 }
 
-/* Year (bottom right, rotated) */
+/* Year */
 
 .year {
   position: absolute;
   bottom: 40px;
   right: 40px;
-
   font-size: 0.75rem;
   color: #777777;
-  letter-spacing: 0.05em;
-
   transform: rotate(90deg);
   transform-origin: right bottom;
-
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-  animation-delay: 1.4s;
-}
-
-/* Animations */
-
-@keyframes drawLine {
-  to {
-    transform: scaleX(1);
-  }
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 0.7;
-  }
 }
 
 /* Responsive */
 
 @media (max-width: 640px) {
-  .wrap {
-    right: 8vw;
-  }
-
-  .center {
-    font-size: 1.5rem;
-  }
-
-  .jp {
-    font-size: 1.45rem;
-  }
-
-  .email,
-  .location {
-    font-size: 0.82rem;
-  }
-
-  .line {
-    width: 70vw;
-  }
-
-  .year {
-    bottom: 28px;
-    right: 28px;
-  }
+  .wrap { right: 8vw; }
+  .center { font-size: 1.5rem; }
+  .jp { font-size: 1.45rem; }
+  .line { width: 70vw; }
 }
 </style>
 </head>
 
 <body>
 
+<div class="nav-link">
+  <a href="https://kuonholdings.com">
+    Holdings <span class="arrow">→</span>
+  </a>
+</div>
+
 <div class="wrap">
-
   <div class="label">sound architecture</div>
-
   <div class="line"></div>
 
   <div class="center">
@@ -213,7 +175,6 @@ body {
   <div class="location">
     London | Taiwan
   </div>
-
 </div>
 
 <div class="year">2027</div>
