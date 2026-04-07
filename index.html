@@ -33,34 +33,31 @@
       letter-spacing: 0.03em;
     }
 
-    /* Center container */
+    /* Datum line (independent) */
 
-    .center-wrap {
+    .line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 50vw; /* reaches centre */
+      height: 1px;
+      background: rgba(111, 134, 168, 0.6);
+      transform: translateY(-50%);
+    }
+
+    /* Center title */
+
+    .center {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -55%);
-      display: flex;
-      align-items: center;
-    }
-
-    /* Datum line */
-
-    .line {
-      height: 2px;
-      width: 40vw;
-      background: #6f86a8; /* studio blue */
-      margin-right: 16px;
-    }
-
-    /* Title */
-
-    .center {
       font-size: 2rem;
       font-weight: 700;
       letter-spacing: -0.04em;
       text-transform: uppercase;
       white-space: nowrap;
+      text-align: center;
     }
 
     .jp {
@@ -97,10 +94,6 @@
     /* Responsive */
 
     @media (max-width: 640px) {
-      .line {
-        width: 25vw;
-      }
-
       .center {
         font-size: 1.5rem;
       }
@@ -121,11 +114,10 @@
 
   <div class="top">London | Taiwan</div>
 
-  <div class="center-wrap">
-    <div class="line"></div>
-    <div class="center">
-      KUON STUDIO <span class="jp">久音</span>
-    </div>
+  <div class="line"></div>
+
+  <div class="center">
+    KUON STUDIO <span class="jp">久音</span>
   </div>
 
   <div class="bottom">
