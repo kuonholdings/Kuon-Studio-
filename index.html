@@ -21,7 +21,7 @@
       overflow: hidden;
     }
 
-    /* Top location */
+    /* Top */
 
     .top {
       position: absolute;
@@ -31,29 +31,42 @@
       font-size: 0.8rem;
       color: #777777;
       letter-spacing: 0.03em;
-      white-space: nowrap;
     }
 
-    /* Main title */
+    /* Center container */
 
-    .center {
+    .center-wrap {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -55%);
+      display: flex;
+      align-items: center;
+    }
+
+    /* Datum line */
+
+    .line {
+      height: 2px;
+      width: 40vw;
+      background: #6f86a8; /* studio blue */
+      margin-right: 16px;
+    }
+
+    /* Title */
+
+    .center {
       font-size: 2rem;
       font-weight: 700;
       letter-spacing: -0.04em;
       text-transform: uppercase;
       white-space: nowrap;
-      text-align: center;
     }
 
     .jp {
       margin-left: 6px;
       font-family: 'Zhi Mang Xing', cursive;
       font-size: 1.85rem;
-      line-height: 1;
       position: relative;
       top: 1px;
       text-transform: none;
@@ -68,7 +81,6 @@
       transform: translateX(-50%);
       font-size: 0.9rem;
       color: #444444;
-      white-space: nowrap;
     }
 
     .bottom a {
@@ -85,9 +97,8 @@
     /* Responsive */
 
     @media (max-width: 640px) {
-      .top {
-        top: 22px;
-        font-size: 0.74rem;
+      .line {
+        width: 25vw;
       }
 
       .center {
@@ -110,8 +121,11 @@
 
   <div class="top">London | Taiwan</div>
 
-  <div class="center">
-    KUON STUDIO. <span class="jp">久音</span>
+  <div class="center-wrap">
+    <div class="line"></div>
+    <div class="center">
+      KUON STUDIO <span class="jp">久音</span>
+    </div>
   </div>
 
   <div class="bottom">
