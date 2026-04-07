@@ -1,174 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KUON STUDIO</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KUON STUDIO</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
 
-<style>
-html, body {
-  height: 100%;
-  margin: 0;
-}
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
 
-body {
-  background: #f2f1ed;
-  color: #111111;
-  font-family: Arial, Helvetica, sans-serif;
-  overflow: hidden;
-}
+    body {
+      background: #f2f1ed;
+      color: #111111;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+    }
 
-/* Wrapper */
+    .wrap {
+      position: absolute;
+      top: 50%;
+      right: 10vw;
+      transform: translateY(-55%);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
 
-.wrap {
-  position: absolute;
-  top: 50%;
-  right: 10vw;
-  transform: translateY(-55%);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
+    .label {
+      margin-bottom: 6px;
+      font-size: 0.7rem;
+      color: #777777;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      opacity: 0;
 
-/* Line */
+      transform: translateY(10px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.45s;
+    }
 
-.line {
-  height: 1px;
-  width: 60vw;
-  background: #111111;
-  opacity: 0.6;
-  margin-bottom: 14px;
+    .line {
+      height: 1px;
+      width: 60vw;
+      background: #111111;
+      opacity: 0.6;
+      margin-bottom: 14px;
 
-  transform-origin: left;
-  transform: scaleX(0);
-  animation: drawLine 1.2s ease forwards;
-}
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: drawLine 1.2s ease forwards;
+    }
 
-/* Title */
+    .center {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      text-align: right;
+      white-space: nowrap;
 
-.center {
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  text-align: right;
-  white-space: nowrap;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.6s;
+    }
 
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 0.6s;
-}
+    .jp {
+      margin-left: 6px;
+      font-family: 'Zhi Mang Xing', cursive;
+      font-size: 1.85rem;
+      position: relative;
+      top: 1px;
+      text-transform: none;
+    }
 
-.jp {
-  margin-left: 6px;
-  font-family: 'Zhi Mang Xing', cursive;
-  font-size: 1.85rem;
-  position: relative;
-  top: 1px;
-  text-transform: none;
-}
+    .email {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #444444;
 
-/* Email */
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1s;
+    }
 
-.email {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #444444;
+    .email a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.25s ease;
+    }
 
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 1s;
-}
+    .email a:hover {
+      border-bottom: 1px solid #111111;
+    }
 
-.email a {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.25s ease;
-}
+    .location {
+      margin-top: 4px;
+      font-size: 0.9rem;
+      color: #444444;
+      letter-spacing: 0.01em;
 
-.email a:hover {
-  border-bottom: 1px solid #111111;
-}
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1.15s;
+    }
 
-/* Location */
+    @keyframes drawLine {
+      to {
+        transform: scaleX(1);
+      }
+    }
 
-.location {
-  margin-top: 6px;
-  font-size: 0.75rem;
-  color: #777777;
-  letter-spacing: 0.03em;
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp 0.8s ease forwards;
-  animation-delay: 1.2s;
-}
+    @media (max-width: 640px) {
+      .wrap {
+        right: 8vw;
+      }
 
-/* Animations */
+      .center {
+        font-size: 1.5rem;
+      }
 
-@keyframes drawLine {
-  to {
-    transform: scaleX(1);
-  }
-}
+      .jp {
+        font-size: 1.45rem;
+      }
 
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+      .email,
+      .location {
+        font-size: 0.82rem;
+      }
 
-/* Responsive */
-
-@media (max-width: 640px) {
-  .wrap {
-    right: 8vw;
-  }
-
-  .center {
-    font-size: 1.5rem;
-  }
-
-  .jp {
-    font-size: 1.45rem;
-  }
-
-  .email {
-    font-size: 0.82rem;
-  }
-
-  .line {
-    width: 70vw;
-  }
-}
-</style>
+      .line {
+        width: 70vw;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="wrap">
+  <div class="wrap">
 
-  <div class="line"></div>
+    <div class="label">sound architecture</div>
 
-  <div class="center">
-    KUON STUDIO <span class="jp">久音</span>
+    <div class="line"></div>
+
+    <div class="center">
+      KUON STUDIO <span class="jp">久音</span>
+    </div>
+
+    <div class="email">
+      <a href="mailto:hello@kuon.studio">hello@kuon.studio</a>
+    </div>
+
+    <div class="location">
+      London | Taiwan
+    </div>
+
   </div>
-
-  <div class="email">
-    <a href="mailto:hello@kuon.studio">hello@kuon.studio</a>
-  </div>
-
-  <div class="location">
-    London | Taiwan
-  </div>
-
-</div>
 
 </body>
 </html>
